@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.bank.dao.TrueFalseQuestionDTOMapper" >
+  <resultMap id="BaseResultMap" type="com.org.bank.domain.TrueFalseQuestionDTO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="true_false_question" property="trueFalseQuestion" jdbcType="VARCHAR" />
+    <result column="true_false_answer" property="trueFalseAnswer" jdbcType="VARCHAR" />
+    <result column="examiner_id" property="examinerId" jdbcType="INTEGER" />
+    <result column="examiner_type" property="examinerType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, true_false_question, true_false_answer, examiner_id, examiner_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from true_false_question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from true_false_question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.org.bank.domain.TrueFalseQuestionDTO" >
+    insert into true_false_question (id, true_false_question, true_false_answer, 
+      examiner_id, examiner_type)
+    values (#{id,jdbcType=INTEGER}, #{trueFalseQuestion,jdbcType=VARCHAR}, #{trueFalseAnswer,jdbcType=VARCHAR}, 
+      #{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.bank.domain.TrueFalseQuestionDTO" >
+    insert into true_false_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="trueFalseQuestion != null" >
+        true_false_question,
+      </if>
+      <if test="trueFalseAnswer != null" >
+        true_false_answer,
+      </if>
+      <if test="examinerId != null" >
+        examiner_id,
+      </if>
+      <if test="examinerType != null" >
+        examiner_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="trueFalseQuestion != null" >
+        #{trueFalseQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="trueFalseAnswer != null" >
+        #{trueFalseAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="examinerId != null" >
+        #{examinerId,jdbcType=INTEGER},
+      </if>
+      <if test="examinerType != null" >
+        #{examinerType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.TrueFalseQuestionDTO" >
+    update true_false_question
+    <set >
+      <if test="trueFalseQuestion != null" >
+        true_false_question = #{trueFalseQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="trueFalseAnswer != null" >
+        true_false_answer = #{trueFalseAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="examinerId != null" >
+        examiner_id = #{examinerId,jdbcType=INTEGER},
+      </if>
+      <if test="examinerType != null" >
+        examiner_type = #{examinerType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.TrueFalseQuestionDTO" >
+    update true_false_question
+    set true_false_question = #{trueFalseQuestion,jdbcType=VARCHAR},
+      true_false_answer = #{trueFalseAnswer,jdbcType=VARCHAR},
+      examiner_id = #{examinerId,jdbcType=INTEGER},
+      examiner_type = #{examinerType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

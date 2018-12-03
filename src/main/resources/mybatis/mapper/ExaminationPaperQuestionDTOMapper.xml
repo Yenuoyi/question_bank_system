@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.bank.dao.ExaminationPaperQuestionDTOMapper" >
+  <resultMap id="BaseResultMap" type="com.org.bank.domain.ExaminationPaperQuestionDTO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="original_examination_paper_id" property="originalExaminationPaperId" jdbcType="INTEGER" />
+    <result column="examination_paper_question" property="examinationPaperQuestion" jdbcType="VARCHAR" />
+    <result column="examination_paper_answer" property="examinationPaperAnswer" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, original_examination_paper_id, examination_paper_question, examination_paper_answer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from examination_paper_question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from examination_paper_question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >
+    insert into examination_paper_question (id, original_examination_paper_id, examination_paper_question, 
+      examination_paper_answer)
+    values (#{id,jdbcType=INTEGER}, #{originalExaminationPaperId,jdbcType=INTEGER}, #{examinationPaperQuestion,jdbcType=VARCHAR}, 
+      #{examinationPaperAnswer,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >
+    insert into examination_paper_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="originalExaminationPaperId != null" >
+        original_examination_paper_id,
+      </if>
+      <if test="examinationPaperQuestion != null" >
+        examination_paper_question,
+      </if>
+      <if test="examinationPaperAnswer != null" >
+        examination_paper_answer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="originalExaminationPaperId != null" >
+        #{originalExaminationPaperId,jdbcType=INTEGER},
+      </if>
+      <if test="examinationPaperQuestion != null" >
+        #{examinationPaperQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="examinationPaperAnswer != null" >
+        #{examinationPaperAnswer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >
+    update examination_paper_question
+    <set >
+      <if test="originalExaminationPaperId != null" >
+        original_examination_paper_id = #{originalExaminationPaperId,jdbcType=INTEGER},
+      </if>
+      <if test="examinationPaperQuestion != null" >
+        examination_paper_question = #{examinationPaperQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="examinationPaperAnswer != null" >
+        examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >
+    update examination_paper_question
+    set original_examination_paper_id = #{originalExaminationPaperId,jdbcType=INTEGER},
+      examination_paper_question = #{examinationPaperQuestion,jdbcType=VARCHAR},
+      examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.bank.dao.DoubtDTOMapper" >
+  <resultMap id="BaseResultMap" type="com.org.bank.domain.DoubtDTO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="questioner_name" property="questionerName" jdbcType="VARCHAR" />
+    <result column="questioner_id" property="questionerId" jdbcType="INTEGER" />
+    <result column="respondent_name" property="respondentName" jdbcType="VARCHAR" />
+    <result column="respondent_id" property="respondentId" jdbcType="INTEGER" />
+    <result column="question" property="question" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, questioner_name, questioner_id, respondent_name, respondent_id, question, answer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from doubt
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from doubt
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.org.bank.domain.DoubtDTO" >
+    insert into doubt (id, questioner_name, questioner_id, 
+      respondent_name, respondent_id, question, 
+      answer)
+    values (#{id,jdbcType=INTEGER}, #{questionerName,jdbcType=VARCHAR}, #{questionerId,jdbcType=INTEGER}, 
+      #{respondentName,jdbcType=VARCHAR}, #{respondentId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, 
+      #{answer,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.bank.domain.DoubtDTO" >
+    insert into doubt
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="questionerName != null" >
+        questioner_name,
+      </if>
+      <if test="questionerId != null" >
+        questioner_id,
+      </if>
+      <if test="respondentName != null" >
+        respondent_name,
+      </if>
+      <if test="respondentId != null" >
+        respondent_id,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="questionerName != null" >
+        #{questionerName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionerId != null" >
+        #{questionerId,jdbcType=INTEGER},
+      </if>
+      <if test="respondentName != null" >
+        #{respondentName,jdbcType=VARCHAR},
+      </if>
+      <if test="respondentId != null" >
+        #{respondentId,jdbcType=INTEGER},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.DoubtDTO" >
+    update doubt
+    <set >
+      <if test="questionerName != null" >
+        questioner_name = #{questionerName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionerId != null" >
+        questioner_id = #{questionerId,jdbcType=INTEGER},
+      </if>
+      <if test="respondentName != null" >
+        respondent_name = #{respondentName,jdbcType=VARCHAR},
+      </if>
+      <if test="respondentId != null" >
+        respondent_id = #{respondentId,jdbcType=INTEGER},
+      </if>
+      <if test="question != null" >
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.DoubtDTO" >
+    update doubt
+    set questioner_name = #{questionerName,jdbcType=VARCHAR},
+      questioner_id = #{questionerId,jdbcType=INTEGER},
+      respondent_name = #{respondentName,jdbcType=VARCHAR},
+      respondent_id = #{respondentId,jdbcType=INTEGER},
+      question = #{question,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
