@@ -1,4 +1,4 @@
-package com.org.bank.common;
+package com.org.bank.common.encrypt;
 
 import org.springframework.stereotype.Component;
 
