@@ -1,5 +1,7 @@
 package com.org.bank.domain;
 
+import com.org.bank.common.Pager;
+
 import java.io.Serializable;
 
 public class TrueFalseQuestionDTO implements Serializable {
@@ -17,6 +19,8 @@ public class TrueFalseQuestionDTO implements Serializable {
 
     /** 出题人类型：1admin 2教师 */
     private String examinerType;
+
+    private Pager pager;
 
     private static final long serialVersionUID = 1L;
 
@@ -58,5 +62,13 @@ public class TrueFalseQuestionDTO implements Serializable {
 
     public void setExaminerType(String examinerType) {
         this.examinerType = examinerType == null ? null : examinerType.trim();
+    }
+
+    public Pager getPager() {
+        return pager;
+    }
+
+    public void setPager(Pager pager) {
+        this.pager = pager;
     }
 }

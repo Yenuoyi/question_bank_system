@@ -1,18 +1,23 @@
 package com.org.bank.service;
 
 
+import com.org.bank.common.DataUtil;
+import com.org.bank.common.ExecuteResult;
+import com.org.bank.common.Pager;
 import com.org.bank.domain.GradSheetDTO;
 
 public interface GradSheetService {
-    int deleteByPrimaryKey(Integer id);
+    ExecuteResult<Integer> deleteByPrimaryKey(GradSheetDTO record);
 
-    int insert(GradSheetDTO record);
+    ExecuteResult<Integer> insert(GradSheetDTO record);
 
-    int insertSelective(GradSheetDTO record);
+    ExecuteResult<Integer> insertSelective(GradSheetDTO record);
 
-    GradSheetDTO selectByPrimaryKey(Integer id);
+    ExecuteResult<GradSheetDTO> selectByPrimaryKey(GradSheetDTO record);
 
-    int updateByPrimaryKeySelective(GradSheetDTO record);
+    ExecuteResult<DataUtil<GradSheetDTO>> selectList(GradSheetDTO record, Pager pager);
 
-    int updateByPrimaryKey(GradSheetDTO record);
+    ExecuteResult<Integer> updateByPrimaryKeySelective(GradSheetDTO record);
+
+    ExecuteResult<Integer> updateByPrimaryKey(GradSheetDTO record);
 }

@@ -1,18 +1,24 @@
 package com.org.bank.service;
 
 
+import com.org.bank.common.DataUtil;
+import com.org.bank.common.ExecuteResult;
+import com.org.bank.common.Pager;
 import com.org.bank.domain.AdminInfoDTO;
+import com.org.bank.domain.ClassDTO;
 
 public interface AdminInfoService {
-    int deleteByPrimaryKey(Integer adminId);
+    ExecuteResult<Integer> deleteByPrimaryKey(AdminInfoDTO record);
 
-    int insert(AdminInfoDTO record);
+    ExecuteResult<Integer> insert(AdminInfoDTO record);
 
-    int insertSelective(AdminInfoDTO record);
+    ExecuteResult<Integer> insertSelective(AdminInfoDTO record);
 
-    AdminInfoDTO selectByPrimaryKey(Integer adminId);
+    ExecuteResult<AdminInfoDTO> selectByPrimaryKey(AdminInfoDTO record);
 
-    int updateByPrimaryKeySelective(AdminInfoDTO record);
+    ExecuteResult<DataUtil<AdminInfoDTO>> selectList(AdminInfoDTO record, Pager pager);
 
-    int updateByPrimaryKey(AdminInfoDTO record);
+    ExecuteResult<Integer> updateByPrimaryKeySelective(AdminInfoDTO record);
+
+    ExecuteResult<Integer> updateByPrimaryKey(AdminInfoDTO record);
 }

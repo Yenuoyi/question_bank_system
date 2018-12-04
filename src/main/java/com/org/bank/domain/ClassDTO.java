@@ -1,5 +1,7 @@
 package com.org.bank.domain;
 
+import com.org.bank.common.Pager;
+
 import java.io.Serializable;
 
 public class ClassDTO implements Serializable {
@@ -14,6 +16,8 @@ public class ClassDTO implements Serializable {
 
     /** 教师id */
     private Integer teacherId;
+
+    private Pager pager;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,5 +51,13 @@ public class ClassDTO implements Serializable {
 
     public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
+    }
+
+    public Pager getPager() {
+        return pager;
+    }
+
+    public void setPager(Pager pager) {
+        this.pager = pager;
     }
 }

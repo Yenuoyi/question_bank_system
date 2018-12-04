@@ -1,19 +1,23 @@
 package com.org.bank.domain;
 
+import com.org.bank.common.Pager;
+
 import java.io.Serializable;
 
 public class ExaminationPaperQuestionDTO implements Serializable {
     /**  */
     private Integer id;
 
-    /**  */
+    /** 试卷原卷id */
     private Integer originalExaminationPaperId;
 
-    /**  */
+    /** 试卷问题 */
     private String examinationPaperQuestion;
 
-    /**  */
+    /** 试卷问题答案 */
     private String examinationPaperAnswer;
+
+    private Pager pager;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,5 +51,13 @@ public class ExaminationPaperQuestionDTO implements Serializable {
 
     public void setExaminationPaperAnswer(String examinationPaperAnswer) {
         this.examinationPaperAnswer = examinationPaperAnswer == null ? null : examinationPaperAnswer.trim();
+    }
+
+    public Pager getPager() {
+        return pager;
+    }
+
+    public void setPager(Pager pager) {
+        this.pager = pager;
     }
 }

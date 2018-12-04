@@ -1,5 +1,7 @@
 package com.org.bank.domain;
 
+import com.org.bank.common.Pager;
+
 import java.io.Serializable;
 
 public class FillVainQuestionDTO implements Serializable {
@@ -17,6 +19,8 @@ public class FillVainQuestionDTO implements Serializable {
 
     /** 出题人类型 */
     private Integer examinerType;
+
+    private Pager pager;
 
     private static final long serialVersionUID = 1L;
 
@@ -58,5 +62,13 @@ public class FillVainQuestionDTO implements Serializable {
 
     public void setExaminerType(Integer examinerType) {
         this.examinerType = examinerType;
+    }
+
+    public Pager getPager() {
+        return pager;
+    }
+
+    public void setPager(Pager pager) {
+        this.pager = pager;
     }
 }

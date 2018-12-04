@@ -1,18 +1,23 @@
 package com.org.bank.service;
 
 
+import com.org.bank.common.DataUtil;
+import com.org.bank.common.ExecuteResult;
+import com.org.bank.common.Pager;
 import com.org.bank.domain.DoubtDTO;
 
 public interface DoubtService {
-    int deleteByPrimaryKey(Integer id);
+    ExecuteResult<Integer> deleteByPrimaryKey(Integer id);
 
-    int insert(DoubtDTO record);
+    ExecuteResult<Integer> insert(DoubtDTO record);
 
-    int insertSelective(DoubtDTO record);
+    ExecuteResult<Integer> insertSelective(DoubtDTO record);
 
-    DoubtDTO selectByPrimaryKey(Integer id);
+    ExecuteResult<DoubtDTO> selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(DoubtDTO record);
+    ExecuteResult<DataUtil<DoubtDTO>> selectList(DoubtDTO record, Pager pager);
 
-    int updateByPrimaryKey(DoubtDTO record);
+    ExecuteResult<Integer> updateByPrimaryKeySelective(DoubtDTO record);
+
+    ExecuteResult<Integer> updateByPrimaryKey(DoubtDTO record);
 }

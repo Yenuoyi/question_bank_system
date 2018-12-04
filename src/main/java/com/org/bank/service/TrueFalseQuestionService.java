@@ -1,18 +1,23 @@
 package com.org.bank.service;
 
 
+import com.org.bank.common.DataUtil;
+import com.org.bank.common.ExecuteResult;
+import com.org.bank.common.Pager;
 import com.org.bank.domain.TrueFalseQuestionDTO;
 
 public interface TrueFalseQuestionService {
-    int deleteByPrimaryKey(Integer id);
+    ExecuteResult<Integer> deleteByPrimaryKey(TrueFalseQuestionDTO record);
 
-    int insert(TrueFalseQuestionDTO record);
+    ExecuteResult<Integer> insert(TrueFalseQuestionDTO record);
 
-    int insertSelective(TrueFalseQuestionDTO record);
+    ExecuteResult<Integer> insertSelective(TrueFalseQuestionDTO record);
 
-    TrueFalseQuestionDTO selectByPrimaryKey(Integer id);
+    ExecuteResult<TrueFalseQuestionDTO> selectByPrimaryKey(TrueFalseQuestionDTO record);
 
-    int updateByPrimaryKeySelective(TrueFalseQuestionDTO record);
+    ExecuteResult<DataUtil<TrueFalseQuestionService>> selectList(TrueFalseQuestionDTO record, Pager pager);
 
-    int updateByPrimaryKey(TrueFalseQuestionDTO record);
+    ExecuteResult<Integer> updateByPrimaryKeySelective(TrueFalseQuestionDTO record);
+
+    ExecuteResult<Integer> updateByPrimaryKey(TrueFalseQuestionDTO record);
 }

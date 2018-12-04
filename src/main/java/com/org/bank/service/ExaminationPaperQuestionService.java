@@ -1,18 +1,23 @@
 package com.org.bank.service;
 
 
+import com.org.bank.common.DataUtil;
+import com.org.bank.common.ExecuteResult;
+import com.org.bank.common.Pager;
 import com.org.bank.domain.ExaminationPaperQuestionDTO;
 
 public interface ExaminationPaperQuestionService {
-    int deleteByPrimaryKey(Integer id);
+    ExecuteResult<Integer> deleteByPrimaryKey(ExaminationPaperQuestionDTO record);
 
-    int insert(ExaminationPaperQuestionDTO record);
+    ExecuteResult<Integer> insert(ExaminationPaperQuestionDTO record);
 
-    int insertSelective(ExaminationPaperQuestionDTO record);
+    ExecuteResult<Integer> insertSelective(ExaminationPaperQuestionDTO record);
 
-    ExaminationPaperQuestionDTO selectByPrimaryKey(Integer id);
+    ExecuteResult<ExaminationPaperQuestionDTO> selectByPrimaryKey(ExaminationPaperQuestionDTO record);
 
-    int updateByPrimaryKeySelective(ExaminationPaperQuestionDTO record);
+    ExecuteResult<DataUtil<ExaminationPaperQuestionDTO>> selectList(ExaminationPaperQuestionDTO record, Pager pager);
 
-    int updateByPrimaryKey(ExaminationPaperQuestionDTO record);
+    ExecuteResult<Integer> updateByPrimaryKeySelective(ExaminationPaperQuestionDTO record);
+
+    ExecuteResult<Integer> updateByPrimaryKey(ExaminationPaperQuestionDTO record);
 }

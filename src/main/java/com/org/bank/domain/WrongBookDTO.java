@@ -1,5 +1,7 @@
 package com.org.bank.domain;
 
+import com.org.bank.common.Pager;
+
 import java.io.Serializable;
 
 public class WrongBookDTO implements Serializable {
@@ -26,6 +28,8 @@ public class WrongBookDTO implements Serializable {
 
     /** 问题id */
     private Integer questionId;
+
+    private Pager pager;
 
     private static final long serialVersionUID = 1L;
 
@@ -91,5 +95,13 @@ public class WrongBookDTO implements Serializable {
 
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
+    }
+
+    public Pager getPager() {
+        return pager;
+    }
+
+    public void setPager(Pager pager) {
+        this.pager = pager;
     }
 }

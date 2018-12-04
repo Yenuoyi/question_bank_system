@@ -1,18 +1,23 @@
 package com.org.bank.service;
 
 
+import com.org.bank.common.DataUtil;
+import com.org.bank.common.ExecuteResult;
+import com.org.bank.common.Pager;
 import com.org.bank.domain.ClassDTO;
 
 public interface ClassService {
-    int deleteByPrimaryKey(Integer id);
+    ExecuteResult<Integer> deleteByPrimaryKey(ClassDTO record);
 
-    int insert(ClassDTO record);
+    ExecuteResult<Integer> insert(ClassDTO record);
 
-    int insertSelective(ClassDTO record);
+    ExecuteResult<Integer> insertSelective(ClassDTO record);
 
-    ClassDTO selectByPrimaryKey(Integer id);
+    ExecuteResult<ClassDTO> selectByPrimaryKey(ClassDTO record);
 
-    int updateByPrimaryKeySelective(ClassDTO record);
+    ExecuteResult<DataUtil<ClassDTO>> selectList(ClassDTO record, Pager pager);
 
-    int updateByPrimaryKey(ClassDTO record);
+    ExecuteResult<Integer> updateByPrimaryKeySelective(ClassDTO record);
+
+    ExecuteResult<Integer> updateByPrimaryKey(ClassDTO record);
 }

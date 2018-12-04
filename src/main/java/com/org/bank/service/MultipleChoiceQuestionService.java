@@ -1,18 +1,23 @@
 package com.org.bank.service;
 
 
+import com.org.bank.common.DataUtil;
+import com.org.bank.common.ExecuteResult;
+import com.org.bank.common.Pager;
 import com.org.bank.domain.MultipleChoiceQuestionDTO;
 
 public interface MultipleChoiceQuestionService {
-    int deleteByPrimaryKey(Integer id);
+    ExecuteResult<Integer> deleteByPrimaryKey(MultipleChoiceQuestionDTO record);
 
-    int insert(MultipleChoiceQuestionDTO record);
+    ExecuteResult<Integer> insert(MultipleChoiceQuestionDTO record);
 
-    int insertSelective(MultipleChoiceQuestionDTO record);
+    ExecuteResult<Integer> insertSelective(MultipleChoiceQuestionDTO record);
 
-    MultipleChoiceQuestionDTO selectByPrimaryKey(Integer id);
+    ExecuteResult<MultipleChoiceQuestionDTO> selectByPrimaryKey(MultipleChoiceQuestionDTO record);
 
-    int updateByPrimaryKeySelective(MultipleChoiceQuestionDTO record);
+    ExecuteResult<DataUtil<MultipleChoiceQuestionService>> selectList(MultipleChoiceQuestionDTO record, Pager pager);
 
-    int updateByPrimaryKey(MultipleChoiceQuestionDTO record);
+    ExecuteResult<Integer> updateByPrimaryKeySelective(MultipleChoiceQuestionDTO record);
+
+    ExecuteResult<Integer> updateByPrimaryKey(MultipleChoiceQuestionDTO record);
 }

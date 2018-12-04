@@ -4,21 +4,24 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.AdminInfoDTO;
-import com.org.bank.service.AdminInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.org.bank.domain.StudentInfoDTO;
+import com.org.bank.service.StudentInfoService;
+import com.sun.istack.internal.logging.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 @RestController
-@RequestMapping("/adminInfo")
-public class AdminInfoController {
-    @Autowired
-    private AdminInfoService adminInfoService;
+@RequestMapping("/studentInfo")
+public class StudentInfoController {
+    private Logger logger = Logger.getLogger(this.getClass());
+    @Resource
+    private StudentInfoService studentInfoService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody AdminInfoDTO record){
-        ExecuteResult<Integer> executeResult = adminInfoService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody StudentInfoDTO record){
+        ExecuteResult<Integer> executeResult = studentInfoService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +29,8 @@ public class AdminInfoController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody AdminInfoDTO record){
-        ExecuteResult<Integer> executeResult = adminInfoService.insert(record);
+    public Wrapper<?> insert(@RequestBody StudentInfoDTO record){
+        ExecuteResult<Integer> executeResult = studentInfoService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +38,8 @@ public class AdminInfoController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody AdminInfoDTO record){
-        ExecuteResult<Integer> executeResult = adminInfoService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody StudentInfoDTO record){
+        ExecuteResult<Integer> executeResult = studentInfoService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +47,8 @@ public class AdminInfoController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody AdminInfoDTO record){
-        ExecuteResult<AdminInfoDTO> executeResult = adminInfoService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody StudentInfoDTO record){
+        ExecuteResult<StudentInfoDTO> executeResult = studentInfoService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +56,8 @@ public class AdminInfoController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody AdminInfoDTO record){
-        ExecuteResult<DataUtil<AdminInfoDTO>> executeResult = adminInfoService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody StudentInfoDTO record){
+        ExecuteResult<DataUtil<StudentInfoDTO>> executeResult = studentInfoService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +65,8 @@ public class AdminInfoController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody AdminInfoDTO record){
-        ExecuteResult<Integer> executeResult = adminInfoService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody StudentInfoDTO record){
+        ExecuteResult<Integer> executeResult = studentInfoService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +74,8 @@ public class AdminInfoController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody AdminInfoDTO record){
-        ExecuteResult<Integer> executeResult = adminInfoService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody StudentInfoDTO record){
+        ExecuteResult<Integer> executeResult = studentInfoService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

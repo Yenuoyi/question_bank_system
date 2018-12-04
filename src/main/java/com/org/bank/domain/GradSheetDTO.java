@@ -1,5 +1,7 @@
 package com.org.bank.domain;
 
+import com.org.bank.common.Pager;
+
 import java.io.Serializable;
 
 public class GradSheetDTO implements Serializable {
@@ -23,6 +25,8 @@ public class GradSheetDTO implements Serializable {
 
     /** 试卷id */
     private Integer examinationPaperId;
+
+    private Pager pager;
 
     private static final long serialVersionUID = 1L;
 
@@ -80,5 +84,13 @@ public class GradSheetDTO implements Serializable {
 
     public void setExaminationPaperId(Integer examinationPaperId) {
         this.examinationPaperId = examinationPaperId;
+    }
+
+    public Pager getPager() {
+        return pager;
+    }
+
+    public void setPager(Pager pager) {
+        this.pager = pager;
     }
 }

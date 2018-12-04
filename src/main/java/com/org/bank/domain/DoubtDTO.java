@@ -1,5 +1,7 @@
 package com.org.bank.domain;
 
+import com.org.bank.common.Pager;
+
 import java.io.Serializable;
 
 public class DoubtDTO implements Serializable {
@@ -23,6 +25,8 @@ public class DoubtDTO implements Serializable {
 
     /** 答案 */
     private String answer;
+
+    private Pager pager;
 
     private static final long serialVersionUID = 1L;
 
@@ -80,5 +84,13 @@ public class DoubtDTO implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer == null ? null : answer.trim();
+    }
+
+    public Pager getPager() {
+        return pager;
+    }
+
+    public void setPager(Pager pager) {
+        this.pager = pager;
     }
 }
