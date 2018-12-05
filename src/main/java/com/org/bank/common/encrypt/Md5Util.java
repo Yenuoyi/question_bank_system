@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class Md5Util {
     private static final String SALT = "lamb";
-    public String encode(String password){
+    public static String encode(String password){
         password = password + SALT;
         StringBuffer stringBuffer = new StringBuffer();
         MessageDigest digest = null;

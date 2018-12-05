@@ -3,6 +3,7 @@ package com.org.bank.service.impl;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
+import com.org.bank.common.encrypt.Md5Util;
 import com.org.bank.dao.StudentInfoDTOMapper;
 import com.org.bank.domain.StudentInfoDTO;
 import com.org.bank.service.StudentInfoService;
@@ -43,6 +44,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
+            record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
             Integer result = studentInfoDTOMapper.insert(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
@@ -61,6 +63,7 @@ public class StudentInfoServiceImpl implements StudentInfoService {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
+            record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
             Integer result = studentInfoDTOMapper.insertSelective(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");

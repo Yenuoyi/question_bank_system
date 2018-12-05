@@ -3,6 +3,7 @@ package com.org.bank.service.impl;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
+import com.org.bank.common.encrypt.Md5Util;
 import com.org.bank.dao.AdminInfoDTOMapper;
 import com.org.bank.domain.AdminInfoDTO;
 import com.org.bank.domain.ClassDTO;
@@ -43,8 +44,9 @@ public class AdminInfoServiceImpl implements AdminInfoService {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
             if(StringUtils.isEmpty(record)){
-                throw new RuntimeException("参数错误：ID非空");
+                throw new RuntimeException("参数错误：对象非空");
             }
+            record.setAdminPassword(Md5Util.encode(record.getAdminPassword()));
             Integer result = adminInfoDTOMapper.insert(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
@@ -61,8 +63,9 @@ public class AdminInfoServiceImpl implements AdminInfoService {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
             if(StringUtils.isEmpty(record)){
-                throw new RuntimeException("参数错误：ID非空");
+                throw new RuntimeException("参数错误：对象非空");
             }
+            record.setAdminPassword(Md5Util.encode(record.getAdminPassword()));
             Integer result = adminInfoDTOMapper.insertSelective(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");

@@ -3,6 +3,7 @@ package com.org.bank.service.impl;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
+import com.org.bank.common.encrypt.Md5Util;
 import com.org.bank.dao.TeacherInfoDTOMapper;
 import com.org.bank.domain.TeacherInfoDTO;
 import com.org.bank.service.TeacherInfoService;
@@ -42,6 +43,7 @@ public class TeacherInfoServiceImpl implements TeacherInfoService {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
+            record.setTeacherPassword(Md5Util.encode(record.getTeacherPassword()));
             Integer result = teacherInfoDTOMapper.insert(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
