@@ -15,7 +15,7 @@ public interface SingleChoiceQuestionService {
 
     ExecuteResult<SingleChoiceQuestionDTO> selectByPrimaryKey(SingleChoiceQuestionDTO record);
 
-    ExecuteResult<DataUtil<SingleChoiceQuestionService>> selectList(SingleChoiceQuestionDTO record, Pager pager);
+    ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> selectList(SingleChoiceQuestionDTO record, Pager pager);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(SingleChoiceQuestionDTO record);
 

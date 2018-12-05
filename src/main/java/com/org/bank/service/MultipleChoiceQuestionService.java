@@ -15,7 +15,7 @@ public interface MultipleChoiceQuestionService {
 
     ExecuteResult<MultipleChoiceQuestionDTO> selectByPrimaryKey(MultipleChoiceQuestionDTO record);
 
-    ExecuteResult<DataUtil<MultipleChoiceQuestionService>> selectList(MultipleChoiceQuestionDTO record, Pager pager);
+    ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> selectList(MultipleChoiceQuestionDTO record, Pager pager);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(MultipleChoiceQuestionDTO record);
 

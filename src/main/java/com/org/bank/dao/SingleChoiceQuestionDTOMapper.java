@@ -20,7 +20,7 @@ public interface SingleChoiceQuestionDTOMapper {
 
     List<SingleChoiceQuestionDTO> selectList(@Param("record") SingleChoiceQuestionDTO record, @Param("pager") Pager pager);
 
-    Integer countTotal(SingleChoiceQuestionDTO record);
+    Long countTotal(SingleChoiceQuestionDTO record);
 
     int updateByPrimaryKeySelective(SingleChoiceQuestionDTO record);
 

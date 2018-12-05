@@ -19,7 +19,7 @@ public interface FillVainQuestionDTOMapper {
 
     List<FillVainQuestionDTO> selectList(@Param("record") FillVainQuestionDTO record, @Param("pager") Pager pager);
 
-    Integer countTotal(FillVainQuestionDTO record);
+    Long countTotal(FillVainQuestionDTO record);
 
     int updateByPrimaryKeySelective(FillVainQuestionDTO record);
 

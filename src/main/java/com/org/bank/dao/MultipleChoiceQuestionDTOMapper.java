@@ -20,7 +20,7 @@ public interface MultipleChoiceQuestionDTOMapper {
 
     List<MultipleChoiceQuestionDTO> selectList(@Param("record") MultipleChoiceQuestionDTO record, @Param("pager") Pager pager);
 
-    Integer countTotal(MultipleChoiceQuestionDTO record);
+    Long countTotal(MultipleChoiceQuestionDTO record);
 
     int updateByPrimaryKeySelective(MultipleChoiceQuestionDTO record);
 

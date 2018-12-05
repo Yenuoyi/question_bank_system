@@ -19,7 +19,7 @@ public interface ShortAnswerQuestionDTOMapper {
 
     List<ShortAnswerQuestionDTO> selectList(@Param("record") ShortAnswerQuestionDTO record, @Param("pager") Pager pager);
 
-    Integer countTotal(ShortAnswerQuestionDTO record);
+    Long countTotal(ShortAnswerQuestionDTO record);
 
     int updateByPrimaryKeySelective(ShortAnswerQuestionDTO record);
 

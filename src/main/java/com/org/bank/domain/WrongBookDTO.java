@@ -4,6 +4,9 @@ import com.org.bank.common.Pager;
 
 import java.io.Serializable;
 
+/**
+ * 错题本DTO
+ */
 public class WrongBookDTO implements Serializable {
     /**  */
     private Integer id;
@@ -24,7 +27,7 @@ public class WrongBookDTO implements Serializable {
     private String answer;
 
     /** 1：单选题，2：多选题，3：判断题，4：填空题，5：简单题，6：直接组卷 */
-    private Integer type;
+    private Integer questionType;
 
     /** 问题id */
     private Integer questionId;
@@ -81,12 +84,12 @@ public class WrongBookDTO implements Serializable {
         this.answer = answer == null ? null : answer.trim();
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getQuestionType() {
+        return questionType;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setQuestionType(Integer questionType) {
+        this.questionType = questionType;
     }
 
     public Integer getQuestionId() {

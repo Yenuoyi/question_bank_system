@@ -10,22 +10,67 @@
   <sql id="Base_Column_List" >
     id, class_name, teacher_name, teacher_id
   </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.className and record.className != ''">
+        and class_name = #{record.className}
+      </if>
+      <if test="record.teacherName and record.teacherName != ''">
+        and teacher_name = #{record.teacherName}
+      </if>
+      <if test="record.teacherId and record.teacherId != ''">
+        and teacher_id = #{record.teacherId}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from class
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from class
+    <include refid="where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="long">
+    select
+    count(1)
+    from class
+    <include refid="where_fragement"/>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from class
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.org.bank.domain.ClassDTO" >
     insert into class (id, class_name, teacher_name, 
       teacher_id)
     values (#{id,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, 
       #{teacherId,jdbcType=INTEGER})
   </insert>
+
   <insert id="insertSelective" parameterType="com.org.bank.domain.ClassDTO" >
     insert into class
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -57,6 +102,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.ClassDTO" >
     update class
     <set >
@@ -72,6 +118,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.ClassDTO" >
     update class
     set class_name = #{className,jdbcType=VARCHAR},

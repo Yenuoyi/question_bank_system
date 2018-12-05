@@ -13,12 +13,64 @@
   <sql id="Base_Column_List" >
     id, answerer_name, answerer_id, answerer_type, grade, examination_paper_type, examination_paper_id
   </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.answererName and record.answererName != ''">
+        and answerer_name = #{record.answererName}
+      </if>
+      <if test="record.answererId and record.answererId != ''">
+        and answerer_id = #{record.answererId}
+      </if>
+      <if test="record.answererType and record.answererType != ''">
+        and answerer_type = #{record.answererType}
+      </if>
+      <if test="record.grade and record.grade != ''">
+        and grade = #{record.grade}
+      </if>
+      <if test="record.examinationPaperType and record.examinationPaperType != ''">
+        and examination_paper_type = #{record.examinationPaperType}
+      </if>
+      <if test="record.examinationPaperId and record.examinationPaperId != ''">
+        and examination_paper_id = #{record.examinationPaperId}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from grade_sheet
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from grade_sheet
+    <include refid="where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="Long">
+    select
+    count(1)
+    from grade_sheet
+    <include refid="where_fragement"/>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from grade_sheet
     where id = #{id,jdbcType=INTEGER}

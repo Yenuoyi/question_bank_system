@@ -7,13 +7,13 @@ import com.org.bank.common.Pager;
 import com.org.bank.domain.DoubtDTO;
 
 public interface DoubtService {
-    ExecuteResult<Integer> deleteByPrimaryKey(Integer id);
+    ExecuteResult<Integer> deleteByPrimaryKey(DoubtDTO record);
 
     ExecuteResult<Integer> insert(DoubtDTO record);
 
     ExecuteResult<Integer> insertSelective(DoubtDTO record);
 
-    ExecuteResult<DoubtDTO> selectByPrimaryKey(Integer id);
+    ExecuteResult<DoubtDTO> selectByPrimaryKey(DoubtDTO record);
 
     ExecuteResult<DataUtil<DoubtDTO>> selectList(DoubtDTO record, Pager pager);
 

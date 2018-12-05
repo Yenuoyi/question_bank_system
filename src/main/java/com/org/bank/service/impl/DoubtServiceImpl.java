@@ -3,31 +3,28 @@ package com.org.bank.service.impl;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
-import com.org.bank.dao.AdminInfoDTOMapper;
-import com.org.bank.domain.AdminInfoDTO;
-import com.org.bank.domain.ClassDTO;
-import com.org.bank.service.AdminInfoService;
+import com.org.bank.dao.DoubtDTOMapper;
+import com.org.bank.domain.DoubtDTO;
+import com.org.bank.service.DoubtService;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service("adminInfoService")
-public class AdminInfoServiceImpl implements AdminInfoService {
+@Service("doubtService")
+public class DoubtServiceImpl implements DoubtService {
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
-    private AdminInfoDTOMapper adminInfoDTOMapper;
+    private DoubtDTOMapper doubtDTOMapper;
     @Override
-    public ExecuteResult<Integer> deleteByPrimaryKey(AdminInfoDTO record) {
+    public ExecuteResult<Integer> deleteByPrimaryKey(DoubtDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
-            if(StringUtils.isEmpty(record.getAdminId())){
+            if(StringUtils.isEmpty(record.getId())){
                 throw new RuntimeException("参数错误：ID非空");
             }
-            Integer result = adminInfoDTOMapper.deleteByPrimaryKey(record.getAdminId());
+            Integer result = doubtDTOMapper.deleteByPrimaryKey(record.getId());
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
@@ -39,68 +36,69 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    public ExecuteResult<Integer> insert(AdminInfoDTO record) {
+    public ExecuteResult<Integer> insert(DoubtDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
-        try {
-            if(StringUtils.isEmpty(record)){
-                throw new RuntimeException("参数错误：ID非空");
-            }
-            Integer result = adminInfoDTOMapper.insert(record);
-            executeResult.setResult(result);
-            executeResult.setResultMessage("成功！");
-        }catch (Exception e){
-            executeResult.setResultMessage("异常错误！");
-            executeResult.getErrorMessages().add(e.getMessage());
-            logger.error(e.getMessage());
-        }
-        return executeResult;
-    }
-
-    @Override
-    public ExecuteResult<Integer> insertSelective(AdminInfoDTO record) {
-        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
-        try {
-            if(StringUtils.isEmpty(record)){
-                throw new RuntimeException("参数错误：ID非空");
-            }
-            Integer result = adminInfoDTOMapper.insertSelective(record);
-            executeResult.setResult(result);
-            executeResult.setResultMessage("成功！");
-        }catch (Exception e){
-            executeResult.setResultMessage("异常错误！");
-            executeResult.getErrorMessages().add(e.getMessage());
-            logger.error(e.getMessage());
-        }
-        return executeResult;    }
-
-    @Override
-    public ExecuteResult<AdminInfoDTO> selectByPrimaryKey(AdminInfoDTO record) {
-        ExecuteResult<AdminInfoDTO> executeResult = new ExecuteResult<AdminInfoDTO>();
-        try {
-            if(StringUtils.isEmpty(record.getAdminId())){
-                throw new RuntimeException("参数错误：ID非空");
-            }
-            AdminInfoDTO result = adminInfoDTOMapper.selectByPrimaryKey(record.getAdminId());
-            executeResult.setResult(result);
-            executeResult.setResultMessage("成功！");
-        }catch (Exception e){
-            executeResult.setResultMessage("异常错误！");
-            executeResult.getErrorMessages().add(e.getMessage());
-            logger.error(e.getMessage());
-        }
-        return executeResult;
-    }
-
-    @Override
-    public ExecuteResult<DataUtil<AdminInfoDTO>> selectList(AdminInfoDTO record, Pager pager) {
-        ExecuteResult<DataUtil<AdminInfoDTO>> executeResult = new ExecuteResult<DataUtil<AdminInfoDTO>>();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            List<AdminInfoDTO> result = adminInfoDTOMapper.selectList(record,pager);
-            Integer total = adminInfoDTOMapper.countTotal(record).intValue();
-            DataUtil<AdminInfoDTO> dtoDataUtil = new DataUtil<AdminInfoDTO>();
+            Integer result = doubtDTOMapper.insert(record);
+            executeResult.setResult(result);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<Integer> insertSelective(DoubtDTO record) {
+        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
+        try {
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            Integer result = doubtDTOMapper.insertSelective(record);
+            executeResult.setResult(result);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DoubtDTO> selectByPrimaryKey(DoubtDTO record) {
+        ExecuteResult<DoubtDTO> executeResult = new ExecuteResult<DoubtDTO>();
+        try {
+            if(StringUtils.isEmpty(record.getId())){
+                throw new RuntimeException("参数错误：ID非空");
+            }
+            DoubtDTO result = doubtDTOMapper.selectByPrimaryKey(record.getId());
+            executeResult.setResult(result);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<DoubtDTO>> selectList(DoubtDTO record, Pager pager) {
+        ExecuteResult<DataUtil<DoubtDTO>> executeResult = new ExecuteResult<DataUtil<DoubtDTO>>();
+        try {
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<DoubtDTO> result = doubtDTOMapper.selectList(record,pager);
+            Integer total = doubtDTOMapper.countTotal(record).intValue();
+            DataUtil<DoubtDTO> dtoDataUtil = new DataUtil<DoubtDTO>();
             dtoDataUtil.setList(result);
             dtoDataUtil.getPager().setTotalCount(total);
             executeResult.setResult(dtoDataUtil);
@@ -114,13 +112,13 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    public ExecuteResult<Integer> updateByPrimaryKeySelective(AdminInfoDTO record) {
+    public ExecuteResult<Integer> updateByPrimaryKeySelective(DoubtDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
-            if(StringUtils.isEmpty(record.getAdminId())){
-                throw new RuntimeException("参数错误：ID非空");
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：对象非空");
             }
-            Integer result = adminInfoDTOMapper.updateByPrimaryKeySelective(record);
+            Integer result = doubtDTOMapper.updateByPrimaryKeySelective(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
@@ -132,13 +130,13 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    public ExecuteResult<Integer> updateByPrimaryKey(AdminInfoDTO record) {
+    public ExecuteResult<Integer> updateByPrimaryKey(DoubtDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
-            if(StringUtils.isEmpty(record.getAdminId())){
-                throw new RuntimeException("参数错误：ID非空");
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：对象非空");
             }
-            Integer result = adminInfoDTOMapper.updateByPrimaryKey(record);
+            Integer result = doubtDTOMapper.updateByPrimaryKey(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){

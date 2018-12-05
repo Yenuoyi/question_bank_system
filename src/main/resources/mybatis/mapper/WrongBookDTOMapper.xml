@@ -12,14 +12,69 @@
     <result column="question_id" property="questionId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_name, user_id, user_type, question, answer, type, question_id
+    id, user_name, user_id, user_type, question, answer, question_type, question_id
   </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.userName and record.userName != ''">
+        and user_name = #{record.userName}
+      </if>
+      <if test="record.userId and record.userId != ''">
+        and user_id = #{record.userId}
+      </if>
+      <if test="record.userType and record.userType != ''">
+        and user_type = #{record.userType}
+      </if>
+      <if test="record.question and record.question != ''">
+        and question = #{record.question}
+      </if>
+      <if test="record.answer and record.answer != ''">
+        and answer = #{record.answer}
+      </if>
+      <if test="record.questionType and record.questionType != ''">
+        and question_type = #{record.questionType}
+      </if>
+      <if test="record.questionId and record.questionId != ''">
+        and question_id = #{record.questionId}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from wrong_book
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wrong_book
+    <include refid="where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="Long">
+    select
+    count(1)
+    from wrong_book
+    <include refid="where_fragement"/>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from wrong_book
     where id = #{id,jdbcType=INTEGER}
@@ -27,10 +82,10 @@
   <insert id="insert" parameterType="com.org.bank.domain.WrongBookDTO" >
     insert into wrong_book (id, user_name, user_id, 
       user_type, question, answer, 
-      type, question_id)
+      question_type, question_id)
     values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
       #{userType,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER})
+      #{questionType,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.WrongBookDTO" >
     insert into wrong_book
@@ -53,8 +108,8 @@
       <if test="answer != null" >
         answer,
       </if>
-      <if test="type != null" >
-        type,
+      <if test="questionType != null" >
+        question_type,
       </if>
       <if test="questionId != null" >
         question_id,
@@ -79,8 +134,8 @@
       <if test="answer != null" >
         #{answer,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
+      <if test="questionType != null" >
+        #{questionType,jdbcType=INTEGER},
       </if>
       <if test="questionId != null" >
         #{questionId,jdbcType=INTEGER},
@@ -105,8 +160,8 @@
       <if test="answer != null" >
         answer = #{answer,jdbcType=VARCHAR},
       </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
+      <if test="questionType != null" >
+        question_type = #{questionType,jdbcType=INTEGER},
       </if>
       <if test="questionId != null" >
         question_id = #{questionId,jdbcType=INTEGER},
@@ -121,7 +176,7 @@
       user_type = #{userType,jdbcType=VARCHAR},
       question = #{question,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
+      question_type = #{questionType,jdbcType=INTEGER},
       question_id = #{questionId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

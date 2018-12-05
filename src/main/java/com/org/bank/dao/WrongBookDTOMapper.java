@@ -20,7 +20,7 @@ public interface WrongBookDTOMapper {
 
     List<WrongBookDTO> selectList(@Param("record") WrongBookDTO record, @Param("pager") Pager pager);
 
-    Integer countTotal(WrongBookDTO record);
+    Long countTotal(WrongBookDTO record);
 
     int updateByPrimaryKeySelective(WrongBookDTO record);
 

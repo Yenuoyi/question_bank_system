@@ -19,7 +19,7 @@ public interface TrueFalseQuestionDTOMapper {
 
     List<TrueFalseQuestionDTO> selectList(@Param("record") TrueFalseQuestionDTO record, @Param("pager") Pager pager);
 
-    Integer countTotal(TrueFalseQuestionDTO record);
+    Long countTotal(TrueFalseQuestionDTO record);
 
     int updateByPrimaryKeySelective(TrueFalseQuestionDTO record);
 

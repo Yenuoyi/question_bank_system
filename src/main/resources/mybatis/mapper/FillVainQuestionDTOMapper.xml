@@ -11,12 +11,58 @@
   <sql id="Base_Column_List" >
     id, fill_vain_question, fill_vain_answer, examiner_id, examiner_type
   </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.fillVainQuestion and record.fillVainQuestion != ''">
+        and fill_vain_question = #{record.fillVainQuestion}
+      </if>
+      <if test="record.fillVainAnswer and record.fillVainAnswer != ''">
+        and fill_vain_answer = #{record.fillVainAnswer}
+      </if>
+      <if test="record.examinerId and record.examinerId != ''">
+        and examiner_id = #{record.examinerId}
+      </if>
+      <if test="record.examinerType and record.examinerType != ''">
+        and examiner_type = #{record.examinerType}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from fill_vain_question
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from fill_vain_question
+    <include refid="where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="Long">
+    select
+    count(1)
+    from fill_vain_question
+    <include refid="where_fragement"/>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from fill_vain_question
     where id = #{id,jdbcType=INTEGER}

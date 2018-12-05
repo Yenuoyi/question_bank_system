@@ -13,16 +13,69 @@
   <sql id="Base_Column_List" >
     id, questioner_name, questioner_id, respondent_name, respondent_id, question, answer
   </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.questionerName and record.questionerName != ''">
+        and questioner_name = #{record.questionerName}
+      </if>
+      <if test="record.questionerId and record.questionerId != ''">
+        and questioner_id = #{record.questionerId}
+      </if>
+      <if test="record.respondentName and record.respondentName != ''">
+        and respondent_name = #{record.respondentName}
+      </if>
+      <if test="record.respondentId and record.respondentId != ''">
+        and respondent_id = #{record.respondentId}
+      </if>
+      <if test="record.question and record.question != ''">
+        and question = #{record.question}
+      </if>
+      <if test="record.answer and record.answer != ''">
+        and answer = #{record.answer}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from doubt
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from doubt
+    <include refid="where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="Long">
+    select
+    count(1)
+    from doubt
+    <include refid="where_fragement"/>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from doubt
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.org.bank.domain.DoubtDTO" >
     insert into doubt (id, questioner_name, questioner_id, 
       respondent_name, respondent_id, question, 
@@ -31,6 +84,7 @@
       #{respondentName,jdbcType=VARCHAR}, #{respondentId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, 
       #{answer,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="com.org.bank.domain.DoubtDTO" >
     insert into doubt
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -80,6 +134,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.DoubtDTO" >
     update doubt
     <set >
@@ -104,6 +159,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.DoubtDTO" >
     update doubt
     set questioner_name = #{questionerName,jdbcType=VARCHAR},

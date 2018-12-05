@@ -99,7 +99,7 @@ public class ClassServiceImpl implements ClassService {
                 throw new RuntimeException("参数错误：ID非空");
             }
             List<ClassDTO> result = classDTOMapper.selectList(record,pager);
-            Integer total = classDTOMapper.countTotal(record);
+            Integer total = classDTOMapper.countTotal(record).intValue();
             DataUtil<ClassDTO> dtoDataUtil = new DataUtil<ClassDTO>();
             dtoDataUtil.setList(result);
             dtoDataUtil.getPager().setTotalCount(total);

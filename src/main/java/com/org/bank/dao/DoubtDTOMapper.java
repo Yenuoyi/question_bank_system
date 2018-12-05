@@ -19,7 +19,7 @@ public interface DoubtDTOMapper {
 
     List<DoubtDTO> selectList(@Param("record") DoubtDTO record, @Param("pager") Pager pager);
 
-    Integer countTotal(DoubtDTO record);
+    Long countTotal(DoubtDTO record);
 
     int updateByPrimaryKeySelective(DoubtDTO record);
 

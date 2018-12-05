@@ -15,7 +15,7 @@ public interface TrueFalseQuestionService {
 
     ExecuteResult<TrueFalseQuestionDTO> selectByPrimaryKey(TrueFalseQuestionDTO record);
 
-    ExecuteResult<DataUtil<TrueFalseQuestionService>> selectList(TrueFalseQuestionDTO record, Pager pager);
+    ExecuteResult<DataUtil<TrueFalseQuestionDTO>> selectList(TrueFalseQuestionDTO record, Pager pager);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(TrueFalseQuestionDTO record);
 

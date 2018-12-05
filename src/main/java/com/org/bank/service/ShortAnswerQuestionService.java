@@ -15,7 +15,7 @@ public interface ShortAnswerQuestionService {
 
     ExecuteResult<ShortAnswerQuestionDTO> selectByPrimaryKey(ShortAnswerQuestionDTO record);
 
-    ExecuteResult<DataUtil<ShortAnswerQuestionService>> selectList(ShortAnswerQuestionDTO record, Pager pager);
+    ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> selectList(ShortAnswerQuestionDTO record, Pager pager);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(ShortAnswerQuestionDTO record);
 

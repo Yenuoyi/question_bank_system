@@ -10,11 +10,53 @@
   <sql id="Base_Column_List" >
     id, original_examination_paper_id, examination_paper_question, examination_paper_answer
   </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.originalExaminationPaperid and record.originalExaminationPaperid != ''">
+        and original_examination_paper_id = #{record.originalExaminationPaperid}
+      </if>
+      <if test="record.examinationPaperQuestion and record.examinationPaperQuestion != ''">
+        and examination_paper_question = #{record.examinationPaperQuestion}
+      </if>
+      <if test="record.examinationPaperAnswer and record.examinationPaperAnswer != ''">
+        and examination_paper_answer = #{record.examinationPaperAnswer}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from examination_paper_question
     where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from examination_paper_question
+    <include refid="where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="Long">
+    select
+    count(1)
+    from examination_paper_question
+    <include refid="where_fragement"/>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from examination_paper_question

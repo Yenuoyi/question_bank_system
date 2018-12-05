@@ -12,16 +12,66 @@
   <sql id="Base_Column_List" >
     id, short_answer_question, short_answer_answer, examiner_id, examiner_code, examiner_type
   </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.shortAnswerquestion and record.shortAnswerquestion != ''">
+        and short_answer_question = #{record.shortAnswerquestion}
+      </if>
+      <if test="record.shortAnswerAnswer and record.shortAnswerAnswer != ''">
+        and short_answer_answer = #{record.shortAnswerAnswer}
+      </if>
+      <if test="record.examinerId and record.examinerId != ''">
+        and examiner_id = #{record.examinerId}
+      </if>
+      <if test="record.examinerType and record.examinerType != ''">
+        and examiner_code = #{record.examinerCode}
+      </if>
+      <if test="record.examinerType and record.examinerType != ''">
+        and examiner_type = #{record.examinerType}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from short_answer_question
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from short_answer_question
+    <include refid="where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="Long">
+    select
+    count(1)
+    from short_answer_question
+    <include refid="where_fragement"/>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from short_answer_question
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.org.bank.domain.ShortAnswerQuestionDTO" >
     insert into short_answer_question (id, short_answer_question, short_answer_answer, 
       examiner_id, examiner_code, examiner_type
