@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/studentInfo")
+@RequestMapping("/student")
 public class StudentInfoController {
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource

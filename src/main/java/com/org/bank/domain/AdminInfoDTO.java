@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class AdminInfoDTO implements Serializable {
     /** 管理员ID */
-    private Integer adminId;
+    private Integer id;
 
     /** 管理员姓名 */
     private String adminName;
@@ -24,12 +24,12 @@ public class AdminInfoDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getAdminId() {
-        return adminId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getAdminName() {

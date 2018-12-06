@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/adminInfo")
+@RequestMapping("/admin")
 public class AdminInfoController {
     @Autowired
     private AdminInfoService adminInfoService;

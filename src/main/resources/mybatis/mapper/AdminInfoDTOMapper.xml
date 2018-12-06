@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.org.bank.dao.AdminInfoDTOMapper" >
   <resultMap id="BaseResultMap" type="com.org.bank.domain.AdminInfoDTO" >
-    <id column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
     <result column="admin_eamil" property="adminEamil" jdbcType="VARCHAR" />
     <result column="admin_password" property="adminPassword" jdbcType="VARCHAR" />
@@ -10,23 +10,23 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    admin_id, admin_name, admin_eamil, admin_password, admin_iphone
+    id, admin_name, admin_eamil, admin_password, admin_iphone
   </sql>
 
   <sql id="where_fragement">
     where 1 = 1
     <if test="record != null">
-      <if test="record.adminId and record.adminId != ''">
-        and admin_id = #{record.adminId}
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
       </if>
       <if test="record.adminName and record.adminName != ''">
-        and admin_name = #{record.adminId}
+        and admin_name = #{record.id}
       </if>
       <if test="record.adminEmail and record.adminEmail != ''">
-        and admin_eamil = #{record.adminId}
+        and admin_eamil = #{record.id}
       </if>
       <if test="record.adminIphone and record.adminIphone != ''">
-        and admin_iphone = #{record.adminId}
+        and admin_iphone = #{record.id}
       </if>
     </if>
   </sql>
@@ -40,7 +40,7 @@
     select 
     <include refid="Base_Column_List" />
     from admin_info
-    where admin_id = #{adminId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
 
   <select id="selectList" resultMap="BaseResultMap">
@@ -48,7 +48,7 @@
     <include refid="Base_Column_List" />
     from admin_info
     <include refid="where_fragement"/>
-    ORDER BY admin_id desc
+    ORDER BY id desc
     <if test="pager != null" >
       <include refid="pagination_tail" />
     </if>
@@ -63,20 +63,20 @@
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from admin_info
-    where admin_id = #{adminId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.AdminInfoDTO" >
-    insert into admin_info (admin_id, admin_name, admin_eamil, 
+    insert into admin_info (id, admin_name, admin_eamil, 
       admin_password, admin_iphone)
-    values (#{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{adminEamil,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{adminEamil,jdbcType=VARCHAR}, 
       #{adminPassword,jdbcType=VARCHAR}, #{adminIphone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.AdminInfoDTO" >
     insert into admin_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="adminId != null" >
-        admin_id,
+      <if test="id != null" >
+        id,
       </if>
       <if test="adminName != null" >
         admin_name,
@@ -92,8 +92,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="adminId != null" >
-        #{adminId,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="adminName != null" >
         #{adminName,jdbcType=VARCHAR},
@@ -125,7 +125,7 @@
         admin_iphone = #{adminIphone,jdbcType=VARCHAR},
       </if>
     </set>
-    where admin_id = #{adminId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.AdminInfoDTO" >
     update admin_info
@@ -133,6 +133,6 @@
       admin_eamil = #{adminEamil,jdbcType=VARCHAR},
       admin_password = #{adminPassword,jdbcType=VARCHAR},
       admin_iphone = #{adminIphone,jdbcType=VARCHAR}
-    where admin_id = #{adminId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

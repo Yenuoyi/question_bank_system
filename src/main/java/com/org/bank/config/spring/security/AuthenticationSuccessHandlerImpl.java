@@ -23,6 +23,6 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         logger.info("Setting session!");
-        httpServletResponse.sendRedirect("/hello");
+//        httpServletResponse.sendRedirect("/hello");
     }
 }

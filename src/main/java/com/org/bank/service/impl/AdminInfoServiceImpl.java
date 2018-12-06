@@ -25,10 +25,10 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     public ExecuteResult<Integer> deleteByPrimaryKey(AdminInfoDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
-            if(StringUtils.isEmpty(record.getAdminId())){
+            if(StringUtils.isEmpty(record.getId())){
                 throw new RuntimeException("参数错误：ID非空");
             }
-            Integer result = adminInfoDTOMapper.deleteByPrimaryKey(record.getAdminId());
+            Integer result = adminInfoDTOMapper.deleteByPrimaryKey(record.getId());
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
@@ -80,10 +80,10 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     public ExecuteResult<AdminInfoDTO> selectByPrimaryKey(AdminInfoDTO record) {
         ExecuteResult<AdminInfoDTO> executeResult = new ExecuteResult<AdminInfoDTO>();
         try {
-            if(StringUtils.isEmpty(record.getAdminId())){
+            if(StringUtils.isEmpty(record.getId())){
                 throw new RuntimeException("参数错误：ID非空");
             }
-            AdminInfoDTO result = adminInfoDTOMapper.selectByPrimaryKey(record.getAdminId());
+            AdminInfoDTO result = adminInfoDTOMapper.selectByPrimaryKey(record.getId());
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
@@ -120,7 +120,7 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     public ExecuteResult<Integer> updateByPrimaryKeySelective(AdminInfoDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
-            if(StringUtils.isEmpty(record.getAdminId())){
+            if(StringUtils.isEmpty(record.getId())){
                 throw new RuntimeException("参数错误：ID非空");
             }
             Integer result = adminInfoDTOMapper.updateByPrimaryKeySelective(record);
@@ -138,7 +138,7 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     public ExecuteResult<Integer> updateByPrimaryKey(AdminInfoDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
-            if(StringUtils.isEmpty(record.getAdminId())){
+            if(StringUtils.isEmpty(record.getId())){
                 throw new RuntimeException("参数错误：ID非空");
             }
             Integer result = adminInfoDTOMapper.updateByPrimaryKey(record);

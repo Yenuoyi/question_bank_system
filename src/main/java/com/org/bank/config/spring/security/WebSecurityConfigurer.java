@@ -27,20 +27,26 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                .loginPage("/login.html")                  //自定义登录页面
-                .loginProcessingUrl("/login")              //自定义成功登录页面
-                .defaultSuccessUrl("success.html")         //自定义成功页面
+                .loginProcessingUrl("/api/login")                  //登录请求拦截的url,也就是form表单提交时指定的action
+//                .loginProcessingUrl("/api/teacherLogin")
+//                .loginProcessingUrl("/api/adminLogin")
                 .successHandler(authenticationSuccessHandler)  //自定义成功处理器
-                .failureUrl("failure.html")         //自定义失败页面
                 .and().authorizeRequests()                 //授权配置
-                .antMatchers("/login.html").permitAll() //自定义登录页面不授权
+                .antMatchers("/api/login.html").permitAll() //自定义登录页面不授权
+                .antMatchers("/teacher/login.html").permitAll() //自定义登录页面不授权
+                .antMatchers("/admin/login.html").permitAll() //自定义登录页面不授权
+                .antMatchers("/teacher/**").hasRole("ADMIN")
+                .antMatchers("/teacher/**").hasRole("TEACHER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()     // 所有请求
                 .authenticated(); // 所有请求都进行权限验证
         http.httpBasic() // 配置弹出框登录
                 .and().authorizeRequests() // 请求权限设置
                 .anyRequest()
                 .authenticated();
-        http.logout().logoutSuccessUrl("/login.html")
+        http.logout()
+                .logoutUrl("/api/logout")
+                .logoutSuccessUrl("/login.html")
                 .invalidateHttpSession(true);
         http.authenticationProvider(authenticationProvider());
     }
