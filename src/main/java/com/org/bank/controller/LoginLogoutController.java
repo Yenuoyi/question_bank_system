@@ -6,7 +6,7 @@ import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
 import com.org.bank.common.encrypt.Md5Util;
 import com.org.bank.domain.AdminInfoDTO;
-import com.org.bank.domain.LoginDTO;
+import com.org.bank.domain.AuthenticationBean;
 import com.org.bank.domain.StudentInfoDTO;
 import com.org.bank.domain.TeacherInfoDTO;
 import com.org.bank.service.AdminInfoService;
@@ -28,7 +28,7 @@ public class LoginLogoutController {
     @Resource
     private StudentInfoService studentInfoService;
     @RequestMapping("/login")
-    public Wrapper<?> login(@RequestBody LoginDTO record){
+    public Wrapper<?> login(@RequestBody AuthenticationBean record){
         Wrapper wrapper = null;
         switch (record.getRole()){
             case Role.ADMIN :
@@ -50,7 +50,7 @@ public class LoginLogoutController {
         return wrapper;
     }
 
-    private Wrapper adminCheck(LoginDTO record, AdminInfoDTO adminInfoDTO){
+    private Wrapper adminCheck(AuthenticationBean record, AdminInfoDTO adminInfoDTO){
         ExecuteResult<AdminInfoDTO> executeResult = adminInfoService.selectByPrimaryKey(adminInfoDTO);
         if(!executeResult.isSuccess()){
             return WrapMapper.error().result(executeResult);
@@ -66,7 +66,7 @@ public class LoginLogoutController {
         return WrapMapper.ok().result(executeResult);
     }
 
-    private Wrapper teacherCheck(LoginDTO record, TeacherInfoDTO teacherInfoDTO){
+    private Wrapper teacherCheck(AuthenticationBean record, TeacherInfoDTO teacherInfoDTO){
         ExecuteResult<TeacherInfoDTO> executeResult = teacherInfoService.selectByPrimaryKey(teacherInfoDTO);
         if(!executeResult.isSuccess()){
             return WrapMapper.error().result(executeResult);
@@ -82,7 +82,7 @@ public class LoginLogoutController {
         return WrapMapper.ok().result(executeResult);
     }
 
-    private Wrapper studentCheck(LoginDTO record, StudentInfoDTO studentInfoDTO){
+    private Wrapper studentCheck(AuthenticationBean record, StudentInfoDTO studentInfoDTO){
         ExecuteResult<StudentInfoDTO> executeResult = studentInfoService.selectByPrimaryKey(studentInfoDTO);
         if(!executeResult.isSuccess()){
             return WrapMapper.error().result(executeResult);

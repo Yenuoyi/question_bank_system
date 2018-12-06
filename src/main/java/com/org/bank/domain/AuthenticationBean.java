@@ -1,6 +1,6 @@
 package com.org.bank.domain;
 
-public class LoginDTO {
+public class AuthenticationBean {
     private String username;
     private String password;
     private String role;

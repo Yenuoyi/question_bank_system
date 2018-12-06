@@ -6,19 +6,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeEditor;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -34,6 +35,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().and()
                 .authorizeRequests()                         //授权配置
                 .antMatchers("/login").permitAll()
                 .antMatchers("/front/*.html").permitAll()
@@ -45,20 +47,18 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/teacher/**").hasRole("TEACHER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()     // 所有请求
-                .authenticated() // 所有请求都进行权限
-                .and()
+                .authenticated(); // 所有请求都进行权限
 
+        http
                 .formLogin()
                 .loginPage("/front/login.html")
                 .loginProcessingUrl("/login")//处理登录post请求接口
-                .successHandler(authenticationSuccessHandler)      //自定义成功处理器
                 .successForwardUrl("/front/index.html")
-                .failureHandler(authenticationFailureHandler)
                 .failureForwardUrl("/front/failure.html")
-                .usernameParameter("username")
-                .passwordParameter("password")
                 .and()
+                .csrf().disable();
 
+        http
                 .logout()
                 .logoutUrl("/public/logout") //自定义登出api，无需自己实现
                 .logoutSuccessUrl("/login.html")
@@ -67,7 +67,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .authenticationProvider(this.authenticationProvider());
-
+        http
+                .addFilterAt(this.customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
@@ -78,6 +79,19 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         authProvider.setUserDetailsService(userDetailsService);
         return authProvider;
     }
+    //注册自定义的UsernamePasswordAuthenticationFilter
+    @Bean
+    public CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
+        CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
+        filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+        filter.setAuthenticationFailureHandler(authenticationFailureHandler);
+        filter.setFilterProcessesUrl("/login/self");
+
+        //这句很关键，重用WebSecurityConfigurerAdapter配置的AuthenticationManager，不然要自己组装AuthenticationManager
+        filter.setAuthenticationManager(authenticationManagerBean());
+        return filter;
+    }
+
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(){
         MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();

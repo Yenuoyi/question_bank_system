@@ -2,11 +2,8 @@ package com.org.bank.config.spring.security;
 
 import com.org.bank.common.encrypt.Md5Util;
 import org.apache.log4j.Logger;
-import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.security.MessageDigest;
 
 /**
  * 功能：密码认证处理器，继承MessageDigestPasswordEncoder类，重写密码认证方法。

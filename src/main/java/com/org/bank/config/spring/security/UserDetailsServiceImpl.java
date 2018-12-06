@@ -1,5 +1,6 @@
 package com.org.bank.config.spring.security;
 
+import com.org.bank.common.Role;
 import com.org.bank.dao.AdminInfoDTOMapper;
 import com.org.bank.dao.StudentInfoDTOMapper;
 import com.org.bank.dao.TeacherInfoDTOMapper;
@@ -7,7 +8,6 @@ import com.org.bank.domain.AdminInfoDTO;
 import com.org.bank.domain.StudentInfoDTO;
 import com.org.bank.domain.TeacherInfoDTO;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -40,10 +40,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         logger.info("开始处理用户信息！");
         //GrantedAuthority是security提供的权限类，
         List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-        Integer userId =Integer.parseInt(username.split("_")[0]);
+        String[] roleUserId = username.split("_");
+        String role = roleUserId[0];
+        Integer userId =Integer.parseInt(roleUserId[1]);
         String password = null;
         Object user = null;
-        if(username.contains("ADMIN_")){
+        if(role.equals(Role.ADMIN)){
             AdminInfoDTO record = adminInfoDTOMapper.selectByPrimaryKey(userId);
             //获取角色，放到list里面
             this.getAdminRoles(record,auths);
@@ -51,14 +53,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             user = record;
             logger.info("数据库密码："+record.getAdminPassword());
         }
-        if(username.contains("TEACHER_")){
+        if(role.equals(Role.TEACHER)){
             TeacherInfoDTO record = teacherInfoDTOMapper.selectByPrimaryKey(userId);
             this.getTeacherRoles(record,auths);
             password = record.getTeacherPassword();
             user = record;
             logger.info("数据库密码："+record.getTeacherPassword());
         }
-        if(username.contains("STUDENT_")){
+        if(role.equals(Role.STUDENT)){
             StudentInfoDTO record = studentInfoDTOMapper.selectByPrimaryKey(userId);
             this.getStudentRoles(record,auths);
             password = record.getStudentPassword();
