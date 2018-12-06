@@ -37,9 +37,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private static Logger logger = Logger.getLogger(UserDetailsServiceImpl.class);
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.info("开始处理用户信息！");
         //GrantedAuthority是security提供的权限类，
         List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
-        Integer userId =Integer.parseInt(username.split("_")[1]);
+        Integer userId =Integer.parseInt(username.split("_")[0]);
         String password = null;
         Object user = null;
         if(username.contains("ADMIN_")){
