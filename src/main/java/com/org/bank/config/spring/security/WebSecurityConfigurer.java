@@ -57,6 +57,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .failureForwardUrl("/front/failure.html")
                 .and()
                 .csrf().disable();
+        http.httpBasic();                                //必不可少，否则自定义UsernamePasswordAuthenticationFilter无效
 
         http
                 .logout()
@@ -65,7 +66,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .invalidateHttpSession(true)
                 .and()
-
                 .authenticationProvider(this.authenticationProvider());
         http
                 .addFilterAt(this.customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -85,7 +85,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
         filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         filter.setAuthenticationFailureHandler(authenticationFailureHandler);
-        filter.setFilterProcessesUrl("/login/self");
+//        filter.setFilterProcessesUrl("/login/self");
 
         //这句很关键，重用WebSecurityConfigurerAdapter配置的AuthenticationManager，不然要自己组装AuthenticationManager
         filter.setAuthenticationManager(authenticationManagerBean());
