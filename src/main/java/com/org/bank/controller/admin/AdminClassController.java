@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 班级控制器
+ */
 @RestController
-@RequestMapping("/class")
-public class ClassController {
+@RequestMapping("/admin/class")
+public class AdminClassController {
     @Autowired
     private ClassService classService;
     @RequestMapping("/deleteByPrimaryKey")
@@ -25,7 +28,7 @@ public class ClassController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insert")
+    @RequestMapping("/insert")
     public Wrapper<?> insert(@RequestBody ClassDTO record){
         ExecuteResult<Integer> executeResult = classService.insert(record);
         if(executeResult.isSuccess()){
@@ -34,7 +37,7 @@ public class ClassController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insertSelective")
+    @RequestMapping("/insertSelective")
     public Wrapper<?> insertSelective(@RequestBody ClassDTO record){
         ExecuteResult<Integer> executeResult = classService.insertSelective(record);
         if(executeResult.isSuccess()){

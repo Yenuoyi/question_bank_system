@@ -13,6 +13,8 @@ public interface WrongBookDTOMapper {
 
     int insert(WrongBookDTO record);
 
+    int insertList(@Param("records") List<WrongBookDTO> records);
+
     int insertSelective(WrongBookDTO record);
 
     WrongBookDTO selectByPrimaryKey(Integer id);

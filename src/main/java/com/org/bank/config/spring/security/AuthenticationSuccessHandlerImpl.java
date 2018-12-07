@@ -29,6 +29,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         logger.info("Setting session!");
+        httpServletRequest.getUserPrincipal();
         httpServletResponse.setContentType("application/json;charset=utf-8");
         PrintWriter out = httpServletResponse.getWriter();
         String jsonString = JSONObject.toJSONString(WrapMapper.ok().result("登录成功！"));

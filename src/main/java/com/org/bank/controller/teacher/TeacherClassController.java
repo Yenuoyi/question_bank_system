@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 教师角色可访问的班级控制类
+ */
 @RestController
-@RequestMapping("/all/class")
-public class ClassController {
+@RequestMapping("/teacher/class")
+public class TeacherClassController {
     @Autowired
     private ClassService classService;
 

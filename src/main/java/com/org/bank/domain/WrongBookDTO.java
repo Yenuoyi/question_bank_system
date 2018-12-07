@@ -11,14 +11,11 @@ public class WrongBookDTO implements Serializable {
     /**  */
     private Integer id;
 
-    /** 用户姓名 */
-    private String userName;
-
     /** 用户id */
     private Integer userId;
 
     /** 1：管理员，2：教师，3：学生 */
-    private String userType;
+    private Integer userType;
 
     /** 问题 */
     private String question;
@@ -44,14 +41,6 @@ public class WrongBookDTO implements Serializable {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
-
     public Integer getUserId() {
         return userId;
     }
@@ -60,12 +49,12 @@ public class WrongBookDTO implements Serializable {
         this.userId = userId;
     }
 
-    public String getUserType() {
+    public Integer getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType == null ? null : userType.trim();
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
     public String getQuestion() {

@@ -3,8 +3,11 @@ package com.org.bank.service.impl;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.dao.SingleChoiceQuestionDTOMapper;
+import com.org.bank.dao.WrongBookDTOMapper;
 import com.org.bank.domain.SingleChoiceQuestionDTO;
+import com.org.bank.domain.WrongBookDTO;
 import com.org.bank.service.SingleChoiceQuestionService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,8 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
     private SingleChoiceQuestionDTOMapper singleChoiceQuestionDTOMapper;
+    @Resource
+    private WrongBookDTOMapper wrongBookDTOMapper;
     @Override
     public ExecuteResult<Integer> deleteByPrimaryKey(SingleChoiceQuestionDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
@@ -157,6 +162,8 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
     @Override
     public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercize(List<SingleChoiceQuestionDTO> record) {
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<SingleChoiceQuestionDTO>>();
+        int username = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        int roleType = UserSecurityContextHolder.getUserRoleType();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
@@ -169,6 +176,7 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
                 map.put(record.get(i).getId(),record.get(i));
             }
             List<SingleChoiceQuestionDTO> result = singleChoiceQuestionDTOMapper.selectByPrimaryKeyList(keys);
+            List<WrongBookDTO> wrongBookDTOS = new ArrayList<>();
             int resultSize = result.size();
             for(int j=0;j < resultSize;j++){
                 SingleChoiceQuestionDTO realSingleChoiceQuestion = result.get(j);
@@ -177,7 +185,18 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
                     testSingleChoiceQuestion.setTrueOrFalse(1);
                 }else{
                     testSingleChoiceQuestion.setTrueOrFalse(0);
+                    WrongBookDTO wrongBookDTO = new WrongBookDTO();
+                    wrongBookDTO.setQuestion(realSingleChoiceQuestion.getSingleChoiceQuestion());
+                    wrongBookDTO.setAnswer(realSingleChoiceQuestion.getSingleChoiceAnswer());
+                    wrongBookDTO.setId(username);
+                    wrongBookDTO.setUserType(roleType);
+                    wrongBookDTO.setQuestionId(realSingleChoiceQuestion.getId());
+                    wrongBookDTO.setQuestionType(3);
+                    wrongBookDTOS.add(wrongBookDTO);
                 }
+            }
+            if (wrongBookDTOS.size()!=0){
+                wrongBookDTOMapper.insertList(wrongBookDTOS);
             }
             DataUtil<SingleChoiceQuestionDTO> dtoDataUtil = new DataUtil<SingleChoiceQuestionDTO>();
             dtoDataUtil.setList(record);

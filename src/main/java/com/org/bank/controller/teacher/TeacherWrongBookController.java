@@ -4,21 +4,24 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.ShortAnswerQuestionDTO;
-import com.org.bank.service.ShortAnswerQuestionService;
+import com.org.bank.domain.WrongBookDTO;
+import com.org.bank.service.WrongBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 教师角色可访问的错题本控制类
+ */
 @RestController
-@RequestMapping("/teacher/shortAnswerQuestion")
-public class ShortAnswerQuestionController {
+@RequestMapping("/teacher/wrongBook")
+public class TeacherWrongBookController {
     @Autowired
-    private ShortAnswerQuestionService shortAnswerQuestionService;
+    private WrongBookService wrongBookService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +29,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.insert(record);
+    public Wrapper<?> insert(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +38,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +47,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<ShortAnswerQuestionDTO> executeResult = shortAnswerQuestionService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody WrongBookDTO record){
+        ExecuteResult<WrongBookDTO> executeResult = wrongBookService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +56,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody WrongBookDTO record){
+        ExecuteResult<DataUtil<WrongBookDTO>> executeResult = wrongBookService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +65,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +74,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

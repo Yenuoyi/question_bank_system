@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 管理员角色控制器
+ */
 @RestController
 @RequestMapping("/admin")
 public class AdminInfoController {
@@ -34,7 +37,7 @@ public class AdminInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insertSelective")
+    @RequestMapping("/insertSelective")
     public Wrapper<?> insertSelective(@RequestBody AdminInfoDTO record){
         ExecuteResult<Integer> executeResult = adminInfoService.insertSelective(record);
         if(executeResult.isSuccess()){

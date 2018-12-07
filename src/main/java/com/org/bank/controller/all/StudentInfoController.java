@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+/**
+ * 所有人可访问的学生控制类
+ */
 @RestController
 @RequestMapping("/all/student")
 public class StudentInfoController {

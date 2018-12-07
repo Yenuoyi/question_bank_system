@@ -3,10 +3,14 @@ package com.org.bank.service.impl;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.dao.TrueFalseQuestionDTOMapper;
+import com.org.bank.dao.WrongBookDTOMapper;
 import com.org.bank.domain.TrueFalseQuestionDTO;
 import com.org.bank.domain.TrueFalseQuestionDTO;
+import com.org.bank.domain.WrongBookDTO;
 import com.org.bank.service.TrueFalseQuestionService;
+import com.org.bank.service.WrongBookService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,6 +26,8 @@ public class TrueFalseQuestionServiceImpl implements TrueFalseQuestionService {
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
     private TrueFalseQuestionDTOMapper trueFalseQuestionDTOMapper;
+    @Resource
+    private WrongBookDTOMapper wrongBookDTOMapper;
     @Override
     public ExecuteResult<Integer> deleteByPrimaryKey(TrueFalseQuestionDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
@@ -159,6 +165,8 @@ public class TrueFalseQuestionServiceImpl implements TrueFalseQuestionService {
     @Override
     public ExecuteResult<DataUtil<TrueFalseQuestionDTO>> checkExercise(List<TrueFalseQuestionDTO> record) {
         ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = new ExecuteResult<DataUtil<TrueFalseQuestionDTO>>();
+        int username = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        int roleType = UserSecurityContextHolder.getUserRoleType();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
@@ -171,6 +179,7 @@ public class TrueFalseQuestionServiceImpl implements TrueFalseQuestionService {
                 map.put(record.get(i).getId(),record.get(i));
             }
             List<TrueFalseQuestionDTO> result = trueFalseQuestionDTOMapper.selectByPrimaryKeyList(keys);
+            List<WrongBookDTO> wrongBookDTOS = new ArrayList<>();
             int resultSize = result.size();
             for(int j=0;j < resultSize;j++){
                 TrueFalseQuestionDTO realTrueFalseQuestion = result.get(j);
@@ -179,7 +188,18 @@ public class TrueFalseQuestionServiceImpl implements TrueFalseQuestionService {
                     testTrueFalseQuestion.setTrueOrFalse(1);
                 }else{
                     testTrueFalseQuestion.setTrueOrFalse(0);
+                    WrongBookDTO wrongBookDTO = new WrongBookDTO();
+                    wrongBookDTO.setQuestion(realTrueFalseQuestion.getTrueFalseQuestion());
+                    wrongBookDTO.setAnswer(realTrueFalseQuestion.getTrueFalseAnswer());
+                    wrongBookDTO.setId(username);
+                    wrongBookDTO.setUserType(roleType);
+                    wrongBookDTO.setQuestionId(realTrueFalseQuestion.getId());
+                    wrongBookDTO.setQuestionType(3);
+                    wrongBookDTOS.add(wrongBookDTO);
                 }
+            }
+            if (wrongBookDTOS.size()!=0){
+                wrongBookDTOMapper.insertList(wrongBookDTOS);
             }
             DataUtil<TrueFalseQuestionDTO> dtoDataUtil = new DataUtil<TrueFalseQuestionDTO>();
             dtoDataUtil.setList(record);

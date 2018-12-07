@@ -1,4 +1,4 @@
-package com.org.bank.controller.admin;
+package com.org.bank.controller.teacher;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 教师角色可访问的多选题控制类
+ */
 @RestController
-@RequestMapping("/multipleChoiceQuestion")
-public class MultipleChoiceQuestionController {
+@RequestMapping("/teacher/multipleChoiceQuestion")
+public class TeacherMultipleChoiceQuestionController {
     @Autowired
     private MultipleChoiceQuestionService multipleChoiceQuestionService;
     @RequestMapping("/deleteByPrimaryKey")

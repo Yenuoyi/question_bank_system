@@ -3,10 +3,13 @@ package com.org.bank.service.impl;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.dao.MultipleChoiceQuestionDTOMapper;
+import com.org.bank.dao.WrongBookDTOMapper;
 import com.org.bank.domain.MultipleChoiceQuestionDTO;
 import com.org.bank.domain.MultipleChoiceQuestionDTO;
 import com.org.bank.domain.MultipleChoiceQuestionDTO;
+import com.org.bank.domain.WrongBookDTO;
 import com.org.bank.service.MultipleChoiceQuestionService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,8 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
     private MultipleChoiceQuestionDTOMapper multipleChoiceQuestionDTOMapper;
+    @Resource
+    private WrongBookDTOMapper wrongBookDTOMapper;
     @Override
     public ExecuteResult<Integer> deleteByPrimaryKey(MultipleChoiceQuestionDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
@@ -160,6 +165,8 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
     @Override
     public ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> checkExercise(List<MultipleChoiceQuestionDTO> record) {
         ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>>();
+        int username = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        int roleType = UserSecurityContextHolder.getUserRoleType();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
@@ -173,6 +180,7 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
             }
             List<MultipleChoiceQuestionDTO> result = multipleChoiceQuestionDTOMapper.selectByPrimaryKeyList(keys);
             int resultSize = result.size();
+            List<WrongBookDTO> wrongBookDTOS = new ArrayList<>();
             for(int j=0;j < resultSize;j++){
                 MultipleChoiceQuestionDTO realMultipleChoiceQuestion = result.get(j);
                 MultipleChoiceQuestionDTO testMultipleChoiceQuestion = map.get(realMultipleChoiceQuestion.getId());
@@ -180,9 +188,19 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
                     testMultipleChoiceQuestion.setTrueOrFalse(1);
                 }else{
                     testMultipleChoiceQuestion.setTrueOrFalse(0);
+                    WrongBookDTO wrongBookDTO = new WrongBookDTO();
+                    wrongBookDTO.setQuestion(realMultipleChoiceQuestion.getMultipleChoiceQuestion());
+                    wrongBookDTO.setAnswer(realMultipleChoiceQuestion.getMultipleChoiceAnswer());
+                    wrongBookDTO.setId(username);
+                    wrongBookDTO.setUserType(roleType);
+                    wrongBookDTO.setQuestionId(realMultipleChoiceQuestion.getId());
+                    wrongBookDTO.setQuestionType(3);
+                    wrongBookDTOS.add(wrongBookDTO);
                 }
             }
-            DataUtil<MultipleChoiceQuestionDTO> dtoDataUtil = new DataUtil<MultipleChoiceQuestionDTO>();
+            if (wrongBookDTOS.size()!=0){
+                wrongBookDTOMapper.insertList(wrongBookDTOS);
+            }            DataUtil<MultipleChoiceQuestionDTO> dtoDataUtil = new DataUtil<MultipleChoiceQuestionDTO>();
             dtoDataUtil.setList(record);
             executeResult.setResult(dtoDataUtil);
             executeResult.setResultMessage("成功！");

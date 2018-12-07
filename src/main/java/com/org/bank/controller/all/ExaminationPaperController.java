@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 所有人可访问的试卷库控制类
+ */
 @RestController
 @RequestMapping("/all/examinationPaper")
 public class ExaminationPaperController {

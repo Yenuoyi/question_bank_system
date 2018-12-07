@@ -1,24 +1,27 @@
-package com.org.bank.controller.admin;
+package com.org.bank.controller.teacher;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.FillVainQuestionDTO;
-import com.org.bank.service.FillVainQuestionService;
+import com.org.bank.domain.SingleChoiceQuestionDTO;
+import com.org.bank.service.SingleChoiceQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 教师角色可访问的单选题控制类
+ */
 @RestController
-@RequestMapping("/fillVainQuestion")
-public class FillVainQuestionController {
+@RequestMapping("/teacher/singleChoiceQuestion")
+public class TeacherSingleChoiceQuestionController {
     @Autowired
-    private FillVainQuestionService fillVainQuestionService;
+    private SingleChoiceQuestionService singleChoiceQuestionService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody FillVainQuestionDTO record){
-        ExecuteResult<Integer> executeResult = fillVainQuestionService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +29,8 @@ public class FillVainQuestionController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody FillVainQuestionDTO record){
-        ExecuteResult<Integer> executeResult = fillVainQuestionService.insert(record);
+    public Wrapper<?> insert(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +38,8 @@ public class FillVainQuestionController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody FillVainQuestionDTO record){
-        ExecuteResult<Integer> executeResult = fillVainQuestionService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +47,8 @@ public class FillVainQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody FillVainQuestionDTO record){
-        ExecuteResult<FillVainQuestionDTO> executeResult = fillVainQuestionService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<SingleChoiceQuestionDTO> executeResult = singleChoiceQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +56,8 @@ public class FillVainQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody FillVainQuestionDTO record){
-        ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = fillVainQuestionService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +65,8 @@ public class FillVainQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody FillVainQuestionDTO record){
-        ExecuteResult<Integer> executeResult = fillVainQuestionService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +74,8 @@ public class FillVainQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody FillVainQuestionDTO record){
-        ExecuteResult<Integer> executeResult = fillVainQuestionService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

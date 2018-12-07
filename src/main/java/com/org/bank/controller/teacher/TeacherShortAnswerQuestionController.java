@@ -1,24 +1,27 @@
-package com.org.bank.controller.admin;
+package com.org.bank.controller.teacher;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.TrueFalseQuestionDTO;
-import com.org.bank.service.TrueFalseQuestionService;
+import com.org.bank.domain.ShortAnswerQuestionDTO;
+import com.org.bank.service.ShortAnswerQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 教师角色可访问的简答题控制类
+ */
 @RestController
-@RequestMapping("/trueFalseQuestion")
-public class TrueFalseQuestionController {
+@RequestMapping("/teacher/shortAnswerQuestion")
+public class TeacherShortAnswerQuestionController {
     @Autowired
-    private TrueFalseQuestionService trueFalseQuestionService;
+    private ShortAnswerQuestionService shortAnswerQuestionService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
+        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +29,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.insert(record);
+    public Wrapper<?> insert(@RequestBody ShortAnswerQuestionDTO record){
+        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +38,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody ShortAnswerQuestionDTO record){
+        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +47,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<TrueFalseQuestionDTO> executeResult = trueFalseQuestionService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
+        ExecuteResult<ShortAnswerQuestionDTO> executeResult = shortAnswerQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +56,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody ShortAnswerQuestionDTO record){
+        ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +65,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody ShortAnswerQuestionDTO record){
+        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +74,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
+        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

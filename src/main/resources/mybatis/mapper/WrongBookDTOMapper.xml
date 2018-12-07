@@ -3,16 +3,15 @@
 <mapper namespace="com.org.bank.dao.WrongBookDTOMapper" >
   <resultMap id="BaseResultMap" type="com.org.bank.domain.WrongBookDTO" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
     <result column="question" property="question" jdbcType="VARCHAR" />
     <result column="answer" property="answer" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="question_type" property="questionType" jdbcType="INTEGER" />
     <result column="question_id" property="questionId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_name, user_id, user_type, question, answer, question_type, question_id
+    id, user_id, user_type, question, answer, question_type, question_id
   </sql>
 
   <sql id="where_fragement">
@@ -20,9 +19,6 @@
     <if test="record != null">
       <if test="record.id and record.id != ''">
         and id = #{record.id}
-      </if>
-      <if test="record.userName and record.userName != ''">
-        and user_name = #{record.userName}
       </if>
       <if test="record.userId and record.userId != ''">
         and user_id = #{record.userId}
@@ -100,21 +96,32 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.WrongBookDTO" >
-    insert into wrong_book (id, user_name, user_id, 
+    insert into wrong_book (id, user_id,
       user_type, question, answer, 
       question_type, question_id)
-    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER},  #{userId,jdbcType=INTEGER},
       #{userType,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
       #{questionType,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER})
   </insert>
+
+  <insert id="insertList" parameterType="list" >
+    insert into wrong_book (id, user_id,
+      user_type, question, answer,
+      question_type, question_id)
+    values
+    <foreach collection="records" item="item" index="index" separator="," >
+      (#{records.id,jdbcType=INTEGER},  #{records.userId,jdbcType=INTEGER},
+      #{records.userType,jdbcType=VARCHAR}, #{records.question,jdbcType=VARCHAR}, #{records.answer,jdbcType=VARCHAR},
+      #{records.questionType,jdbcType=INTEGER}, #{records.questionId,jdbcType=INTEGER})
+    </foreach>
+
+  </insert>
+
   <insert id="insertSelective" parameterType="com.org.bank.domain.WrongBookDTO" >
     insert into wrong_book
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
-      </if>
-      <if test="userName != null" >
-        user_name,
       </if>
       <if test="userId != null" >
         user_id,
@@ -139,9 +146,6 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
       <if test="userId != null" >
         #{userId,jdbcType=INTEGER},
       </if>
@@ -165,9 +169,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.WrongBookDTO" >
     update wrong_book
     <set >
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=INTEGER},
       </if>
@@ -191,7 +192,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.WrongBookDTO" >
     update wrong_book
-    set user_name = #{userName,jdbcType=VARCHAR},
+    set
       user_id = #{userId,jdbcType=INTEGER},
       user_type = #{userType,jdbcType=VARCHAR},
       question = #{question,jdbcType=VARCHAR},

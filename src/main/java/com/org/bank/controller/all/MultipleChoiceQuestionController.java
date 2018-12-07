@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 所有人可访问的多选题控制类
+ */
 @RestController
 @RequestMapping("/all/multipleChoiceQuestion")
 public class MultipleChoiceQuestionController {

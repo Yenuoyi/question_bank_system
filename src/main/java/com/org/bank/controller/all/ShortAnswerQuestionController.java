@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 所有人可访问的简答题控制类
+ */
 @RestController
 @RequestMapping("/all/shortAnswerQuestion")
 public class ShortAnswerQuestionController {

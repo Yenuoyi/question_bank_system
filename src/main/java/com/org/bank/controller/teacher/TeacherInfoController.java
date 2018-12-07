@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+/**
+ * 教师角色可访问的教师角色控制类
+ */
 @RestController
 @RequestMapping("/teacher/teacher")
 public class TeacherInfoController {

@@ -1,6 +1,5 @@
 package com.org.bank.controller.all;
 
-import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
@@ -11,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 所有人都可访问的班级控制类
+ */
 @RestController
 @RequestMapping("/all/class")
 public class ClassController {

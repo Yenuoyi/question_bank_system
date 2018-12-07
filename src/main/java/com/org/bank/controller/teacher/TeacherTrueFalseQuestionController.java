@@ -4,21 +4,24 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.ExaminationPaperQuestionDTO;
-import com.org.bank.service.ExaminationPaperQuestionService;
+import com.org.bank.domain.TrueFalseQuestionDTO;
+import com.org.bank.service.TrueFalseQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 教师角色可访问的判断题控制类
+ */
 @RestController
-@RequestMapping("/teacher/examinationPaperQuestion")
-public class ExaminationPaperQuestionController {
+@RequestMapping("/teacher/trueFalseQuestion")
+public class TeacherTrueFalseQuestionController {
     @Autowired
-    private ExaminationPaperQuestionService examinationPaperQuestionService;
+    private TrueFalseQuestionService trueFalseQuestionService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody ExaminationPaperQuestionDTO record){
-        ExecuteResult<Integer> executeResult = examinationPaperQuestionService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
+        ExecuteResult<Integer> executeResult = trueFalseQuestionService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +29,8 @@ public class ExaminationPaperQuestionController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody ExaminationPaperQuestionDTO record){
-        ExecuteResult<Integer> executeResult = examinationPaperQuestionService.insert(record);
+    public Wrapper<?> insert(@RequestBody TrueFalseQuestionDTO record){
+        ExecuteResult<Integer> executeResult = trueFalseQuestionService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +38,8 @@ public class ExaminationPaperQuestionController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody ExaminationPaperQuestionDTO record){
-        ExecuteResult<Integer> executeResult = examinationPaperQuestionService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody TrueFalseQuestionDTO record){
+        ExecuteResult<Integer> executeResult = trueFalseQuestionService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +47,8 @@ public class ExaminationPaperQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody ExaminationPaperQuestionDTO record){
-        ExecuteResult<ExaminationPaperQuestionDTO> executeResult = examinationPaperQuestionService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
+        ExecuteResult<TrueFalseQuestionDTO> executeResult = trueFalseQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +56,8 @@ public class ExaminationPaperQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody ExaminationPaperQuestionDTO record){
-        ExecuteResult<DataUtil<ExaminationPaperQuestionDTO>> executeResult = examinationPaperQuestionService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody TrueFalseQuestionDTO record){
+        ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +65,8 @@ public class ExaminationPaperQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody ExaminationPaperQuestionDTO record){
-        ExecuteResult<Integer> executeResult = examinationPaperQuestionService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody TrueFalseQuestionDTO record){
+        ExecuteResult<Integer> executeResult = trueFalseQuestionService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +74,8 @@ public class ExaminationPaperQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody ExaminationPaperQuestionDTO record){
-        ExecuteResult<Integer> executeResult = examinationPaperQuestionService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
+        ExecuteResult<Integer> executeResult = trueFalseQuestionService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
