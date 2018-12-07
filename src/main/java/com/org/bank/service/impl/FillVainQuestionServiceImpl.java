@@ -5,6 +5,7 @@ import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.dao.FillVainQuestionDTOMapper;
 import com.org.bank.domain.FillVainQuestionDTO;
+import com.org.bank.domain.FillVainQuestionDTO;
 import com.org.bank.service.FillVainQuestionService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -102,6 +103,46 @@ public class FillVainQuestionServiceImpl implements FillVainQuestionService {
             DataUtil<FillVainQuestionDTO> dtoDataUtil = new DataUtil<FillVainQuestionDTO>();
             dtoDataUtil.setList(result);
             dtoDataUtil.getPager().setTotalCount(total);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<FillVainQuestionDTO>> randomSelectFillVainQuestionList(Pager pager) {
+        ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = new ExecuteResult<DataUtil<FillVainQuestionDTO>>();
+        try {
+            if(StringUtils.isEmpty(pager)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<FillVainQuestionDTO> result = fillVainQuestionDTOMapper.randomSelectFillVainQuestionList(pager);
+            DataUtil<FillVainQuestionDTO> dtoDataUtil = new DataUtil<FillVainQuestionDTO>();
+            dtoDataUtil.setList(result);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<FillVainQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys) {
+        ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = new ExecuteResult<DataUtil<FillVainQuestionDTO>>();
+        try {
+            if(StringUtils.isEmpty(keys)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<FillVainQuestionDTO> result = fillVainQuestionDTOMapper.selectByPrimaryKeyList(keys);
+            DataUtil<FillVainQuestionDTO> dtoDataUtil = new DataUtil<FillVainQuestionDTO>();
+            dtoDataUtil.setList(result);
             executeResult.setResult(dtoDataUtil);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){

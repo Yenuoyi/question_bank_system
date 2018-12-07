@@ -113,6 +113,46 @@ public class WrongBookServiceImpl implements WrongBookService {
     }
 
     @Override
+    public ExecuteResult<DataUtil<WrongBookDTO>> randomSelectWrongBookList(Pager pager) {
+        ExecuteResult<DataUtil<WrongBookDTO>> executeResult = new ExecuteResult<DataUtil<WrongBookDTO>>();
+        try {
+            if(StringUtils.isEmpty(pager)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<WrongBookDTO> result = wrongBookDTOMapper.randomSelectWrongBookList(pager);
+            DataUtil<WrongBookDTO> dtoDataUtil = new DataUtil<WrongBookDTO>();
+            dtoDataUtil.setList(result);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<WrongBookDTO>> selectByPrimaryKeyList(List<Integer> keys) {
+        ExecuteResult<DataUtil<WrongBookDTO>> executeResult = new ExecuteResult<DataUtil<WrongBookDTO>>();
+        try {
+            if(StringUtils.isEmpty(keys)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<WrongBookDTO> result = wrongBookDTOMapper.selectByPrimaryKeyList(keys);
+            DataUtil<WrongBookDTO> dtoDataUtil = new DataUtil<WrongBookDTO>();
+            dtoDataUtil.setList(result);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
     public ExecuteResult<Integer> updateByPrimaryKeySelective(WrongBookDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {

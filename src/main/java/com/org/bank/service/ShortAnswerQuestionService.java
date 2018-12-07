@@ -6,6 +6,8 @@ import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.ShortAnswerQuestionDTO;
 
+import java.util.List;
+
 public interface ShortAnswerQuestionService {
     ExecuteResult<Integer> deleteByPrimaryKey(ShortAnswerQuestionDTO record);
 
@@ -16,6 +18,10 @@ public interface ShortAnswerQuestionService {
     ExecuteResult<ShortAnswerQuestionDTO> selectByPrimaryKey(ShortAnswerQuestionDTO record);
 
     ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> selectList(ShortAnswerQuestionDTO record, Pager pager);
+
+    ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> randomSelectShortAnswerQuestionList(Pager pager);
+
+    ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(ShortAnswerQuestionDTO record);
 

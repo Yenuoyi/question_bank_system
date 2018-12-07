@@ -1,24 +1,24 @@
-package com.org.bank.controller;
+package com.org.bank.controller.admin;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.MultipleChoiceQuestionDTO;
-import com.org.bank.service.MultipleChoiceQuestionService;
+import com.org.bank.domain.DoubtDTO;
+import com.org.bank.service.DoubtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/multipleChoiceQuestion")
-public class MultipleChoiceQuestionController {
+@RequestMapping("/doubt")
+public class DoubtController {
     @Autowired
-    private MultipleChoiceQuestionService multipleChoiceQuestionService;
+    private DoubtService doubtService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody MultipleChoiceQuestionDTO record){
-        ExecuteResult<Integer> executeResult = multipleChoiceQuestionService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody DoubtDTO record){
+        ExecuteResult<Integer> executeResult = doubtService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +26,8 @@ public class MultipleChoiceQuestionController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody MultipleChoiceQuestionDTO record){
-        ExecuteResult<Integer> executeResult = multipleChoiceQuestionService.insert(record);
+    public Wrapper<?> insert(@RequestBody DoubtDTO record){
+        ExecuteResult<Integer> executeResult = doubtService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +35,8 @@ public class MultipleChoiceQuestionController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody MultipleChoiceQuestionDTO record){
-        ExecuteResult<Integer> executeResult = multipleChoiceQuestionService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody DoubtDTO record){
+        ExecuteResult<Integer> executeResult = doubtService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +44,8 @@ public class MultipleChoiceQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody MultipleChoiceQuestionDTO record){
-        ExecuteResult<MultipleChoiceQuestionDTO> executeResult = multipleChoiceQuestionService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody DoubtDTO record){
+        ExecuteResult<DoubtDTO> executeResult = doubtService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +53,8 @@ public class MultipleChoiceQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody MultipleChoiceQuestionDTO record){
-        ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = multipleChoiceQuestionService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody DoubtDTO record){
+        ExecuteResult<DataUtil<DoubtDTO>> executeResult = doubtService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +62,8 @@ public class MultipleChoiceQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody MultipleChoiceQuestionDTO record){
-        ExecuteResult<Integer> executeResult = multipleChoiceQuestionService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody DoubtDTO record){
+        ExecuteResult<Integer> executeResult = doubtService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +71,8 @@ public class MultipleChoiceQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody MultipleChoiceQuestionDTO record){
-        ExecuteResult<Integer> executeResult = multipleChoiceQuestionService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody DoubtDTO record){
+        ExecuteResult<Integer> executeResult = doubtService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

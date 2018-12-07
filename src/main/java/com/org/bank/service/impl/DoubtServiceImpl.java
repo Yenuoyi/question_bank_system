@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 @Service("doubtService")
 public class DoubtServiceImpl implements DoubtService {
@@ -101,6 +101,46 @@ public class DoubtServiceImpl implements DoubtService {
             DataUtil<DoubtDTO> dtoDataUtil = new DataUtil<DoubtDTO>();
             dtoDataUtil.setList(result);
             dtoDataUtil.getPager().setTotalCount(total);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<DoubtDTO>> randomSelectDoubtList(Pager pager) {
+        ExecuteResult<DataUtil<DoubtDTO>> executeResult = new ExecuteResult<DataUtil<DoubtDTO>>();
+        try {
+            if(StringUtils.isEmpty(pager)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<DoubtDTO> result = doubtDTOMapper.randomSelectDoubtList(pager);
+            DataUtil<DoubtDTO> dtoDataUtil = new DataUtil<DoubtDTO>();
+            dtoDataUtil.setList(result);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<DoubtDTO>> selectByPrimaryKeyList(List<Integer> keys) {
+        ExecuteResult<DataUtil<DoubtDTO>> executeResult = new ExecuteResult<DataUtil<DoubtDTO>>();
+        try {
+            if(StringUtils.isEmpty(keys)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<DoubtDTO> result = doubtDTOMapper.selectByPrimaryKeyList(keys);
+            DataUtil<DoubtDTO> dtoDataUtil = new DataUtil<DoubtDTO>();
+            dtoDataUtil.setList(result);
             executeResult.setResult(dtoDataUtil);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){

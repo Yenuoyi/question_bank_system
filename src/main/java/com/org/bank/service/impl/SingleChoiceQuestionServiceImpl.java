@@ -10,7 +10,10 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("singleChoiceQuestionService")
 public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionService {
@@ -101,6 +104,83 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
             DataUtil<SingleChoiceQuestionDTO> dtoDataUtil = new DataUtil<SingleChoiceQuestionDTO>();
             dtoDataUtil.setList(result);
             dtoDataUtil.getPager().setTotalCount(total);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> randomSelectSingleChoiceQuestionList(Pager pager) {
+        ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<SingleChoiceQuestionDTO>>();
+        try {
+            if(StringUtils.isEmpty(pager)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<SingleChoiceQuestionDTO> result = singleChoiceQuestionDTOMapper.randomSelectSingleChoiceQuestionList(pager);
+            DataUtil<SingleChoiceQuestionDTO> dtoDataUtil = new DataUtil<SingleChoiceQuestionDTO>();
+            dtoDataUtil.setList(result);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys) {
+        ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<SingleChoiceQuestionDTO>>();
+        try {
+            if(StringUtils.isEmpty(keys)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<SingleChoiceQuestionDTO> result = singleChoiceQuestionDTOMapper.selectByPrimaryKeyList(keys);
+            DataUtil<SingleChoiceQuestionDTO> dtoDataUtil = new DataUtil<SingleChoiceQuestionDTO>();
+            dtoDataUtil.setList(result);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercize(List<SingleChoiceQuestionDTO> record) {
+        ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<SingleChoiceQuestionDTO>>();
+        try {
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            Map<Integer,SingleChoiceQuestionDTO> map = new HashMap<>();
+            List<Integer> keys = new ArrayList<>();
+            int doubtListSize = record.size();
+            for(int i=0;i<doubtListSize;i++){
+                keys.add(record.get(i).getId());
+                map.put(record.get(i).getId(),record.get(i));
+            }
+            List<SingleChoiceQuestionDTO> result = singleChoiceQuestionDTOMapper.selectByPrimaryKeyList(keys);
+            int resultSize = result.size();
+            for(int j=0;j < resultSize;j++){
+                SingleChoiceQuestionDTO realSingleChoiceQuestion = result.get(j);
+                SingleChoiceQuestionDTO testSingleChoiceQuestion = map.get(realSingleChoiceQuestion.getId());
+                if(testSingleChoiceQuestion.getSingleChoiceAnswer().equals(realSingleChoiceQuestion.getSingleChoiceAnswer())){
+                    testSingleChoiceQuestion.setTrueOrFalse(1);
+                }else{
+                    testSingleChoiceQuestion.setTrueOrFalse(0);
+                }
+            }
+            DataUtil<SingleChoiceQuestionDTO> dtoDataUtil = new DataUtil<SingleChoiceQuestionDTO>();
+            dtoDataUtil.setList(record);
             executeResult.setResult(dtoDataUtil);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){

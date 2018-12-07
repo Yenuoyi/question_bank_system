@@ -1,5 +1,10 @@
 package com.org.bank.config.spring.security;
 
+import com.alibaba.fastjson.JSONObject;
+import com.org.bank.common.ExecuteResult;
+import com.org.bank.common.WrapMapper;
+import com.org.bank.common.encrypt.Md5Util;
+import com.org.bank.domain.StudentInfoDTO;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -26,7 +31,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         logger.info("Setting session!");
         httpServletResponse.setContentType("application/json;charset=utf-8");
         PrintWriter out = httpServletResponse.getWriter();
-        out.write("{\"status\":\"ok\",\"msg\":\"登录成功\"}");
+        String jsonString = JSONObject.toJSONString(WrapMapper.ok().result("登录成功！"));
+        out.write(jsonString);
         out.flush();
         out.close();
 //        httpServletResponse.sendRedirect("/hello");

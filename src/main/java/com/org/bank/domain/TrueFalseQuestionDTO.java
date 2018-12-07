@@ -20,6 +20,9 @@ public class TrueFalseQuestionDTO implements Serializable {
     /** 出题人类型：1admin 2教师 */
     private String examinerType;
 
+    /** 习题练习是否正确，0：错误，1：正确 */
+    private Integer trueOrFalse;
+
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +65,14 @@ public class TrueFalseQuestionDTO implements Serializable {
 
     public void setExaminerType(String examinerType) {
         this.examinerType = examinerType == null ? null : examinerType.trim();
+    }
+
+    public Integer getTrueOrFalse() {
+        return trueOrFalse;
+    }
+
+    public void setTrueOrFalse(Integer trueOrFalse) {
+        this.trueOrFalse = trueOrFalse;
     }
 
     public Pager getPager() {

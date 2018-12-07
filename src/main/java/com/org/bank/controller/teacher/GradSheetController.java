@@ -1,24 +1,24 @@
-package com.org.bank.controller;
+package com.org.bank.controller.teacher;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.DoubtDTO;
-import com.org.bank.service.DoubtService;
+import com.org.bank.domain.GradSheetDTO;
+import com.org.bank.service.GradSheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/doubt")
-public class DoubtController {
+@RequestMapping("/teacher/gradSheet")
+public class GradSheetController {
     @Autowired
-    private DoubtService doubtService;
+    private GradSheetService gradSheetService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody DoubtDTO record){
-        ExecuteResult<Integer> executeResult = doubtService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +26,8 @@ public class DoubtController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody DoubtDTO record){
-        ExecuteResult<Integer> executeResult = doubtService.insert(record);
+    public Wrapper<?> insert(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +35,8 @@ public class DoubtController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody DoubtDTO record){
-        ExecuteResult<Integer> executeResult = doubtService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +44,8 @@ public class DoubtController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody DoubtDTO record){
-        ExecuteResult<DoubtDTO> executeResult = doubtService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody GradSheetDTO record){
+        ExecuteResult<GradSheetDTO> executeResult = gradSheetService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +53,8 @@ public class DoubtController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody DoubtDTO record){
-        ExecuteResult<DataUtil<DoubtDTO>> executeResult = doubtService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody GradSheetDTO record){
+        ExecuteResult<DataUtil<GradSheetDTO>> executeResult = gradSheetService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +62,8 @@ public class DoubtController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody DoubtDTO record){
-        ExecuteResult<Integer> executeResult = doubtService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +71,8 @@ public class DoubtController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody DoubtDTO record){
-        ExecuteResult<Integer> executeResult = doubtService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

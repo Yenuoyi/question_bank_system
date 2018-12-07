@@ -1,4 +1,4 @@
-package com.org.bank.controller;
+package com.org.bank.controller.admin;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;

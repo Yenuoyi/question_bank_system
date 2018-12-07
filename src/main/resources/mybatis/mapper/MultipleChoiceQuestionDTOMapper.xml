@@ -56,6 +56,25 @@
     </if>
   </select>
 
+  <select id="randomSelectMultipleChoiceQuestionList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from multiple_choice_question
+    ORDER BY rand()
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKeyList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from multiple_choice_question
+    <foreach collection="keys" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
   <select id="countTotal" resultType="Long">
     select
     count(1)

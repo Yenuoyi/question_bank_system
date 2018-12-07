@@ -1,24 +1,24 @@
-package com.org.bank.controller;
+package com.org.bank.controller.teacher;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.TrueFalseQuestionDTO;
-import com.org.bank.service.TrueFalseQuestionService;
+import com.org.bank.domain.WrongBookDTO;
+import com.org.bank.service.WrongBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/trueFalseQuestion")
-public class TrueFalseQuestionController {
+@RequestMapping("/teacher/wrongBook")
+public class WrongBookController {
     @Autowired
-    private TrueFalseQuestionService trueFalseQuestionService;
+    private WrongBookService wrongBookService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +26,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.insert(record);
+    public Wrapper<?> insert(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +35,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +44,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<TrueFalseQuestionDTO> executeResult = trueFalseQuestionService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody WrongBookDTO record){
+        ExecuteResult<WrongBookDTO> executeResult = wrongBookService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +53,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody WrongBookDTO record){
+        ExecuteResult<DataUtil<WrongBookDTO>> executeResult = wrongBookService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +62,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +71,8 @@ public class TrueFalseQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
-        ExecuteResult<Integer> executeResult = trueFalseQuestionService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody WrongBookDTO record){
+        ExecuteResult<Integer> executeResult = wrongBookService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

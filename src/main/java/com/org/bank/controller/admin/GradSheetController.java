@@ -1,24 +1,24 @@
-package com.org.bank.controller;
+package com.org.bank.controller.admin;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.ShortAnswerQuestionDTO;
-import com.org.bank.service.ShortAnswerQuestionService;
+import com.org.bank.domain.GradSheetDTO;
+import com.org.bank.service.GradSheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/shortAnswerQuestion")
-public class ShortAnswerQuestionController {
+@RequestMapping("/gradSheet")
+public class GradSheetController {
     @Autowired
-    private ShortAnswerQuestionService shortAnswerQuestionService;
+    private GradSheetService gradSheetService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +26,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.insert(record);
+    public Wrapper<?> insert(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +35,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +44,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<ShortAnswerQuestionDTO> executeResult = shortAnswerQuestionService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody GradSheetDTO record){
+        ExecuteResult<GradSheetDTO> executeResult = gradSheetService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +53,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody GradSheetDTO record){
+        ExecuteResult<DataUtil<GradSheetDTO>> executeResult = gradSheetService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +62,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +71,8 @@ public class ShortAnswerQuestionController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
-        ExecuteResult<Integer> executeResult = shortAnswerQuestionService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody GradSheetDTO record){
+        ExecuteResult<Integer> executeResult = gradSheetService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

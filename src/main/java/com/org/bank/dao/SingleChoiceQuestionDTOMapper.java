@@ -1,6 +1,5 @@
 package com.org.bank.dao;
 
-
 import com.org.bank.common.Pager;
 import com.org.bank.domain.SingleChoiceQuestionDTO;
 import org.apache.ibatis.annotations.Param;
@@ -19,6 +18,10 @@ public interface SingleChoiceQuestionDTOMapper {
     SingleChoiceQuestionDTO selectByPrimaryKey(Integer id);
 
     List<SingleChoiceQuestionDTO> selectList(@Param("record") SingleChoiceQuestionDTO record, @Param("pager") Pager pager);
+
+    List<SingleChoiceQuestionDTO> randomSelectSingleChoiceQuestionList(@Param("pager") Pager pager);
+
+    List<SingleChoiceQuestionDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 
     Long countTotal(SingleChoiceQuestionDTO record);
 

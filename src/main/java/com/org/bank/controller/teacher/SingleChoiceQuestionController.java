@@ -1,4 +1,4 @@
-package com.org.bank.controller;
+package com.org.bank.controller.teacher;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/singleChoiceQuestion")
+@RequestMapping("/teacher/singleChoiceQuestion")
 public class SingleChoiceQuestionController {
     @Autowired
     private SingleChoiceQuestionService singleChoiceQuestionService;

@@ -6,6 +6,8 @@ import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.MultipleChoiceQuestionDTO;
 
+import java.util.List;
+
 public interface MultipleChoiceQuestionService {
     ExecuteResult<Integer> deleteByPrimaryKey(MultipleChoiceQuestionDTO record);
 
@@ -16,6 +18,12 @@ public interface MultipleChoiceQuestionService {
     ExecuteResult<MultipleChoiceQuestionDTO> selectByPrimaryKey(MultipleChoiceQuestionDTO record);
 
     ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> selectList(MultipleChoiceQuestionDTO record, Pager pager);
+
+    ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> randomSelectMultipleChoiceQuestionList(Pager pager);
+
+    ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
+
+    ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> checkExercise(List<MultipleChoiceQuestionDTO> record);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(MultipleChoiceQuestionDTO record);
 

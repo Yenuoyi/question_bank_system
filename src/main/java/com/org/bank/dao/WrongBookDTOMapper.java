@@ -1,7 +1,6 @@
 package com.org.bank.dao;
 
 import com.org.bank.common.Pager;
-import com.org.bank.domain.DoubtDTO;
 import com.org.bank.domain.WrongBookDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -19,6 +18,10 @@ public interface WrongBookDTOMapper {
     WrongBookDTO selectByPrimaryKey(Integer id);
 
     List<WrongBookDTO> selectList(@Param("record") WrongBookDTO record, @Param("pager") Pager pager);
+
+    List<WrongBookDTO> randomSelectWrongBookList(@Param("pager") Pager pager);
+
+    List<WrongBookDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 
     Long countTotal(WrongBookDTO record);
 

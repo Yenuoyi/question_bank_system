@@ -6,6 +6,8 @@ import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.DoubtDTO;
 
+import java.util.List;
+
 public interface DoubtService {
     ExecuteResult<Integer> deleteByPrimaryKey(DoubtDTO record);
 
@@ -16,6 +18,10 @@ public interface DoubtService {
     ExecuteResult<DoubtDTO> selectByPrimaryKey(DoubtDTO record);
 
     ExecuteResult<DataUtil<DoubtDTO>> selectList(DoubtDTO record, Pager pager);
+
+    ExecuteResult<DataUtil<DoubtDTO>> randomSelectDoubtList(Pager pager);
+
+    ExecuteResult<DataUtil<DoubtDTO>> selectByPrimaryKeyList(List<Integer> keys);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(DoubtDTO record);
 

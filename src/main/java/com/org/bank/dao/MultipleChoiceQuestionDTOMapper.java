@@ -1,6 +1,5 @@
 package com.org.bank.dao;
 
-
 import com.org.bank.common.Pager;
 import com.org.bank.domain.MultipleChoiceQuestionDTO;
 import org.apache.ibatis.annotations.Param;
@@ -19,6 +18,10 @@ public interface MultipleChoiceQuestionDTOMapper {
     MultipleChoiceQuestionDTO selectByPrimaryKey(Integer id);
 
     List<MultipleChoiceQuestionDTO> selectList(@Param("record") MultipleChoiceQuestionDTO record, @Param("pager") Pager pager);
+
+    List<MultipleChoiceQuestionDTO> randomSelectMultipleChoiceQuestionList(@Param("pager") Pager pager);
+
+    List<MultipleChoiceQuestionDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 
     Long countTotal(MultipleChoiceQuestionDTO record);
 

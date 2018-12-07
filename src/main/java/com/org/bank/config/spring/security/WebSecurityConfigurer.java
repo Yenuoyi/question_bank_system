@@ -35,14 +35,15 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .sessionManagement().maximumSessions(1).expiredUrl("/front/login.html");
+        http
                 .cors().and()
                 .authorizeRequests()                         //授权配置
                 .antMatchers("/login").permitAll()
-                .antMatchers("/front/*.html").permitAll()
+                .antMatchers("/front/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/images/**").permitAll()
-                .antMatchers("/api/login").permitAll()
                 .antMatchers("/teacher/**").hasRole("ADMIN")
                 .antMatchers("/teacher/**").hasRole("TEACHER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -53,22 +54,21 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/front/login.html")
                 .loginProcessingUrl("/login")//处理登录post请求接口
-                .successForwardUrl("/front/index.html")
-                .failureForwardUrl("/front/failure.html")
                 .and()
                 .csrf().disable();
         http.httpBasic();                                //必不可少，否则自定义UsernamePasswordAuthenticationFilter无效
 
         http
                 .logout()
-                .logoutUrl("/public/logout") //自定义登出api，无需自己实现
-                .logoutSuccessUrl("/login.html")
+                .logoutUrl("/logout") //自定义登出api，无需自己实现
+                .logoutSuccessUrl("/front/login.html")
                 .permitAll()
                 .invalidateHttpSession(true)
                 .and()
                 .authenticationProvider(this.authenticationProvider());
         http
                 .addFilterAt(this.customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Bean

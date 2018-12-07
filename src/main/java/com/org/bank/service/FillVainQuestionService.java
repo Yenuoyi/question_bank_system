@@ -6,6 +6,8 @@ import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.FillVainQuestionDTO;
 
+import java.util.List;
+
 public interface FillVainQuestionService {
     ExecuteResult<Integer> deleteByPrimaryKey(FillVainQuestionDTO record);
 
@@ -16,6 +18,10 @@ public interface FillVainQuestionService {
     ExecuteResult<FillVainQuestionDTO> selectByPrimaryKey(FillVainQuestionDTO record);
 
     ExecuteResult<DataUtil<FillVainQuestionDTO>> selectList(FillVainQuestionDTO record, Pager pager);
+
+    ExecuteResult<DataUtil<FillVainQuestionDTO>> randomSelectFillVainQuestionList(Pager pager);
+
+    ExecuteResult<DataUtil<FillVainQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(FillVainQuestionDTO record);
 

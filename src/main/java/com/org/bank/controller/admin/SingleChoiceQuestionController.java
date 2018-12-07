@@ -1,24 +1,24 @@
-package com.org.bank.controller;
+package com.org.bank.controller.admin;
 
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.domain.GradSheetDTO;
-import com.org.bank.service.GradSheetService;
+import com.org.bank.domain.SingleChoiceQuestionDTO;
+import com.org.bank.service.SingleChoiceQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/gradSheet")
-public class GradSheetController {
+@RequestMapping("/singleChoiceQuestion")
+public class SingleChoiceQuestionController {
     @Autowired
-    private GradSheetService gradSheetService;
+    private SingleChoiceQuestionService singleChoiceQuestionService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody GradSheetDTO record){
-        ExecuteResult<Integer> executeResult = gradSheetService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -26,8 +26,8 @@ public class GradSheetController {
     }
 
     @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody GradSheetDTO record){
-        ExecuteResult<Integer> executeResult = gradSheetService.insert(record);
+    public Wrapper<?> insert(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -35,8 +35,8 @@ public class GradSheetController {
     }
 
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody GradSheetDTO record){
-        ExecuteResult<Integer> executeResult = gradSheetService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -44,8 +44,8 @@ public class GradSheetController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody GradSheetDTO record){
-        ExecuteResult<GradSheetDTO> executeResult = gradSheetService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<SingleChoiceQuestionDTO> executeResult = singleChoiceQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -53,8 +53,8 @@ public class GradSheetController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody GradSheetDTO record){
-        ExecuteResult<DataUtil<GradSheetDTO>> executeResult = gradSheetService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -62,8 +62,8 @@ public class GradSheetController {
     }
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody GradSheetDTO record){
-        ExecuteResult<Integer> executeResult = gradSheetService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -71,8 +71,8 @@ public class GradSheetController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody GradSheetDTO record){
-        ExecuteResult<Integer> executeResult = gradSheetService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
+        ExecuteResult<Integer> executeResult = singleChoiceQuestionService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

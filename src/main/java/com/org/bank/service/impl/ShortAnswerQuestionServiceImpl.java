@@ -112,6 +112,46 @@ public class ShortAnswerQuestionServiceImpl implements ShortAnswerQuestionServic
     }
 
     @Override
+    public ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> randomSelectShortAnswerQuestionList(Pager pager) {
+        ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = new ExecuteResult<DataUtil<ShortAnswerQuestionDTO>>();
+        try {
+            if(StringUtils.isEmpty(pager)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<ShortAnswerQuestionDTO> result = shortAnswerQuestionDTOMapper.randomSelectShortAnswerQuestionList(pager);
+            DataUtil<ShortAnswerQuestionDTO> dtoDataUtil = new DataUtil<ShortAnswerQuestionDTO>();
+            dtoDataUtil.setList(result);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys) {
+        ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = new ExecuteResult<DataUtil<ShortAnswerQuestionDTO>>();
+        try {
+            if(StringUtils.isEmpty(keys)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<ShortAnswerQuestionDTO> result = shortAnswerQuestionDTOMapper.selectByPrimaryKeyList(keys);
+            DataUtil<ShortAnswerQuestionDTO> dtoDataUtil = new DataUtil<ShortAnswerQuestionDTO>();
+            dtoDataUtil.setList(result);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
     public ExecuteResult<Integer> updateByPrimaryKeySelective(ShortAnswerQuestionDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {

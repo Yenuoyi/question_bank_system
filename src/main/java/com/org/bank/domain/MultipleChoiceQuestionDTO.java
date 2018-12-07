@@ -20,6 +20,9 @@ public class MultipleChoiceQuestionDTO implements Serializable {
     /** 出题人类型：1admin 2教师 */
     private Integer examinerType;
 
+    /** 习题练习是否正确，0：错误，1：正确 */
+    private Integer trueOrFalse;
+
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +65,14 @@ public class MultipleChoiceQuestionDTO implements Serializable {
 
     public void setExaminerType(Integer examinerType) {
         this.examinerType = examinerType;
+    }
+
+    public Integer getTrueOrFalse() {
+        return trueOrFalse;
+    }
+
+    public void setTrueOrFalse(Integer trueOrFalse) {
+        this.trueOrFalse = trueOrFalse;
     }
 
     public Pager getPager() {

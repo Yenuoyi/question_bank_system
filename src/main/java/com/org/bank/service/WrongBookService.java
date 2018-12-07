@@ -6,6 +6,8 @@ import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.WrongBookDTO;
 
+import java.util.List;
+
 public interface WrongBookService {
     ExecuteResult<Integer> deleteByPrimaryKey(WrongBookDTO record);
 
@@ -16,6 +18,10 @@ public interface WrongBookService {
     ExecuteResult<WrongBookDTO> selectByPrimaryKey(WrongBookDTO record);
 
     ExecuteResult<DataUtil<WrongBookDTO>> selectList(WrongBookDTO record, Pager pager);
+
+    ExecuteResult<DataUtil<WrongBookDTO>> randomSelectWrongBookList(Pager pager);
+
+    ExecuteResult<DataUtil<WrongBookDTO>> selectByPrimaryKeyList(List<Integer> keys);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(WrongBookDTO record);
 
