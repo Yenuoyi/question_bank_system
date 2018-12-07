@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.bank.dao.AnswerSheetDTOMapper" >
+  <resultMap id="BaseResultMap" type="com.org.bank.domain.AnswerSheetDTO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="answer_sheet_type" property="answerSheetType" jdbcType="VARCHAR" />
+    <result column="original_examination_paper_id" property="originalExaminationPaperId" jdbcType="INTEGER" />
+    <result column="original_examination_paper_question" property="originalExaminationPaperQuestion" jdbcType="VARCHAR" />
+    <result column="examination_paper_answer" property="examinationPaperAnswer" jdbcType="VARCHAR" />
+    <result column="answerer_id" property="answererId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, answer_sheet_type, original_examination_paper_id, original_examination_paper_question, 
+    examination_paper_answer, answerer_id
+  </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.answerSheetType and record.answerSheetType != ''">
+        and answer_sheet_type = #{record.answerSheetType}
+      </if>
+      <if test="record.originalExaminationPaperId and record.originalExaminationPaperId != ''">
+        and original_examination_paper_id = #{record.originalExaminationPaperId}
+      </if>
+      <if test="record.originalExaminationPaperQuestion and record.originalExaminationPaperQuestion != ''">
+        and original_examination_paper_question = #{record.originalExaminationPaperQuestion}
+      </if>
+      <if test="record.examinationpaperAnswer and record.examinationpaperAnswer != ''">
+        and examination_paper_answer = #{record.examinationpaperAnswer}
+      </if>
+      <if test="record.answererId and record.answererId != ''">
+        and answerer_id = #{record.answererId}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from answer_sheet
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from answer_sheet
+    <include refid="where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="Long">
+    select
+    count(1)
+    from answer_sheet
+    <include refid="where_fragement"/>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from answer_sheet
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.org.bank.domain.AnswerSheetDTO" >
+    insert into answer_sheet (id, answer_sheet_type, original_examination_paper_id, 
+      original_examination_paper_question, examination_paper_answer, 
+      answerer_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{answerSheetType,jdbcType=VARCHAR}, #{originalExaminationPaperId,jdbcType=INTEGER}, 
+      #{originalExaminationPaperQuestion,jdbcType=VARCHAR}, #{examinationPaperAnswer,jdbcType=VARCHAR}, 
+      #{answererId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.org.bank.domain.AnswerSheetDTO" >
+    insert into answer_sheet
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="answerSheetType != null" >
+        answer_sheet_type,
+      </if>
+      <if test="originalExaminationPaperId != null" >
+        original_examination_paper_id,
+      </if>
+      <if test="originalExaminationPaperQuestion != null" >
+        original_examination_paper_question,
+      </if>
+      <if test="examinationPaperAnswer != null" >
+        examination_paper_answer,
+      </if>
+      <if test="answererId != null" >
+        answerer_id,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="answerSheetType != null" >
+        #{answerSheetType,jdbcType=VARCHAR},
+      </if>
+      <if test="originalExaminationPaperId != null" >
+        #{originalExaminationPaperId,jdbcType=INTEGER},
+      </if>
+      <if test="originalExaminationPaperQuestion != null" >
+        #{originalExaminationPaperQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="examinationPaperAnswer != null" >
+        #{examinationPaperAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="answererId != null" >
+        #{answererId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.AnswerSheetDTO" >
+    update answer_sheet
+    <set >
+      <if test="answerSheetType != null" >
+        answer_sheet_type = #{answerSheetType,jdbcType=VARCHAR},
+      </if>
+      <if test="originalExaminationPaperId != null" >
+        original_examination_paper_id = #{originalExaminationPaperId,jdbcType=INTEGER},
+      </if>
+      <if test="originalExaminationPaperQuestion != null" >
+        original_examination_paper_question = #{originalExaminationPaperQuestion,jdbcType=VARCHAR},
+      </if>
+      <if test="examinationPaperAnswer != null" >
+        examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="answererId != null" >
+        answerer_id = #{answererId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.AnswerSheetDTO" >
+    update answer_sheet
+    set answer_sheet_type = #{answerSheetType,jdbcType=VARCHAR},
+      original_examination_paper_id = #{originalExaminationPaperId,jdbcType=INTEGER},
+      original_examination_paper_question = #{originalExaminationPaperQuestion,jdbcType=VARCHAR},
+      examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR},
+      answerer_id = #{answererId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
