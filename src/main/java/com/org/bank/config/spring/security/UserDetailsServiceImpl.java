@@ -46,7 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         String password = null;
         Object user = null;
         if(role.equals(Role.ADMIN)){
-            AdminInfoDTO record = adminInfoDTOMapper.selectByPrimaryKey(userId);
+            AdminInfoDTO record = adminInfoDTOMapper.selectPasswordByPrimaryKey(userId);
             //获取角色，放到list里面
             this.getAdminRoles(record,auths);
             password = record.getAdminPassword();
@@ -54,14 +54,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             logger.info("数据库密码："+record.getAdminPassword());
         }
         if(role.equals(Role.TEACHER)){
-            TeacherInfoDTO record = teacherInfoDTOMapper.selectByPrimaryKey(userId);
+            TeacherInfoDTO record = teacherInfoDTOMapper.selectPasswordByPrimaryKey(userId);
             this.getTeacherRoles(record,auths);
             password = record.getTeacherPassword();
             user = record;
             logger.info("数据库密码："+record.getTeacherPassword());
         }
         if(role.equals(Role.STUDENT)){
-            StudentInfoDTO record = studentInfoDTOMapper.selectByPrimaryKey(userId);
+            StudentInfoDTO record = studentInfoDTOMapper.selectPasswordByPrimaryKey(userId);
             this.getStudentRoles(record,auths);
             password = record.getStudentPassword();
             user = record;

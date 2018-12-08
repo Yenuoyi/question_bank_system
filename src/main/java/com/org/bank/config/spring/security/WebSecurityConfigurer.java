@@ -40,6 +40,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .authorizeRequests()                         //授权配置
                 .antMatchers("/login").permitAll()
+                .antMatchers("/all/student/insert*").permitAll()
                 .antMatchers("/front/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/css/**").permitAll()

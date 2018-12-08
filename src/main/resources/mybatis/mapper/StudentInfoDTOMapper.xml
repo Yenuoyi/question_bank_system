@@ -10,7 +10,7 @@
     <result column="class_id" property="classId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, student_name, student_email, student_iphone, student_password, class_id
+    id, student_name, student_email, student_iphone, class_id
   </sql>
 
   <sql id="where_fragement">
@@ -42,6 +42,13 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    from student_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectPasswordByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    *
     from student_info
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -132,9 +139,6 @@
       <if test="studentIphone != null" >
         student_iphone = #{studentIphone,jdbcType=VARCHAR},
       </if>
-      <if test="studentPassword != null" >
-        student_password = #{studentPassword,jdbcType=VARCHAR},
-      </if>
       <if test="classId != null" >
         class_id = #{classId,jdbcType=INTEGER},
       </if>
@@ -146,8 +150,13 @@
     set student_name = #{studentName,jdbcType=VARCHAR},
       student_email = #{studentEmail,jdbcType=VARCHAR},
       student_iphone = #{studentIphone,jdbcType=VARCHAR},
-      student_password = #{studentPassword,jdbcType=VARCHAR},
       class_id = #{classId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updatePasswordByPrimaryKey" parameterType="com.org.bank.domain.StudentInfoDTO" >
+    update student_info
+    set student_password = #{newStudentPassword,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

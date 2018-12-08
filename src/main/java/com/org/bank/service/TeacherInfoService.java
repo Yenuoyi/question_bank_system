@@ -15,9 +15,13 @@ public interface TeacherInfoService {
 
     ExecuteResult<TeacherInfoDTO> selectByPrimaryKey(TeacherInfoDTO record);
 
+    ExecuteResult<TeacherInfoDTO> selectPasswordByPrimaryKey(TeacherInfoDTO record);
+
     ExecuteResult<DataUtil<TeacherInfoDTO>> selectList(@Param("record")TeacherInfoDTO teacherInfoDTO, @Param("pager") Pager pager);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(TeacherInfoDTO record);
 
     ExecuteResult<Integer> updateByPrimaryKey(TeacherInfoDTO record);
+
+    ExecuteResult<Integer> updatePasswordByPrimaryKey(TeacherInfoDTO record);
 }

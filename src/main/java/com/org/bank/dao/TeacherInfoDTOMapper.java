@@ -17,11 +17,15 @@ public interface TeacherInfoDTOMapper {
 
     TeacherInfoDTO selectByPrimaryKey(Integer id);
 
+    TeacherInfoDTO selectPasswordByPrimaryKey(Integer id);
+
     List<TeacherInfoDTO> selectList(@Param("record")TeacherInfoDTO teacherInfoDTO, @Param("pager")Pager pager);
 
-    Integer countTotal(TeacherInfoDTO record);
+    Long countTotal(TeacherInfoDTO record);
 
     int updateByPrimaryKeySelective(TeacherInfoDTO record);
 
     int updateByPrimaryKey(TeacherInfoDTO record);
+
+    int updatePasswordByPrimaryKey(TeacherInfoDTO record);
 }

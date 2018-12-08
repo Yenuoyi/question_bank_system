@@ -8,15 +8,66 @@
     <result column="teacher_iphone" property="teacherIphone" jdbcType="VARCHAR" />
     <result column="teacher_password" property="teacherPassword" jdbcType="VARCHAR" />
   </resultMap>
+  
   <sql id="Base_Column_List" >
-    id, teacher_name, teacher_email, teacher_iphone, teacher_password
+    id, teacher_name, teacher_email, teacher_iphone
   </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.teacherName and record.teacherName != ''">
+        and teacher_name = #{record.id}
+      </if>
+      <if test="record.teacherEmail and record.teacherEmail != ''">
+        and teacher_eamil = #{record.id}
+      </if>
+      <if test="record.teacherIphone and record.teacherIphone != ''">
+        and teacher_iphone = #{record.id}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from teacher_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectPasswordByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    *
+    from teacher_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from teacher_info
+    <include refid="where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="Long">
+    select
+    count(1)
+    from teacher_info
+    <include refid="where_fragement"/>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from teacher_info
     where id = #{id,jdbcType=INTEGER}
@@ -76,9 +127,6 @@
       <if test="teacherIphone != null" >
         teacher_iphone = #{teacherIphone,jdbcType=VARCHAR},
       </if>
-      <if test="teacherPassword != null" >
-        teacher_password = #{teacherPassword,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -87,7 +135,13 @@
     set teacher_name = #{teacherName,jdbcType=VARCHAR},
       teacher_email = #{teacherEmail,jdbcType=VARCHAR},
       teacher_iphone = #{teacherIphone,jdbcType=VARCHAR},
-      teacher_password = #{teacherPassword,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updatePasswordByPrimaryKey" parameterType="com.org.bank.domain.AdminInfoDTO" >
+    update admin_info
+    set teacher_password = #{newTeacherPassword,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
 </mapper>

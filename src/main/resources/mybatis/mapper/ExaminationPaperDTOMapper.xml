@@ -5,9 +5,10 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="examiner_id" property="examinerId" jdbcType="INTEGER" />
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
+    <result column="examination_paper_name" property="examinationPaperName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, examiner_id, examiner_type
+    id, examiner_id, examiner_type, examination_paper_name
   </sql>
 
   <sql id="where_fragement">
@@ -21,6 +22,9 @@
       </if>
       <if test="record.examinerType and record.examinerType != ''">
         and examiner_type = #{record.examinerType}
+      </if>
+      <if test="record.examinationPaperName and record.examinationPaperName != ''">
+        and examination_paper_name like  CONCAT('%', #{record.examinationPaperName}, '%')
       </if>
     </if>
   </sql>
@@ -59,10 +63,11 @@
     delete from examination_paper
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
-    insert into examination_paper (id, examiner_id, examiner_type
+    insert into examination_paper (id, examiner_id, examiner_type, examination_paper_name
       )
-    values (#{id,jdbcType=INTEGER}, #{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}
+    values (#{id,jdbcType=INTEGER}, #{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}, #{examinationPaperName,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
@@ -77,6 +82,9 @@
       <if test="examinerType != null" >
         examiner_type,
       </if>
+      <if test="examinationPaperName != null" >
+        examination_paper_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -87,6 +95,9 @@
       </if>
       <if test="examinerType != null" >
         #{examinerType,jdbcType=INTEGER},
+      </if>
+      <if test="examinationPaperName != null" >
+        #{examinationPaperName,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -99,6 +110,9 @@
       <if test="examinerType != null" >
         examiner_type = #{examinerType,jdbcType=INTEGER},
       </if>
+      <if test="examinationPaperName != null" >
+        examination_paper_name = #{examinationPaperName,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -106,6 +120,7 @@
     update examination_paper
     set examiner_id = #{examinerId,jdbcType=INTEGER},
       examiner_type = #{examinerType,jdbcType=INTEGER}
+      examination_paper_name = #{examinationPaperName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

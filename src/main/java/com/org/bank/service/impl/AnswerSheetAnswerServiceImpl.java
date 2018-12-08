@@ -3,10 +3,9 @@ package com.org.bank.service.impl;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
-import com.org.bank.common.encrypt.Md5Util;
-import com.org.bank.dao.StudentInfoDTOMapper;
-import com.org.bank.domain.StudentInfoDTO;
-import com.org.bank.service.StudentInfoService;
+import com.org.bank.dao.AnswerSheetAnswerDTOMapper;
+import com.org.bank.domain.AnswerSheetAnswerDTO;
+import com.org.bank.service.AnswerSheetAnswerService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -14,19 +13,19 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service("studentInfoService")
-public class StudentInfoServiceImpl implements StudentInfoService {
+@Service("examinationPaperAnswerService")
+public class AnswerSheetAnswerServiceImpl implements AnswerSheetAnswerService {
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
-    private StudentInfoDTOMapper studentInfoDTOMapper;
+    private AnswerSheetAnswerDTOMapper answerSheetAnswerDTOMapper;
     @Override
-    public ExecuteResult<Integer> deleteByPrimaryKey(StudentInfoDTO record) {
+    public ExecuteResult<Integer> deleteByPrimaryKey(AnswerSheetAnswerDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
             if(StringUtils.isEmpty(record.getId())){
                 throw new RuntimeException("参数错误：ID非空");
             }
-            Integer result = studentInfoDTOMapper.deleteByPrimaryKey(record.getId());
+            Integer result = answerSheetAnswerDTOMapper.deleteByPrimaryKey(record.getId());
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
@@ -38,14 +37,13 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
-    public ExecuteResult<Integer> insert(StudentInfoDTO record) {
+    public ExecuteResult<Integer> insert(AnswerSheetAnswerDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
-            Integer result = studentInfoDTOMapper.insert(record);
+            Integer result = answerSheetAnswerDTOMapper.insert(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
@@ -57,14 +55,13 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
-    public ExecuteResult<Integer> insertSelective(StudentInfoDTO record) {
+    public ExecuteResult<Integer> insertSelective(AnswerSheetAnswerDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
-            Integer result = studentInfoDTOMapper.insertSelective(record);
+            Integer result = answerSheetAnswerDTOMapper.insertSelective(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
@@ -76,13 +73,13 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
-    public ExecuteResult<StudentInfoDTO> selectByPrimaryKey(StudentInfoDTO record) {
-        ExecuteResult<StudentInfoDTO> executeResult = new ExecuteResult<StudentInfoDTO>();
+    public ExecuteResult<AnswerSheetAnswerDTO> selectByPrimaryKey(AnswerSheetAnswerDTO record) {
+        ExecuteResult<AnswerSheetAnswerDTO> executeResult = new ExecuteResult<AnswerSheetAnswerDTO>();
         try {
-            if(StringUtils.isEmpty(record)){
+            if(StringUtils.isEmpty(record.getId())){
                 throw new RuntimeException("参数错误：ID非空");
             }
-            StudentInfoDTO result = studentInfoDTOMapper.selectByPrimaryKey(record.getId());
+            AnswerSheetAnswerDTO result = answerSheetAnswerDTOMapper.selectByPrimaryKey(record.getId());
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
@@ -94,32 +91,15 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
-    public ExecuteResult<StudentInfoDTO> selectPasswordByPrimaryKey(StudentInfoDTO record) {
-        ExecuteResult<StudentInfoDTO> executeResult = new ExecuteResult<StudentInfoDTO>();
-        try {
-            if(StringUtils.isEmpty(record)){
-                throw new RuntimeException("参数错误：ID非空");
-            }
-            StudentInfoDTO result = studentInfoDTOMapper.selectPasswordByPrimaryKey(record.getId());
-            executeResult.setResult(result);
-            executeResult.setResultMessage("成功！");
-        }catch (Exception e){
-            executeResult.setResultMessage("异常错误！");
-            executeResult.getErrorMessages().add(e.getMessage());
-            logger.error(e.getMessage());
-        }
-        return executeResult;    }
-
-    @Override
-    public ExecuteResult<DataUtil<StudentInfoDTO>> selectList(StudentInfoDTO record, Pager pager) {
-        ExecuteResult<DataUtil<StudentInfoDTO>> executeResult = new ExecuteResult<DataUtil<StudentInfoDTO>>();
+    public ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> selectList(AnswerSheetAnswerDTO record, Pager pager) {
+        ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> executeResult = new ExecuteResult<DataUtil<AnswerSheetAnswerDTO>>();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            List<StudentInfoDTO> result = studentInfoDTOMapper.selectList(record,pager);
-            Integer total = studentInfoDTOMapper.countTotal(record).intValue();
-            DataUtil<StudentInfoDTO> dtoDataUtil = new DataUtil<StudentInfoDTO>();
+            List<AnswerSheetAnswerDTO> result = answerSheetAnswerDTOMapper.selectList(record,pager);
+            Integer total = answerSheetAnswerDTOMapper.countTotal(record).intValue();
+            DataUtil<AnswerSheetAnswerDTO> dtoDataUtil = new DataUtil<AnswerSheetAnswerDTO>();
             dtoDataUtil.setList(result);
             dtoDataUtil.getPager().setTotalCount(total);
             executeResult.setResult(dtoDataUtil);
@@ -133,13 +113,13 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
-    public ExecuteResult<Integer> updateByPrimaryKeySelective(StudentInfoDTO record) {
+    public ExecuteResult<Integer> updateByPrimaryKeySelective(AnswerSheetAnswerDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            Integer result = studentInfoDTOMapper.updateByPrimaryKeySelective(record);
+            Integer result = answerSheetAnswerDTOMapper.updateByPrimaryKeySelective(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
@@ -151,42 +131,15 @@ public class StudentInfoServiceImpl implements StudentInfoService {
     }
 
     @Override
-    public ExecuteResult<Integer> updateByPrimaryKey(StudentInfoDTO record) {
+    public ExecuteResult<Integer> updateByPrimaryKey(AnswerSheetAnswerDTO record) {
         ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            Integer result = studentInfoDTOMapper.updateByPrimaryKey(record);
+            Integer result = answerSheetAnswerDTOMapper.updateByPrimaryKey(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
-        }catch (Exception e){
-            executeResult.setResultMessage("异常错误！");
-            executeResult.getErrorMessages().add(e.getMessage());
-            logger.error(e.getMessage());
-        }
-        return executeResult;
-    }
-
-    @Override
-    public ExecuteResult<Integer> updatePasswordByPrimaryKey(StudentInfoDTO record) {
-        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
-        try {
-            if(StringUtils.isEmpty(record)){
-                throw new RuntimeException("参数错误：对象非空");
-            }
-            StudentInfoDTO studentInfoDTO = studentInfoDTOMapper.selectPasswordByPrimaryKey(record.getId());
-            String oldPassword = Md5Util.encode(record.getStudentPassword());
-            if(studentInfoDTO.getStudentPassword().equals(oldPassword)){
-                record.setNewStudentPassword(Md5Util.encode(record.getNewStudentPassword()));
-                Integer result = studentInfoDTOMapper.updatePasswordByPrimaryKey(record);
-                executeResult.setResult(result);
-                executeResult.setResultMessage("成功！");
-            }else{
-                executeResult.setResult(0);
-                executeResult.setResultMessage("旧密码错误！");
-            }
-
         }catch (Exception e){
             executeResult.setResultMessage("异常错误！");
             executeResult.getErrorMessages().add(e.getMessage());

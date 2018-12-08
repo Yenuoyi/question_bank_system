@@ -4,6 +4,7 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.TeacherInfoDTO;
 import com.org.bank.service.TeacherInfoService;
 import com.sun.istack.internal.logging.Logger;
@@ -17,7 +18,7 @@ import javax.annotation.Resource;
  * 教师角色可访问的教师角色控制类
  */
 @RestController
-@RequestMapping("/teacher/teacher")
+@RequestMapping("/teacher")
 public class TeacherInfoController {
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
@@ -25,7 +26,10 @@ public class TeacherInfoController {
 
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody TeacherInfoDTO record){
+    public Wrapper<?> selectByPrimaryKey(){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        TeacherInfoDTO record = new TeacherInfoDTO();
+        record.setId(id);
         ExecuteResult<TeacherInfoDTO> executeResult = teacherInfoService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -33,17 +37,11 @@ public class TeacherInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody TeacherInfoDTO record){
-        ExecuteResult<DataUtil<TeacherInfoDTO>> executeResult = teacherInfoService.selectList(record,record.getPager());
-        if(executeResult.isSuccess()){
-            return WrapMapper.ok().result(executeResult);
-        }
-        return WrapMapper.error().result(executeResult);
-    }
 
     @RequestMapping("/updateByPrimaryKeySelective")
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody TeacherInfoDTO record){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        record.setId(id);
         ExecuteResult<Integer> executeResult = teacherInfoService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -53,7 +51,20 @@ public class TeacherInfoController {
 
     @RequestMapping("/updateByPrimaryKey")
     public Wrapper<?> updateByPrimaryKey(@RequestBody TeacherInfoDTO record){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        record.setId(id);
         ExecuteResult<Integer> executeResult = teacherInfoService.updateByPrimaryKey(record);
+        if(executeResult.isSuccess()){
+            return WrapMapper.ok().result(executeResult);
+        }
+        return WrapMapper.error().result(executeResult);
+    }
+
+    @RequestMapping("/updatePasswordByPrimaryKey")
+    public Wrapper<?> updatePasswordByPrimaryKey(@RequestBody TeacherInfoDTO record){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        record.setId(id);
+        ExecuteResult<Integer> executeResult = teacherInfoService.updatePasswordByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

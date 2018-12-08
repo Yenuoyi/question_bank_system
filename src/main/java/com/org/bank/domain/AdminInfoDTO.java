@@ -17,6 +17,9 @@ public class AdminInfoDTO implements Serializable {
     /** 管理员密码 */
     private String adminPassword;
 
+    /** 管理员密码 */
+    private String newAdminPassword;
+
     /** 管理员手机 */
     private String adminIphone;
 
@@ -54,6 +57,14 @@ public class AdminInfoDTO implements Serializable {
 
     public void setAdminPassword(String adminPassword) {
         this.adminPassword = adminPassword == null ? null : adminPassword.trim();
+    }
+
+    public String getNewAdminPassword() {
+        return newAdminPassword;
+    }
+
+    public void setNewAdminPassword(String newAdminPassword) {
+        this.newAdminPassword = newAdminPassword;
     }
 
     public String getAdminIphone() {

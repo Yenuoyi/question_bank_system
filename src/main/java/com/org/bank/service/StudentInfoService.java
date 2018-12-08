@@ -14,9 +14,13 @@ public interface StudentInfoService {
 
     ExecuteResult<StudentInfoDTO> selectByPrimaryKey(StudentInfoDTO record);
 
+    ExecuteResult<StudentInfoDTO> selectPasswordByPrimaryKey(StudentInfoDTO record);
+
     ExecuteResult<DataUtil<StudentInfoDTO>> selectList(StudentInfoDTO record, Pager pager);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(StudentInfoDTO record);
 
     ExecuteResult<Integer> updateByPrimaryKey(StudentInfoDTO record);
+
+    ExecuteResult<Integer> updatePasswordByPrimaryKey(StudentInfoDTO record);
 }

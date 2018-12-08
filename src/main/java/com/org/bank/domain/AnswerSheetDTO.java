@@ -1,25 +1,29 @@
 package com.org.bank.domain;
 
+import com.org.bank.common.Pager;
+
 import java.io.Serializable;
 
 public class AnswerSheetDTO implements Serializable {
     /**  */
     private Integer id;
 
-    /** 1：教师出卷 */
-    private String answerSheetType;
+    /** 试卷id */
+    private Integer examinationPaperId;
 
-    /** 源试卷id */
-    private Integer originalExaminationPaperId;
+    /** 答题者id */
+    private Integer answerId;
 
-    /** 源试卷问题 */
-    private String originalExaminationPaperQuestion;
+    /** 答题者姓名 */
+    private String answererName;
 
-    /** 回答 */
-    private String examinationPaperAnswer;
+    /** 答卷人类型：3学生 */
+    private Integer answererType;
 
-    /** 答卷人id */
-    private Integer answererId;
+    /** 成绩 */
+    private Double grade;
+
+    private Pager pager;
 
     private static final long serialVersionUID = 1L;
 
@@ -31,43 +35,51 @@ public class AnswerSheetDTO implements Serializable {
         this.id = id;
     }
 
-    public String getAnswerSheetType() {
-        return answerSheetType;
+    public Integer getExaminationPaperId() {
+        return examinationPaperId;
     }
 
-    public void setAnswerSheetType(String answerSheetType) {
-        this.answerSheetType = answerSheetType == null ? null : answerSheetType.trim();
+    public void setExaminationPaperId(Integer examinationPaperId) {
+        this.examinationPaperId = examinationPaperId;
     }
 
-    public Integer getOriginalExaminationPaperId() {
-        return originalExaminationPaperId;
+    public Integer getAnswerId() {
+        return answerId;
     }
 
-    public void setOriginalExaminationPaperId(Integer originalExaminationPaperId) {
-        this.originalExaminationPaperId = originalExaminationPaperId;
+    public void setAnswerId(Integer answerId) {
+        this.answerId = answerId;
     }
 
-    public String getOriginalExaminationPaperQuestion() {
-        return originalExaminationPaperQuestion;
+    public String getAnswererName() {
+        return answererName;
     }
 
-    public void setOriginalExaminationPaperQuestion(String originalExaminationPaperQuestion) {
-        this.originalExaminationPaperQuestion = originalExaminationPaperQuestion == null ? null : originalExaminationPaperQuestion.trim();
+    public void setAnswererName(String answererName) {
+        this.answererName = answererName == null ? null : answererName.trim();
     }
 
-    public String getExaminationPaperAnswer() {
-        return examinationPaperAnswer;
+    public Integer getAnswererType() {
+        return answererType;
     }
 
-    public void setExaminationPaperAnswer(String examinationPaperAnswer) {
-        this.examinationPaperAnswer = examinationPaperAnswer == null ? null : examinationPaperAnswer.trim();
+    public void setAnswererType(Integer answererType) {
+        this.answererType = answererType;
     }
 
-    public Integer getAnswererId() {
-        return answererId;
+    public Double getGrade() {
+        return grade;
     }
 
-    public void setAnswererId(Integer answererId) {
-        this.answererId = answererId;
+    public void setGrade(Double grade) {
+        this.grade = grade;
+    }
+
+    public Pager getPager() {
+        return pager;
+    }
+
+    public void setPager(Pager pager) {
+        this.pager = pager;
     }
 }

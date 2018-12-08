@@ -4,6 +4,7 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.StudentInfoDTO;
 import com.org.bank.service.StudentInfoService;
 import com.sun.istack.internal.logging.Logger;
@@ -42,7 +43,10 @@ public class StudentInfoController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody StudentInfoDTO record){
+    public Wrapper<?> selectByPrimaryKey(){
+        int studentId = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        StudentInfoDTO record = new StudentInfoDTO();
+        record.setId(studentId);
         ExecuteResult<StudentInfoDTO> executeResult = studentInfoService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -50,17 +54,11 @@ public class StudentInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody StudentInfoDTO record){
-        ExecuteResult<DataUtil<StudentInfoDTO>> executeResult = studentInfoService.selectList(record,record.getPager());
-        if(executeResult.isSuccess()){
-            return WrapMapper.ok().result(executeResult);
-        }
-        return WrapMapper.error().result(executeResult);
-    }
 
     @RequestMapping("/updateByPrimaryKeySelective")
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody StudentInfoDTO record){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        record.setId(id);
         ExecuteResult<Integer> executeResult = studentInfoService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -70,7 +68,20 @@ public class StudentInfoController {
 
     @RequestMapping("/updateByPrimaryKey")
     public Wrapper<?> updateByPrimaryKey(@RequestBody StudentInfoDTO record){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        record.setId(id);
         ExecuteResult<Integer> executeResult = studentInfoService.updateByPrimaryKey(record);
+        if(executeResult.isSuccess()){
+            return WrapMapper.ok().result(executeResult);
+        }
+        return WrapMapper.error().result(executeResult);
+    }
+
+    @RequestMapping("/updatePasswordByPrimaryKey")
+    public Wrapper<?> updatePasswordByPrimaryKey(@RequestBody StudentInfoDTO record){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        record.setId(id);
+        ExecuteResult<Integer> executeResult = studentInfoService.updatePasswordByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

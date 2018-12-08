@@ -92,6 +92,23 @@ public class TeacherInfoServiceImpl implements TeacherInfoService {
     }
 
     @Override
+    public ExecuteResult<TeacherInfoDTO> selectPasswordByPrimaryKey(TeacherInfoDTO record) {
+        ExecuteResult<TeacherInfoDTO> executeResult = new ExecuteResult<TeacherInfoDTO>();
+        try {
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：ID非空");
+            }
+            TeacherInfoDTO result = teacherInfoDTOMapper.selectPasswordByPrimaryKey(record.getId());
+            executeResult.setResult(result);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;    }
+
+    @Override
     public ExecuteResult<DataUtil<TeacherInfoDTO>> selectList(TeacherInfoDTO record, Pager pager) {
         ExecuteResult<DataUtil<TeacherInfoDTO>> executeResult = new ExecuteResult<DataUtil<TeacherInfoDTO>>();
         try {
@@ -141,6 +158,33 @@ public class TeacherInfoServiceImpl implements TeacherInfoService {
             Integer result = teacherInfoDTOMapper.updateByPrimaryKey(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<Integer> updatePasswordByPrimaryKey(TeacherInfoDTO record) {
+        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
+        try {
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            TeacherInfoDTO teacherInfoDTO = teacherInfoDTOMapper.selectPasswordByPrimaryKey(record.getId());
+            String oldPassword = Md5Util.encode(record.getTeacherPassword());
+            if(teacherInfoDTO.getTeacherPassword().equals(oldPassword)){
+                record.setNewTeacherPassword(Md5Util.encode(record.getNewTeacherPassword()));
+                Integer result = teacherInfoDTOMapper.updatePasswordByPrimaryKey(record);
+                executeResult.setResult(result);
+                executeResult.setResultMessage("成功！");
+            }else{
+                executeResult.setResult(0);
+                executeResult.setResultMessage("旧密码错误！");
+            }
+
         }catch (Exception e){
             executeResult.setResultMessage("异常错误！");
             executeResult.getErrorMessages().add(e.getMessage());

@@ -95,6 +95,24 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
+    public ExecuteResult<AdminInfoDTO> selectPasswordByPrimaryKey(AdminInfoDTO record) {
+        ExecuteResult<AdminInfoDTO> executeResult = new ExecuteResult<AdminInfoDTO>();
+        try {
+            if(StringUtils.isEmpty(record.getId())){
+                throw new RuntimeException("参数错误：ID非空");
+            }
+            AdminInfoDTO result = adminInfoDTOMapper.selectPasswordByPrimaryKey(record.getId());
+            executeResult.setResult(result);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
     public ExecuteResult<DataUtil<AdminInfoDTO>> selectList(AdminInfoDTO record, Pager pager) {
         ExecuteResult<DataUtil<AdminInfoDTO>> executeResult = new ExecuteResult<DataUtil<AdminInfoDTO>>();
         try {
@@ -144,6 +162,33 @@ public class AdminInfoServiceImpl implements AdminInfoService {
             Integer result = adminInfoDTOMapper.updateByPrimaryKey(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<Integer> updatePasswordByPrimaryKey(AdminInfoDTO record) {
+        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
+        try {
+            if(StringUtils.isEmpty(record.getId())){
+                throw new RuntimeException("参数错误：ID非空");
+            }
+            AdminInfoDTO adminInfoDTO = adminInfoDTOMapper.selectPasswordByPrimaryKey(record.getId());
+            String oldPassword = Md5Util.encode(record.getAdminPassword());
+            if(adminInfoDTO.getAdminPassword().equals(oldPassword)){
+                record.setNewAdminPassword(Md5Util.encode(record.getNewAdminPassword()));
+                Integer result = adminInfoDTOMapper.updatePasswordByPrimaryKey(record);
+                executeResult.setResult(result);
+                executeResult.setResultMessage("成功！");
+            }else{
+                executeResult.setResult(0);
+                executeResult.setResultMessage("旧密码错误！");
+            }
+
         }catch (Exception e){
             executeResult.setResultMessage("异常错误！");
             executeResult.getErrorMessages().add(e.getMessage());

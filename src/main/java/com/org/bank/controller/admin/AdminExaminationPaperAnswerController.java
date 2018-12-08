@@ -4,10 +4,8 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.config.spring.security.UserSecurityContextHolder;
-import com.org.bank.domain.TeacherInfoDTO;
-import com.org.bank.service.TeacherInfoService;
-import com.sun.istack.internal.logging.Logger;
+import com.org.bank.domain.AnswerSheetAnswerDTO;
+import com.org.bank.service.AnswerSheetAnswerService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,17 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- * 教师控制器
+ * 管理员角色拥有的答卷控制器
  */
 @RestController
-@RequestMapping("/admin/teacher")
-public class AdminTeacherInfoController {
-    private Logger logger = Logger.getLogger(this.getClass());
+@RequestMapping("/admin/examinationPaperAnswer")
+public class AdminExaminationPaperAnswerController {
     @Resource
-    private TeacherInfoService teacherInfoService;
+    private AnswerSheetAnswerService answerSheetAnswerService;
     @RequestMapping("/deleteByPrimaryKey")
-    public Wrapper<?> deleteByPrimaryKey(@RequestBody TeacherInfoDTO record){
-        ExecuteResult<Integer> executeResult = teacherInfoService.deleteByPrimaryKey(record);
+    public Wrapper<?> deleteByPrimaryKey(@RequestBody AnswerSheetAnswerDTO record){
+        ExecuteResult<Integer> executeResult = answerSheetAnswerService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -33,8 +30,8 @@ public class AdminTeacherInfoController {
     }
 
     @RequestMapping("/insert")
-    public Wrapper<?> insert(@RequestBody TeacherInfoDTO record){
-        ExecuteResult<Integer> executeResult = teacherInfoService.insert(record);
+    public Wrapper<?> insert(@RequestBody AnswerSheetAnswerDTO record){
+        ExecuteResult<Integer> executeResult = answerSheetAnswerService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -42,8 +39,8 @@ public class AdminTeacherInfoController {
     }
 
     @RequestMapping("/insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody TeacherInfoDTO record){
-        ExecuteResult<Integer> executeResult = teacherInfoService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody AnswerSheetAnswerDTO record){
+        ExecuteResult<Integer> executeResult = answerSheetAnswerService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -51,8 +48,8 @@ public class AdminTeacherInfoController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody TeacherInfoDTO record){
-        ExecuteResult<TeacherInfoDTO> executeResult = teacherInfoService.selectByPrimaryKey(record);
+    public Wrapper<?> selectByPrimaryKey(@RequestBody AnswerSheetAnswerDTO record){
+        ExecuteResult<AnswerSheetAnswerDTO> executeResult = answerSheetAnswerService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -60,19 +57,18 @@ public class AdminTeacherInfoController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody TeacherInfoDTO record){
-        ExecuteResult<DataUtil<TeacherInfoDTO>> executeResult = teacherInfoService.selectList(record,record.getPager());
+    public Wrapper<?> selectList(@RequestBody AnswerSheetAnswerDTO record){
+        ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> executeResult = answerSheetAnswerService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
         return WrapMapper.error().result(executeResult);
     }
 
+
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody TeacherInfoDTO record){
-        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
-        record.setId(id);
-        ExecuteResult<Integer> executeResult = teacherInfoService.updateByPrimaryKeySelective(record);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody AnswerSheetAnswerDTO record){
+        ExecuteResult<Integer> executeResult = answerSheetAnswerService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -80,8 +76,8 @@ public class AdminTeacherInfoController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody TeacherInfoDTO record){
-        ExecuteResult<Integer> executeResult = teacherInfoService.updateByPrimaryKey(record);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody AnswerSheetAnswerDTO record){
+        ExecuteResult<Integer> executeResult = answerSheetAnswerService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

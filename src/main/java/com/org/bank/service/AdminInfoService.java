@@ -16,9 +16,13 @@ public interface AdminInfoService {
 
     ExecuteResult<AdminInfoDTO> selectByPrimaryKey(AdminInfoDTO record);
 
+    ExecuteResult<AdminInfoDTO> selectPasswordByPrimaryKey(AdminInfoDTO record);
+
     ExecuteResult<DataUtil<AdminInfoDTO>> selectList(AdminInfoDTO record, Pager pager);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(AdminInfoDTO record);
 
     ExecuteResult<Integer> updateByPrimaryKey(AdminInfoDTO record);
+
+    ExecuteResult<Integer> updatePasswordByPrimaryKey(AdminInfoDTO record);
 }

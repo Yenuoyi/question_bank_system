@@ -14,7 +14,11 @@ public class ExaminationPaperDTO implements Serializable {
     /** 出卷人类型 */
     private Integer examinerType;
 
+    /** 试卷名 */
+    private String examinationPaperName;
+
     private Pager pager;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -41,6 +45,13 @@ public class ExaminationPaperDTO implements Serializable {
         this.examinerType = examinerType;
     }
 
+    public String getExaminationPaperName() {
+        return examinationPaperName;
+    }
+
+    public void setExaminationPaperName(String examinationPaperName) {
+        this.examinationPaperName = examinationPaperName == null ? null : examinationPaperName.trim();
+    }
     public Pager getPager() {
         return pager;
     }

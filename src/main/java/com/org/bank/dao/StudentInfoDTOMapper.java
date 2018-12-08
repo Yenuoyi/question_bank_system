@@ -17,6 +17,8 @@ public interface StudentInfoDTOMapper {
 
     StudentInfoDTO selectByPrimaryKey(Integer id);
 
+    StudentInfoDTO selectPasswordByPrimaryKey(Integer id);
+
     List<StudentInfoDTO> selectList(@Param("record")StudentInfoDTO studentInfoDTO, @Param("pager") Pager pager);
 
     Long countTotal(StudentInfoDTO record);
@@ -24,4 +26,6 @@ public interface StudentInfoDTOMapper {
     int updateByPrimaryKeySelective(StudentInfoDTO record);
 
     int updateByPrimaryKey(StudentInfoDTO record);
+
+    int updatePasswordByPrimaryKey(StudentInfoDTO record);
 }

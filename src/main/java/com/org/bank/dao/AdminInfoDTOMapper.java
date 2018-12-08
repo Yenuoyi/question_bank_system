@@ -15,7 +15,9 @@ public interface AdminInfoDTOMapper {
 
     int insertSelective(AdminInfoDTO record);
 
-    AdminInfoDTO selectByPrimaryKey(Integer adminId);
+    AdminInfoDTO selectByPrimaryKey(Integer id);
+
+    AdminInfoDTO selectPasswordByPrimaryKey(Integer id);
 
     List<AdminInfoDTO> selectList(@Param("record") AdminInfoDTO record, @Param("pager") Pager pager);
 
@@ -24,4 +26,6 @@ public interface AdminInfoDTOMapper {
     int updateByPrimaryKeySelective(AdminInfoDTO record);
 
     int updateByPrimaryKey(AdminInfoDTO record);
+
+    int updatePasswordByPrimaryKey(AdminInfoDTO record);
 }

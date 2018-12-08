@@ -4,6 +4,7 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.AdminInfoDTO;
 import com.org.bank.service.AdminInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,10 @@ public class AdminInfoController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody AdminInfoDTO record){
+    public Wrapper<?> selectByPrimaryKey(){
+        int studentId = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        AdminInfoDTO record = new AdminInfoDTO();
+        record.setId(studentId);
         ExecuteResult<AdminInfoDTO> executeResult = adminInfoService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -66,6 +70,8 @@ public class AdminInfoController {
 
     @RequestMapping("/updateByPrimaryKeySelective")
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody AdminInfoDTO record){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        record.setId(id);
         ExecuteResult<Integer> executeResult = adminInfoService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -75,10 +81,24 @@ public class AdminInfoController {
 
     @RequestMapping("/updateByPrimaryKey")
     public Wrapper<?> updateByPrimaryKey(@RequestBody AdminInfoDTO record){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        record.setId(id);
         ExecuteResult<Integer> executeResult = adminInfoService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
         return WrapMapper.error().result(executeResult);
     }
+
+    @RequestMapping("/updatePasswordByPrimaryKey")
+    public Wrapper<?> updatePasswordByPrimaryKey(@RequestBody AdminInfoDTO record){
+        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        record.setId(id);
+        ExecuteResult<Integer> executeResult = adminInfoService.updatePasswordByPrimaryKey(record);
+        if(executeResult.isSuccess()){
+            return WrapMapper.ok().result(executeResult);
+        }
+        return WrapMapper.error().result(executeResult);
+    }
+
 }
