@@ -6,7 +6,7 @@ import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
 import com.org.bank.domain.StudentInfoDTO;
 import com.org.bank.service.StudentInfoService;
-import com.sun.istack.internal.logging.Logger;
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
