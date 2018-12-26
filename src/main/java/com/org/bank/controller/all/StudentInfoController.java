@@ -44,9 +44,9 @@ public class StudentInfoController {
 
     @RequestMapping("/selectByPrimaryKey")
     public Wrapper<?> selectByPrimaryKey(){
-        int studentId = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        String email = UserSecurityContextHolder.getUsername();
         StudentInfoDTO record = new StudentInfoDTO();
-        record.setId(studentId);
+        record.setStudentEmail(email);
         ExecuteResult<StudentInfoDTO> executeResult = studentInfoService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -57,8 +57,8 @@ public class StudentInfoController {
 
     @RequestMapping("/updateByPrimaryKeySelective")
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody StudentInfoDTO record){
-        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
-        record.setId(id);
+        String email = UserSecurityContextHolder.getUsername();
+        record.setStudentEmail(email);
         ExecuteResult<Integer> executeResult = studentInfoService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -68,8 +68,8 @@ public class StudentInfoController {
 
     @RequestMapping("/updateByPrimaryKey")
     public Wrapper<?> updateByPrimaryKey(@RequestBody StudentInfoDTO record){
-        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
-        record.setId(id);
+        String email = UserSecurityContextHolder.getUsername();
+        record.setStudentEmail(email);
         ExecuteResult<Integer> executeResult = studentInfoService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -79,8 +79,8 @@ public class StudentInfoController {
 
     @RequestMapping("/updatePasswordByPrimaryKey")
     public Wrapper<?> updatePasswordByPrimaryKey(@RequestBody StudentInfoDTO record){
-        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
-        record.setId(id);
+        String email = UserSecurityContextHolder.getUsername();
+        record.setStudentEmail(email);
         ExecuteResult<Integer> executeResult = studentInfoService.updatePasswordByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

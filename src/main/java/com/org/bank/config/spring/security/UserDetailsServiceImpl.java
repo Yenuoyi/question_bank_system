@@ -42,30 +42,43 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<GrantedAuthority> auths = new ArrayList<GrantedAuthority>();
         String[] roleUserId = username.split("_");
         String role = roleUserId[0];
-        Integer userId =Integer.parseInt(roleUserId[1]);
+        String email =roleUserId[1];
         String password = null;
         Object user = null;
         if(role.equals(Role.ADMIN)){
-            AdminInfoDTO record = adminInfoDTOMapper.selectPasswordByPrimaryKey(userId);
-            //获取角色，放到list里面
-            this.getAdminRoles(record,auths);
-            password = record.getAdminPassword();
-            user = record;
-            logger.info("数据库密码："+record.getAdminPassword());
+            AdminInfoDTO record = new AdminInfoDTO();
+            record.setAdminEmail(email);
+            List<AdminInfoDTO> adminInfoDTOS = adminInfoDTOMapper.selectList(record, null);
+            if(adminInfoDTOS.size()!=0){
+                record = adminInfoDTOS.get(0);
+                //获取角色，放到list里面
+                this.getAdminRoles(record,auths);
+                password = record.getAdminPassword();
+                user = record;
+                logger.info("数据库密码："+record.getAdminPassword());
+            }
         }
         if(role.equals(Role.TEACHER)){
-            TeacherInfoDTO record = teacherInfoDTOMapper.selectPasswordByPrimaryKey(userId);
-            this.getTeacherRoles(record,auths);
-            password = record.getTeacherPassword();
-            user = record;
-            logger.info("数据库密码："+record.getTeacherPassword());
+            TeacherInfoDTO record = new TeacherInfoDTO();
+            record.setTeacherEmail(email);
+            List<TeacherInfoDTO> teacherInfoDTOS = teacherInfoDTOMapper.selectList(record, null);
+            if(teacherInfoDTOS.size()!=0){
+                this.getTeacherRoles(record,auths);
+                password = record.getTeacherPassword();
+                user = record;
+                logger.info("数据库密码："+record.getTeacherPassword());
+            }
         }
         if(role.equals(Role.STUDENT)){
-            StudentInfoDTO record = studentInfoDTOMapper.selectPasswordByPrimaryKey(userId);
-            this.getStudentRoles(record,auths);
-            password = record.getStudentPassword();
-            user = record;
-            logger.info("数据库密码："+record.getStudentPassword());
+            StudentInfoDTO record = new StudentInfoDTO();
+            record.setStudentEmail(email);
+            List<StudentInfoDTO> studentInfoDTOS = studentInfoDTOMapper.selectList(record, null);
+            if(studentInfoDTOS.size()!=0){
+                this.getStudentRoles(record,auths);
+                password = record.getStudentPassword();
+                user = record;
+                logger.info("数据库密码："+record.getStudentPassword());
+            }
         }
         if (null == user) {
             throw new UsernameNotFoundException("用户" + username + "不存在");

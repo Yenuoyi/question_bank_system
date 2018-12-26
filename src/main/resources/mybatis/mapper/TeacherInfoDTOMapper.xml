@@ -20,13 +20,13 @@
         and id = #{record.id}
       </if>
       <if test="record.teacherName and record.teacherName != ''">
-        and teacher_name = #{record.id}
+        and teacher_name = #{record.teacherName}
       </if>
       <if test="record.teacherEmail and record.teacherEmail != ''">
-        and teacher_eamil = #{record.id}
+        and teacher_eamil = #{record.teacherEmail}
       </if>
       <if test="record.teacherIphone and record.teacherIphone != ''">
-        and teacher_iphone = #{record.id}
+        and teacher_iphone = #{record.teacherIphone}
       </if>
     </if>
   </sql>

@@ -2,7 +2,6 @@ package com.org.bank.common.CodeUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.util.Random;
 
 /**

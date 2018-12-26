@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.org.bank.domain.SingleChoiceQuestionDTO" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="single_choice_question" property="singleChoiceQuestion" jdbcType="VARCHAR" />
+    <result column="single_choice_option" property="singleChoiceOption" jdbcType="VARCHAR" />
     <result column="single_choice_answer" property="singleChoiceAnswer" jdbcType="VARCHAR" />
     <result column="examiner_id" property="examinerId" jdbcType="INTEGER" />
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
@@ -20,6 +21,9 @@
       </if>
       <if test="record.singleChoiceQuestion and record.singleChoiceQuestion != ''">
         and single_choice_question = #{record.singleChoiceQuestion}
+      </if>
+      <if test="record.singleChoiceOption and record.singleChoiceOption != ''">
+        and single_choice_option = #{record.singleChoiceOption}
       </if>
       <if test="record.singleChoiceAnswer and record.singleChoiceAnswer != ''">
         and single_choice_answer = #{record.singleChoiceAnswer}
@@ -87,9 +91,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.SingleChoiceQuestionDTO" >
-    insert into single_choice_question (id, single_choice_question, single_choice_answer, 
+    insert into single_choice_question (id, single_choice_question, single_choice_option, single_choice_answer,
       examiner_id, examiner_type)
-    values (#{id,jdbcType=INTEGER}, #{singleChoiceQuestion,jdbcType=VARCHAR}, #{singleChoiceAnswer,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{singleChoiceQuestion,jdbcType=VARCHAR}, #{singleChoiceOption,jdbcType=VARCHAR}, #{singleChoiceAnswer,jdbcType=VARCHAR},
       #{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.SingleChoiceQuestionDTO" >
@@ -100,6 +104,9 @@
       </if>
       <if test="singleChoiceQuestion != null" >
         single_choice_question,
+      </if>
+      <if test="singleChoiceOption != null" >
+        single_choice_option,
       </if>
       <if test="singleChoiceAnswer != null" >
         single_choice_answer,
@@ -118,6 +125,9 @@
       <if test="singleChoiceQuestion != null" >
         #{singleChoiceQuestion,jdbcType=VARCHAR},
       </if>
+      <if test="singleChoiceOption != null" >
+        #{singleChoiceOption,jdbcType=VARCHAR},
+      </if>
       <if test="singleChoiceAnswer != null" >
         #{singleChoiceAnswer,jdbcType=VARCHAR},
       </if>
@@ -135,6 +145,9 @@
       <if test="singleChoiceQuestion != null" >
         single_choice_question = #{singleChoiceQuestion,jdbcType=VARCHAR},
       </if>
+      <if test="singleChoiceOption != null" >
+        single_choice_option = #{singleChoiceOption,jdbcType=VARCHAR},
+      </if>
       <if test="singleChoiceAnswer != null" >
         single_choice_answer = #{singleChoiceAnswer,jdbcType=VARCHAR},
       </if>
@@ -150,6 +163,7 @@
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.SingleChoiceQuestionDTO" >
     update single_choice_question
     set single_choice_question = #{singleChoiceQuestion,jdbcType=VARCHAR},
+      single_choice_option = #{singleChoiceOption,jdbcType=VARCHAR},
       single_choice_answer = #{singleChoiceAnswer,jdbcType=VARCHAR},
       examiner_id = #{examinerId,jdbcType=INTEGER},
       examiner_type = #{examinerType,jdbcType=INTEGER}

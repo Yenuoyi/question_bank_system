@@ -4,13 +4,13 @@
   <resultMap id="BaseResultMap" type="com.org.bank.domain.AdminInfoDTO" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
-    <result column="admin_eamil" property="adminEamil" jdbcType="VARCHAR" />
+    <result column="admin_email" property="adminEmail" jdbcType="VARCHAR" />
     <result column="admin_password" property="adminPassword" jdbcType="VARCHAR" />
     <result column="admin_iphone" property="adminIphone" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, admin_name, admin_eamil, admin_password, admin_iphone
+    id, admin_name, admin_email, admin_password, admin_iphone
   </sql>
 
   <sql id="where_fragement">
@@ -20,13 +20,13 @@
         and id = #{record.id}
       </if>
       <if test="record.adminName and record.adminName != ''">
-        and admin_name = #{record.id}
+        and admin_name = #{record.adminName}
       </if>
       <if test="record.adminEmail and record.adminEmail != ''">
-        and admin_eamil = #{record.id}
+        and admin_email = #{record.adminEmail}
       </if>
       <if test="record.adminIphone and record.adminIphone != ''">
-        and admin_iphone = #{record.id}
+        and admin_iphone = #{record.adminIphone}
       </if>
     </if>
   </sql>
@@ -75,9 +75,9 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.AdminInfoDTO" >
-    insert into admin_info (id, admin_name, admin_eamil, 
+    insert into admin_info (id, admin_name, admin_email, 
       admin_password, admin_iphone)
-    values (#{id,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{adminEamil,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{adminEmail,jdbcType=VARCHAR}, 
       #{adminPassword,jdbcType=VARCHAR}, #{adminIphone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.AdminInfoDTO" >
@@ -89,8 +89,8 @@
       <if test="adminName != null" >
         admin_name,
       </if>
-      <if test="adminEamil != null" >
-        admin_eamil,
+      <if test="adminEmail != null" >
+        admin_email,
       </if>
       <if test="adminPassword != null" >
         admin_password,
@@ -106,8 +106,8 @@
       <if test="adminName != null" >
         #{adminName,jdbcType=VARCHAR},
       </if>
-      <if test="adminEamil != null" >
-        #{adminEamil,jdbcType=VARCHAR},
+      <if test="adminEmail != null" >
+        #{adminEmail,jdbcType=VARCHAR},
       </if>
       <if test="adminPassword != null" >
         #{adminPassword,jdbcType=VARCHAR},
@@ -123,8 +123,8 @@
       <if test="adminName != null" >
         admin_name = #{adminName,jdbcType=VARCHAR},
       </if>
-      <if test="adminEamil != null" >
-        admin_eamil = #{adminEamil,jdbcType=VARCHAR},
+      <if test="adminEmail != null" >
+        admin_email = #{adminEmail,jdbcType=VARCHAR},
       </if>
       <if test="adminIphone != null" >
         admin_iphone = #{adminIphone,jdbcType=VARCHAR},
@@ -136,7 +136,7 @@
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.AdminInfoDTO" >
     update admin_info
     set admin_name = #{adminName,jdbcType=VARCHAR},
-      admin_eamil = #{adminEamil,jdbcType=VARCHAR},
+      admin_email = #{adminEmail,jdbcType=VARCHAR},
       admin_password = #{adminPassword,jdbcType=VARCHAR},
       admin_iphone = #{adminIphone,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

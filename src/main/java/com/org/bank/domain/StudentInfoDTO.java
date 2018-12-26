@@ -121,7 +121,7 @@ public class StudentInfoDTO implements Serializable {
         AdminInfoDTO adminInfoDTO = new AdminInfoDTO();
         adminInfoDTO.setId(1);
         adminInfoDTO.setAdminPassword("123456");
-        adminInfoDTO.setAdminEamil("19689405@qq.com");
+        adminInfoDTO.setAdminEmail("19689405@qq.com");
         adminInfoDTO.setAdminIphone("15917934393");
         adminInfoDTO.setAdminName("yebing");
 //        adminInfoDTO.setPager(pager);

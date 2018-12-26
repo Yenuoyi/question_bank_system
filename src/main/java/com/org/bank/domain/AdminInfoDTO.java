@@ -12,7 +12,7 @@ public class AdminInfoDTO implements Serializable {
     private String adminName;
 
     /** 管理员邮箱 */
-    private String adminEamil;
+    private String adminEmail;
 
     /** 管理员密码 */
     private String adminPassword;
@@ -43,12 +43,12 @@ public class AdminInfoDTO implements Serializable {
         this.adminName = adminName == null ? null : adminName.trim();
     }
 
-    public String getAdminEamil() {
-        return adminEamil;
+    public String getAdminEmail() {
+        return adminEmail;
     }
 
-    public void setAdminEamil(String adminEamil) {
-        this.adminEamil = adminEamil == null ? null : adminEamil.trim();
+    public void setAdminEmail(String adminEmail) {
+        this.adminEmail = adminEmail;
     }
 
     public String getAdminPassword() {

@@ -1,6 +1,8 @@
 package com.org.bank.domain;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.bank.common.Pager;
+import org.springframework.security.core.parameters.P;
 
 import java.io.Serializable;
 
@@ -10,6 +12,9 @@ public class SingleChoiceQuestionDTO implements Serializable {
 
     /** 问题 */
     private String singleChoiceQuestion;
+
+    /** 选项 */
+    private String singleChoiceOption;
 
     /** 答案 */
     private String singleChoiceAnswer;
@@ -41,6 +46,14 @@ public class SingleChoiceQuestionDTO implements Serializable {
 
     public void setSingleChoiceQuestion(String singleChoiceQuestion) {
         this.singleChoiceQuestion = singleChoiceQuestion == null ? null : singleChoiceQuestion.trim();
+    }
+
+    public String getSingleChoiceOption() {
+        return singleChoiceOption;
+    }
+
+    public void setSingleChoiceOption(String singleChoiceOption) {
+        this.singleChoiceOption = singleChoiceOption;
     }
 
     public String getSingleChoiceAnswer() {
@@ -81,5 +94,14 @@ public class SingleChoiceQuestionDTO implements Serializable {
 
     public void setPager(Pager pager) {
         this.pager = pager;
+    }
+
+    public static void main(String[] args){
+        SingleChoiceQuestionDTO singleChoiceQuestionDTO = new SingleChoiceQuestionDTO();
+        Pager pager = new Pager();
+        singleChoiceQuestionDTO.setPager(pager);
+        singleChoiceQuestionDTO.getPager().setRows(10);
+        singleChoiceQuestionDTO.getPager().setPage(1);
+        System.out.print(JSONObject.toJSONString(singleChoiceQuestionDTO));
     }
 }

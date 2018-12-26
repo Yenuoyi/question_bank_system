@@ -11,6 +11,9 @@ public class MultipleChoiceQuestionDTO implements Serializable {
     /** 问题 */
     private String multipleChoiceQuestion;
 
+    /** 选项 */
+    private String multipleChoiceOption;
+
     /** 答案 */
     private String multipleChoiceAnswer;
 
@@ -41,6 +44,14 @@ public class MultipleChoiceQuestionDTO implements Serializable {
 
     public void setMultipleChoiceQuestion(String multipleChoiceQuestion) {
         this.multipleChoiceQuestion = multipleChoiceQuestion == null ? null : multipleChoiceQuestion.trim();
+    }
+
+    public String getMultipleChoiceOption() {
+        return multipleChoiceOption;
+    }
+
+    public void setMultipleChoiceOption(String multipleChoiceOption) {
+        this.multipleChoiceOption = multipleChoiceOption;
     }
 
     public String getMultipleChoiceAnswer() {
