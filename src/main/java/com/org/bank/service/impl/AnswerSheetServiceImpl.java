@@ -144,4 +144,10 @@ public class AnswerSheetServiceImpl implements AnswerSheetService {
         }
         return executeResult;
     }
+
+    public static void main(String[] args){
+        Integer var = 0;
+        System.out.println(var == 0);
+        System.out.println(var == 1);
+    }
 }

@@ -4,12 +4,15 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.TrueFalseQuestionDTO;
 import com.org.bank.service.TrueFalseQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 教师角色可访问的判断题控制类
@@ -28,8 +31,10 @@ public class TeacherTrueFalseQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insert")
-    public Wrapper<?> insert(@RequestBody TrueFalseQuestionDTO record){
+    @RequestMapping("/insert")
+    public Wrapper<?> insert(@RequestBody TrueFalseQuestionDTO record, HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<Integer> executeResult = trueFalseQuestionService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -37,8 +42,10 @@ public class TeacherTrueFalseQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody TrueFalseQuestionDTO record){
+    @RequestMapping("/insertSelective")
+    public Wrapper<?> insertSelective(@RequestBody TrueFalseQuestionDTO record,HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<Integer> executeResult = trueFalseQuestionService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

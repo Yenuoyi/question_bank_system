@@ -5,6 +5,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Component("userSecurityContextHolder")
 public class UserSecurityContextHolder {
     public static UserDetails getUserDetails(){
@@ -43,5 +45,10 @@ public class UserSecurityContextHolder {
             return 3;
         }
         return 3;
+    }
+
+    public static int getUserId(HttpServletRequest httpServletRequest){
+        int id = Integer.parseInt(httpServletRequest.getAttribute("id").toString());
+        return id;
     }
 }

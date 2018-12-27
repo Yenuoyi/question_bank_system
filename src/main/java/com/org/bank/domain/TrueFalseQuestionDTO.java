@@ -18,7 +18,7 @@ public class TrueFalseQuestionDTO implements Serializable {
     private Integer examinerId;
 
     /** 出题人类型：1admin 2教师 */
-    private String examinerType;
+    private Integer examinerType;
 
     /** 习题练习是否正确，0：错误，1：正确 */
     private Integer trueOrFalse;
@@ -59,12 +59,12 @@ public class TrueFalseQuestionDTO implements Serializable {
         this.examinerId = examinerId;
     }
 
-    public String getExaminerType() {
+    public Integer getExaminerType() {
         return examinerType;
     }
 
-    public void setExaminerType(String examinerType) {
-        this.examinerType = examinerType == null ? null : examinerType.trim();
+    public void setExaminerType(Integer examinerType) {
+        this.examinerType = examinerType;
     }
 
     public Integer getTrueOrFalse() {

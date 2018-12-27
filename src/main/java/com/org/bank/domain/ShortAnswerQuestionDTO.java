@@ -1,5 +1,6 @@
 package com.org.bank.domain;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.bank.common.Pager;
 
 import java.io.Serializable;
@@ -16,9 +17,6 @@ public class ShortAnswerQuestionDTO implements Serializable {
 
     /** 出题人id */
     private Integer examinerId;
-
-    /** 出题人code */
-    private String examinerCode;
 
     /** 出题人类型 */
     private Integer examinerType;
@@ -59,14 +57,6 @@ public class ShortAnswerQuestionDTO implements Serializable {
         this.examinerId = examinerId;
     }
 
-    public String getExaminerCode() {
-        return examinerCode;
-    }
-
-    public void setExaminerCode(String examinerCode) {
-        this.examinerCode = examinerCode == null ? null : examinerCode.trim();
-    }
-
     public Integer getExaminerType() {
         return examinerType;
     }
@@ -81,5 +71,12 @@ public class ShortAnswerQuestionDTO implements Serializable {
 
     public void setPager(Pager pager) {
         this.pager = pager;
+    }
+
+    public static void main(String[] args){
+        ShortAnswerQuestionDTO shortAnswerQuestionDTO = new ShortAnswerQuestionDTO();
+        shortAnswerQuestionDTO.setShortAnswerAnswer("这个是问题！");
+        shortAnswerQuestionDTO.setShortAnswerQuestion("这个是回答！");
+        System.out.println(JSONObject.toJSONString(shortAnswerQuestionDTO));
     }
 }
