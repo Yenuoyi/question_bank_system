@@ -76,15 +76,17 @@
                 var strTxtName = encodeURI($("#txtName").val());
                 //获取输入密码
                 var strTxtPass = encodeURI($("#txtPass").val());
-                var contents = JSON.stringify({ 'username': strTxtName, 'password': strTxtPass, 'role':'ADMIN'});
+                //用户角色
+                var role = encodeURI($("#txtRole").val());
+                var contents = JSON.stringify({ 'username': strTxtName, 'password': strTxtPass, 'role':role});
                 //开始发送数据
                 $.ajax({
                     type:"post",
                     headers: {
                         "content-Type":"application/json",
                     },
-                    url:"http://47.107.250.149:8081/login",
-                    // url:"http://localhost:8081/login",
+                    // url:"http://47.107.250.149:8081/login",
+                    url:"http://localhost:8081/login",
                     contentType:"application/json",
                     data:contents,
                     success:function(result) {
@@ -109,6 +111,8 @@
 					名称：<input id="txtName" type="text" class="txt"></div>
 				<div>
 					密码：<input id="txtPass" type="password" class="txt"></div>
+				<div>
+					用户角色：<input id="txtRole" type="text" class="txt"></div>
 				<div>
 					<input id="btnLogin" type="button" value="登录" class="btn">&nbsp;&nbsp;
 					<input id="btnReset" type="reset" value="取消" class="btn">

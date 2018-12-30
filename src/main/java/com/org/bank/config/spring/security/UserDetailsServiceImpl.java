@@ -63,6 +63,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             record.setTeacherEmail(email);
             List<TeacherInfoDTO> teacherInfoDTOS = teacherInfoDTOMapper.selectList(record, null);
             if(teacherInfoDTOS.size()!=0){
+                record = teacherInfoDTOS.get(0);
                 this.getTeacherRoles(record,auths);
                 password = record.getTeacherPassword();
                 user = record;
@@ -74,6 +75,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             record.setStudentEmail(email);
             List<StudentInfoDTO> studentInfoDTOS = studentInfoDTOMapper.selectList(record, null);
             if(studentInfoDTOS.size()!=0){
+                record = studentInfoDTOS.get(0);
                 this.getStudentRoles(record,auths);
                 password = record.getStudentPassword();
                 user = record;

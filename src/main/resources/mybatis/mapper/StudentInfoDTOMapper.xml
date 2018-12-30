@@ -10,7 +10,7 @@
     <result column="class_id" property="classId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, student_name, student_email, student_iphone, class_id
+    id, student_name, student_email, student_iphone, class_id, student_password
   </sql>
 
   <sql id="where_fragement">

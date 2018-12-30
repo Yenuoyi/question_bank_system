@@ -10,7 +10,7 @@
   </resultMap>
   
   <sql id="Base_Column_List" >
-    id, teacher_name, teacher_email, teacher_iphone
+    id, teacher_name, teacher_email, teacher_iphone, teacher_password
   </sql>
 
   <sql id="where_fragement">
