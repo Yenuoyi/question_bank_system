@@ -23,7 +23,7 @@
         and teacher_name = #{record.teacherName}
       </if>
       <if test="record.teacherEmail and record.teacherEmail != ''">
-        and teacher_eamil = #{record.teacherEmail}
+        and teacher_email = #{record.teacherEmail}
       </if>
       <if test="record.teacherIphone and record.teacherIphone != ''">
         and teacher_iphone = #{record.teacherIphone}

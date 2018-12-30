@@ -17,8 +17,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 功能：动态获取用户账号密码认证
@@ -98,5 +98,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public void getStudentRoles(StudentInfoDTO studentInfoDTO,List<GrantedAuthority> list){
         list.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
     }
+    public static void main(String[] args){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        System.out.print("当前时间："+format.format(calendar.getTime()));
 
+
+//        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.DAY_OF_MONTH,1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND,0);
+        System.out.print("当前月开始时间："+format.format(calendar.getTime()));
+
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND,0);
+
+        Date m = calendar.getTime();
+        String mon = format.format(m);
+        System.out.println("下个月开始时间："+mon);
+    }
 }
