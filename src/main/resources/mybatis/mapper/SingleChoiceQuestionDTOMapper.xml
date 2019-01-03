@@ -10,7 +10,7 @@
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, single_choice_question, single_choice_answer, examiner_id, examiner_type
+    id, single_choice_question, single_choice_option, single_choice_answer, examiner_id, examiner_type
   </sql>
 
   <sql id="where_fragement">
