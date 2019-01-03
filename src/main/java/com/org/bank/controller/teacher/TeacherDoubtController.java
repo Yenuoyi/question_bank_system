@@ -31,7 +31,7 @@ public class TeacherDoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insert")
+    @RequestMapping("/insert")
     public Wrapper<?> insert(@RequestBody DoubtDTO record){
         ExecuteResult<Integer> executeResult = doubtService.insert(record);
         if(executeResult.isSuccess()){
@@ -40,7 +40,7 @@ public class TeacherDoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insertSelective")
+    @RequestMapping("/insertSelective")
     public Wrapper<?> insertSelective(@RequestBody DoubtDTO record){
         ExecuteResult<Integer> executeResult = doubtService.insertSelective(record);
         if(executeResult.isSuccess()){

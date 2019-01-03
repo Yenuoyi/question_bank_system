@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 /**
  * 教师角色可访问的填空题控制类
@@ -54,7 +55,9 @@ public class TeacherFillVainQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody FillVainQuestionDTO record){
+    public Wrapper<?> selectByPrimaryKey(@RequestBody FillVainQuestionDTO record,HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<FillVainQuestionDTO> executeResult = fillVainQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -63,7 +66,9 @@ public class TeacherFillVainQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody FillVainQuestionDTO record){
+    public Wrapper<?> selectList(@RequestBody FillVainQuestionDTO record,HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = fillVainQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -87,5 +92,20 @@ public class TeacherFillVainQuestionController {
             return WrapMapper.ok().result(executeResult);
         }
         return WrapMapper.error().result(executeResult);
+    }
+
+    public static void main(String[] args){
+        BigDecimal total = new BigDecimal(548.1);
+        BigDecimal proportion = new BigDecimal(0.02);
+        System.out.println(total.multiply(proportion));
+        System.out.println(total.multiply(proportion).setScale(2,BigDecimal.ROUND_DOWN));
+        System.out.println(total.multiply(proportion).setScale(2,BigDecimal.ROUND_HALF_UP));
+
+        System.out.println(new BigDecimal(25.32522).setScale(2,BigDecimal.ROUND_DOWN));
+        System.out.println(new BigDecimal(1.12345).setScale(2,BigDecimal.ROUND_DOWN));
+        System.out.println(new BigDecimal(1.0000000000000000022).setScale(2,BigDecimal.ROUND_DOWN));
+        System.out.println(new BigDecimal(1.015555).setScale(2,BigDecimal.ROUND_DOWN));
+
+
     }
 }

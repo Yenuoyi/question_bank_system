@@ -6,11 +6,10 @@
     <result column="short_answer_question" property="shortAnswerQuestion" jdbcType="VARCHAR" />
     <result column="short_answer_answer" property="shortAnswerAnswer" jdbcType="VARCHAR" />
     <result column="examiner_id" property="examinerId" jdbcType="INTEGER" />
-    <result column="examiner_code" property="examinerCode" jdbcType="VARCHAR" />
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, short_answer_question, short_answer_answer, examiner_id, examiner_code, examiner_type
+    id, short_answer_question, short_answer_answer, examiner_id, examiner_type
   </sql>
 
   <sql id="where_fragement">
@@ -27,9 +26,6 @@
       </if>
       <if test="record.examinerId and record.examinerId != ''">
         and examiner_id = #{record.examinerId}
-      </if>
-      <if test="record.examinerType and record.examinerType != ''">
-        and examiner_code = #{record.examinerCode}
       </if>
       <if test="record.examinerType and record.examinerType != ''">
         and examiner_type = #{record.examinerType}
@@ -96,7 +92,7 @@
       examiner_id, examiner_code, examiner_type
       )
     values (#{id,jdbcType=INTEGER}, #{shortAnswerQuestion,jdbcType=VARCHAR}, #{shortAnswerAnswer,jdbcType=VARCHAR}, 
-      #{examinerId,jdbcType=INTEGER}, #{examinerCode,jdbcType=VARCHAR}, #{examinerType,jdbcType=INTEGER}
+      #{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.ShortAnswerQuestionDTO" >
@@ -113,9 +109,6 @@
       </if>
       <if test="examinerId != null" >
         examiner_id,
-      </if>
-      <if test="examinerCode != null" >
-        examiner_code,
       </if>
       <if test="examinerType != null" >
         examiner_type,
@@ -134,9 +127,6 @@
       <if test="examinerId != null" >
         #{examinerId,jdbcType=INTEGER},
       </if>
-      <if test="examinerCode != null" >
-        #{examinerCode,jdbcType=VARCHAR},
-      </if>
       <if test="examinerType != null" >
         #{examinerType,jdbcType=INTEGER},
       </if>
@@ -154,9 +144,6 @@
       <if test="examinerId != null" >
         examiner_id = #{examinerId,jdbcType=INTEGER},
       </if>
-      <if test="examinerCode != null" >
-        examiner_code = #{examinerCode,jdbcType=VARCHAR},
-      </if>
       <if test="examinerType != null" >
         examiner_type = #{examinerType,jdbcType=INTEGER},
       </if>
@@ -168,7 +155,6 @@
     set short_answer_question = #{shortAnswerQuestion,jdbcType=VARCHAR},
       short_answer_answer = #{shortAnswerAnswer,jdbcType=VARCHAR},
       examiner_id = #{examinerId,jdbcType=INTEGER},
-      examiner_code = #{examinerCode,jdbcType=VARCHAR},
       examiner_type = #{examinerType,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

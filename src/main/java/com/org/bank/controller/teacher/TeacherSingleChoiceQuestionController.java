@@ -54,7 +54,9 @@ public class TeacherSingleChoiceQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
+    public Wrapper<?> selectByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record,HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<SingleChoiceQuestionDTO> executeResult = singleChoiceQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -63,7 +65,9 @@ public class TeacherSingleChoiceQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody SingleChoiceQuestionDTO record){
+    public Wrapper<?> selectList(@RequestBody SingleChoiceQuestionDTO record,HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

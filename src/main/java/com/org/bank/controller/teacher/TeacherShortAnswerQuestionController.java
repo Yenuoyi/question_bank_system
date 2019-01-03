@@ -54,7 +54,9 @@ public class TeacherShortAnswerQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record){
+    public Wrapper<?> selectByPrimaryKey(@RequestBody ShortAnswerQuestionDTO record,HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<ShortAnswerQuestionDTO> executeResult = shortAnswerQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -63,7 +65,9 @@ public class TeacherShortAnswerQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody ShortAnswerQuestionDTO record){
+    public Wrapper<?> selectList(@RequestBody ShortAnswerQuestionDTO record,HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

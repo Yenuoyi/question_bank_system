@@ -54,7 +54,9 @@ public class TeacherTrueFalseQuestionController {
     }
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
+    public Wrapper<?> selectByPrimaryKey(@RequestBody TrueFalseQuestionDTO record,HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<TrueFalseQuestionDTO> executeResult = trueFalseQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -63,7 +65,9 @@ public class TeacherTrueFalseQuestionController {
     }
 
     @RequestMapping("/selectList")
-    public Wrapper<?> selectList(@RequestBody TrueFalseQuestionDTO record){
+    public Wrapper<?> selectList(@RequestBody TrueFalseQuestionDTO record, HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
         ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
