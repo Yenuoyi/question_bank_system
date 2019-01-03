@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * 教师角色可访问的填空题控制类
  */
 @RestController
-@RequestMapping("/teacher/ ")
+@RequestMapping("/teacher/fillVainQuestion")
 public class TeacherFillVainQuestionController {
     @Autowired
     private FillVainQuestionService fillVainQuestionService;
