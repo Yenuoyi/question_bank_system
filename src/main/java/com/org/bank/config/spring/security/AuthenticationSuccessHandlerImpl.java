@@ -66,8 +66,8 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
             id = studentInfoDTOS.get(0).getId();
         }
 
-        httpServletRequest.setAttribute("id",id);
-        httpServletRequest.setAttribute("userRoleType",userRoleType);
+        httpServletRequest.getSession().setAttribute("id",id);
+        httpServletRequest.getSession().setAttribute("userRoleType",userRoleType);
         httpServletRequest.getUserPrincipal();
         httpServletResponse.setContentType("application/json;charset=utf-8");
         PrintWriter out = httpServletResponse.getWriter();

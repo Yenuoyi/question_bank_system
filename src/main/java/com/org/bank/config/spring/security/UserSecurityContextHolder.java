@@ -48,7 +48,7 @@ public class UserSecurityContextHolder {
     }
 
     public static int getUserId(HttpServletRequest httpServletRequest){
-        int id = Integer.parseInt(httpServletRequest.getAttribute("id").toString());
+        int id = Integer.parseInt(httpServletRequest.getSession().getAttribute("id").toString());
         return id;
     }
 }
