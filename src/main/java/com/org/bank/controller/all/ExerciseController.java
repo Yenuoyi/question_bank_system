@@ -73,7 +73,7 @@ public class ExerciseController {
 
     @RequestMapping("/singleChoiceQuestionCheck")
     public Wrapper<?> singleChoiceQuestionCheck(@RequestBody List<SingleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest){
-        ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.checkExercize(record,httpServletRequest);
+        ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.checkExercise(record,httpServletRequest);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -263,7 +263,7 @@ public class ExerciseController {
         List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS= (List<ShortAnswerQuestionDTO>) shortAnswerQuestionService.selectByPrimaryKeyList(shortAnswerQuestionKeys).getResult().getList();
         record.setShortAnswerQuestionDTOS(shortAnswerQuestionDTOS);
 
-        List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.checkExercize(record.getSingleChoiceQuestionDTOS(),httpServletRequest).getResult().getList();
+        List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.checkExercise(record.getSingleChoiceQuestionDTOS(),httpServletRequest).getResult().getList();
         record.setSingleChoiceQuestionDTOS(singleChoiceQuestionDTOS);
 
         List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = (List<TrueFalseQuestionDTO>) trueFalseQuestionService.checkExercise(record.getTrueFalseQuestionDTOS(),httpServletRequest).getResult().getList();
