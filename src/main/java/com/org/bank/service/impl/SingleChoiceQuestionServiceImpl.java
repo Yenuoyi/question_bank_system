@@ -161,9 +161,9 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
     }
 
     @Override
-    public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercize(List<SingleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest) {
+    public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercise(List<SingleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest) {
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<SingleChoiceQuestionDTO>>();
-        int id = UserSecurityContextHolder.getUserId(httpServletRequest);
+        int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
         int roleType = UserSecurityContextHolder.getUserRoleType();
         try {
             if(StringUtils.isEmpty(record)){
@@ -189,10 +189,10 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
                     WrongBookDTO wrongBookDTO = new WrongBookDTO();
                     wrongBookDTO.setQuestion(realSingleChoiceQuestion.getSingleChoiceQuestion());
                     wrongBookDTO.setAnswer(realSingleChoiceQuestion.getSingleChoiceAnswer());
-                    wrongBookDTO.setId(id);
+                    wrongBookDTO.setUserId(userId);
                     wrongBookDTO.setUserType(roleType);
                     wrongBookDTO.setQuestionId(realSingleChoiceQuestion.getId());
-                    wrongBookDTO.setQuestionType(3);
+                    wrongBookDTO.setQuestionType(1);
                     wrongBookDTOS.add(wrongBookDTO);
                 }
             }

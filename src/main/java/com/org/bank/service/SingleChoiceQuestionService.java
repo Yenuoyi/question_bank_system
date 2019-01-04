@@ -24,7 +24,7 @@ public interface SingleChoiceQuestionService {
 
     ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
 
-    ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercize(List<SingleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest);
+    ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercise(List<SingleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(SingleChoiceQuestionDTO record);
 

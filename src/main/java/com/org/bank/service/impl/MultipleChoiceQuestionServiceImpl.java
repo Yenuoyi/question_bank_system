@@ -166,7 +166,7 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
     @Override
     public ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> checkExercise(List<MultipleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest) {
         ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>>();
-        int id = UserSecurityContextHolder.getUserId(httpServletRequest);
+        int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
         int roleType = UserSecurityContextHolder.getUserRoleType();
         try {
             if(StringUtils.isEmpty(record)){
@@ -192,10 +192,10 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
                     WrongBookDTO wrongBookDTO = new WrongBookDTO();
                     wrongBookDTO.setQuestion(realMultipleChoiceQuestion.getMultipleChoiceQuestion());
                     wrongBookDTO.setAnswer(realMultipleChoiceQuestion.getMultipleChoiceAnswer());
-                    wrongBookDTO.setId(id);
+                    wrongBookDTO.setUserId(userId);
                     wrongBookDTO.setUserType(roleType);
                     wrongBookDTO.setQuestionId(realMultipleChoiceQuestion.getId());
-                    wrongBookDTO.setQuestionType(3);
+                    wrongBookDTO.setQuestionType(2);
                     wrongBookDTOS.add(wrongBookDTO);
                 }
             }
