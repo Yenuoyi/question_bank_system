@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -160,9 +161,9 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
     }
 
     @Override
-    public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercize(List<SingleChoiceQuestionDTO> record) {
+    public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercize(List<SingleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest) {
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<SingleChoiceQuestionDTO>>();
-        int username = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        int id = UserSecurityContextHolder.getUserId(httpServletRequest);
         int roleType = UserSecurityContextHolder.getUserRoleType();
         try {
             if(StringUtils.isEmpty(record)){
@@ -188,7 +189,7 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
                     WrongBookDTO wrongBookDTO = new WrongBookDTO();
                     wrongBookDTO.setQuestion(realSingleChoiceQuestion.getSingleChoiceQuestion());
                     wrongBookDTO.setAnswer(realSingleChoiceQuestion.getSingleChoiceAnswer());
-                    wrongBookDTO.setId(username);
+                    wrongBookDTO.setId(id);
                     wrongBookDTO.setUserType(roleType);
                     wrongBookDTO.setQuestionId(realSingleChoiceQuestion.getId());
                     wrongBookDTO.setQuestionType(3);

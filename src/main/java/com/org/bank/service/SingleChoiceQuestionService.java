@@ -6,6 +6,7 @@ import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.SingleChoiceQuestionDTO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface SingleChoiceQuestionService {
@@ -23,7 +24,7 @@ public interface SingleChoiceQuestionService {
 
     ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
 
-    ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercize(List<SingleChoiceQuestionDTO> record);
+    ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> checkExercize(List<SingleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(SingleChoiceQuestionDTO record);
 

@@ -23,7 +23,7 @@ public interface SingleChoiceQuestionDTOMapper {
 
     List<SingleChoiceQuestionDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 
-    Long countTotal(SingleChoiceQuestionDTO record);
+    Long countTotal(@Param("record") SingleChoiceQuestionDTO record);
 
     int updateByPrimaryKeySelective(SingleChoiceQuestionDTO record);
 

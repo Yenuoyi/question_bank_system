@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -163,9 +164,9 @@ public class TrueFalseQuestionServiceImpl implements TrueFalseQuestionService {
     }
 
     @Override
-    public ExecuteResult<DataUtil<TrueFalseQuestionDTO>> checkExercise(List<TrueFalseQuestionDTO> record) {
+    public ExecuteResult<DataUtil<TrueFalseQuestionDTO>> checkExercise(List<TrueFalseQuestionDTO> record, HttpServletRequest httpServletRequest) {
         ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = new ExecuteResult<DataUtil<TrueFalseQuestionDTO>>();
-        int username = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        int id = UserSecurityContextHolder.getUserId(httpServletRequest);
         int roleType = UserSecurityContextHolder.getUserRoleType();
         try {
             if(StringUtils.isEmpty(record)){
@@ -191,7 +192,8 @@ public class TrueFalseQuestionServiceImpl implements TrueFalseQuestionService {
                     WrongBookDTO wrongBookDTO = new WrongBookDTO();
                     wrongBookDTO.setQuestion(realTrueFalseQuestion.getTrueFalseQuestion());
                     wrongBookDTO.setAnswer(realTrueFalseQuestion.getTrueFalseAnswer());
-                    wrongBookDTO.setId(username);
+                    wrongBookDTO.setQuestionType(3);
+                    wrongBookDTO.setUserId(id);
                     wrongBookDTO.setUserType(roleType);
                     wrongBookDTO.setQuestionId(realTrueFalseQuestion.getId());
                     wrongBookDTO.setQuestionType(3);

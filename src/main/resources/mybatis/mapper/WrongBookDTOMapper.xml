@@ -95,24 +95,25 @@
     delete from wrong_book
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.org.bank.domain.WrongBookDTO" >
-    insert into wrong_book (id, user_id,
+    insert into wrong_book (user_id,
       user_type, question, answer, 
       question_type, question_id)
-    values (#{id,jdbcType=INTEGER},  #{userId,jdbcType=INTEGER},
-      #{userType,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=INTEGER},
+      #{userType,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR},
       #{questionType,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER})
   </insert>
 
-  <insert id="insertList" parameterType="list" >
-    insert into wrong_book (id, user_id,
+  <insert id="insertList" >
+    insert into wrong_book (user_id,
       user_type, question, answer,
       question_type, question_id)
     values
     <foreach collection="records" item="item" index="index" separator="," >
-      (#{records.id,jdbcType=INTEGER},  #{records.userId,jdbcType=INTEGER},
-      #{records.userType,jdbcType=VARCHAR}, #{records.question,jdbcType=VARCHAR}, #{records.answer,jdbcType=VARCHAR},
-      #{records.questionType,jdbcType=INTEGER}, #{records.questionId,jdbcType=INTEGER})
+      ( #{item.userId,jdbcType=INTEGER},
+      #{item.userType,jdbcType=INTEGER}, #{item.question,jdbcType=VARCHAR}, #{item.answer,jdbcType=VARCHAR},
+      #{item.questionType,jdbcType=INTEGER}, #{item.questionId,jdbcType=INTEGER})
     </foreach>
 
   </insert>
@@ -150,7 +151,7 @@
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="userType != null" >
-        #{userType,jdbcType=VARCHAR},
+        #{userType,jdbcType=INTEGER},
       </if>
       <if test="question != null" >
         #{question,jdbcType=VARCHAR},
@@ -173,7 +174,7 @@
         user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="userType != null" >
-        user_type = #{userType,jdbcType=VARCHAR},
+        user_type = #{userType,jdbcType=INTEGER},
       </if>
       <if test="question != null" >
         question = #{question,jdbcType=VARCHAR},
@@ -194,7 +195,7 @@
     update wrong_book
     set
       user_id = #{userId,jdbcType=INTEGER},
-      user_type = #{userType,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
       question = #{question,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR},
       question_type = #{questionType,jdbcType=INTEGER},

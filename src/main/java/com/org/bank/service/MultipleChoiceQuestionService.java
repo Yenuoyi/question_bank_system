@@ -6,6 +6,7 @@ import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.MultipleChoiceQuestionDTO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface MultipleChoiceQuestionService {
@@ -23,7 +24,7 @@ public interface MultipleChoiceQuestionService {
 
     ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
 
-    ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> checkExercise(List<MultipleChoiceQuestionDTO> record);
+    ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> checkExercise(List<MultipleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest);
 
     ExecuteResult<Integer> updateByPrimaryKeySelective(MultipleChoiceQuestionDTO record);
 

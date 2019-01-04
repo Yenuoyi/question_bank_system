@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -163,9 +164,9 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
     }
 
     @Override
-    public ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> checkExercise(List<MultipleChoiceQuestionDTO> record) {
+    public ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> checkExercise(List<MultipleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest) {
         ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>>();
-        int username = Integer.parseInt(UserSecurityContextHolder.getUsername());
+        int id = UserSecurityContextHolder.getUserId(httpServletRequest);
         int roleType = UserSecurityContextHolder.getUserRoleType();
         try {
             if(StringUtils.isEmpty(record)){
@@ -191,7 +192,7 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
                     WrongBookDTO wrongBookDTO = new WrongBookDTO();
                     wrongBookDTO.setQuestion(realMultipleChoiceQuestion.getMultipleChoiceQuestion());
                     wrongBookDTO.setAnswer(realMultipleChoiceQuestion.getMultipleChoiceAnswer());
-                    wrongBookDTO.setId(username);
+                    wrongBookDTO.setId(id);
                     wrongBookDTO.setUserType(roleType);
                     wrongBookDTO.setQuestionId(realMultipleChoiceQuestion.getId());
                     wrongBookDTO.setQuestionType(3);

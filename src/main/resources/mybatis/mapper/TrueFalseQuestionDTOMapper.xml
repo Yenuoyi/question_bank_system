@@ -70,6 +70,7 @@
     select
     <include refid="Base_Column_List" />
     from true_false_question
+    where id in
     <foreach collection="keys" item="item" index="index" open="(" separator="," close=")">
       #{item}
     </foreach>
