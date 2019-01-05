@@ -63,14 +63,17 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >
-    insert into examination_paper_question (original_examination_paper_id, examination_paper_question,
+    insert into examination_paper_question (answer_sheet_id,original_examination_paper_id, examination_paper_question,
       examination_paper_answer)
-    values (#{originalExaminationPaperId,jdbcType=INTEGER}, #{examinationPaperQuestion,jdbcType=VARCHAR},
+    values (#{answerSheetId,jdbcType=INTEGER},#{originalExaminationPaperId,jdbcType=INTEGER}, #{examinationPaperQuestion,jdbcType=VARCHAR},
       #{examinationPaperAnswer,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >
     insert into examination_paper_question
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="answerSheetId != null">
+        answer_sheet_id,
+      </if>
       <if test="originalExaminationPaperId != null" >
         original_examination_paper_id,
       </if>
@@ -82,6 +85,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="answerSheetId != null">
+        #{answerSheetId,jdbcType=INTEGER},
+      </if>
       <if test="originalExaminationPaperId != null" >
         #{originalExaminationPaperId,jdbcType=INTEGER},
       </if>
@@ -115,4 +121,14 @@
       examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="insertList">
+    insert into examination_paper_question (answer_sheet_id,original_examination_paper_id, examination_paper_question,
+    examination_paper_answer)
+    values
+    <foreach collection="records" index="index" item="item" separator="," >
+      (#{item.answerSheetId,jdbcType=INTEGER},#{item.originalExaminationPaperId,jdbcType=INTEGER}, #{item.examinationPaperQuestion,jdbcType=VARCHAR},
+      #{item.examinationPaperAnswer,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
 </mapper>

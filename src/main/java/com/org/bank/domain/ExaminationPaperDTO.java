@@ -3,6 +3,7 @@ package com.org.bank.domain;
 import com.org.bank.common.Pager;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ExaminationPaperDTO implements Serializable {
     /** 试卷id */
@@ -16,6 +17,9 @@ public class ExaminationPaperDTO implements Serializable {
 
     /** 试卷名 */
     private String examinationPaperName;
+
+    /** 试卷内容 */
+    private List<ExaminationPaperQuestionDTO> examinationPaperQuestionDTOList;
 
     private Pager pager;
 
@@ -52,6 +56,15 @@ public class ExaminationPaperDTO implements Serializable {
     public void setExaminationPaperName(String examinationPaperName) {
         this.examinationPaperName = examinationPaperName == null ? null : examinationPaperName.trim();
     }
+
+    public List<ExaminationPaperQuestionDTO> getExaminationPaperQuestionDTOList() {
+        return examinationPaperQuestionDTOList;
+    }
+
+    public void setExaminationPaperQuestionDTOList(List<ExaminationPaperQuestionDTO> examinationPaperQuestionDTOList) {
+        this.examinationPaperQuestionDTOList = examinationPaperQuestionDTOList;
+    }
+
     public Pager getPager() {
         return pager;
     }

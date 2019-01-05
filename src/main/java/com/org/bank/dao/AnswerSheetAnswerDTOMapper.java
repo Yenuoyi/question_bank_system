@@ -1,5 +1,6 @@
 package com.org.bank.dao;
 
+import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.AnswerSheetAnswerDTO;
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +23,6 @@ public interface AnswerSheetAnswerDTOMapper {
     int updateByPrimaryKeySelective(AnswerSheetAnswerDTO record);
 
     int updateByPrimaryKey(AnswerSheetAnswerDTO record);
+
+    int insertList(@Param("record") List<AnswerSheetAnswerDTO> records);
 }

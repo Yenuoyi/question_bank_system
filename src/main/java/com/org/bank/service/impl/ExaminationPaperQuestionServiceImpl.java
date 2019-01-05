@@ -146,4 +146,21 @@ public class ExaminationPaperQuestionServiceImpl implements ExaminationPaperQues
         }
         return executeResult;
     }
+
+    @Override
+    public ExecuteResult<Integer> insertList(List<ExaminationPaperQuestionDTO> records) {
+        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
+        try {
+            if(StringUtils.isEmpty(records)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            Integer result = examinationPaperQuestionDTOMapper.insertList(records);
+            executeResult.setResult(result);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;    }
 }

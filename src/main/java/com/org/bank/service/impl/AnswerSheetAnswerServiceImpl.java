@@ -147,4 +147,22 @@ public class AnswerSheetAnswerServiceImpl implements AnswerSheetAnswerService {
         }
         return executeResult;
     }
+
+    @Override
+    public ExecuteResult<Integer> insertList(List<AnswerSheetAnswerDTO> records) {
+        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
+        try {
+            if(StringUtils.isEmpty(records)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            int result = answerSheetAnswerDTOMapper.insertList(records);
+            executeResult.setResult(result);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
 }

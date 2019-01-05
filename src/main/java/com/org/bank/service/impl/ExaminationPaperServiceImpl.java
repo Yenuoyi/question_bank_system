@@ -37,14 +37,14 @@ public class ExaminationPaperServiceImpl implements ExaminationPaperService {
     }
 
     @Override
-    public ExecuteResult<ExaminationPaperDTO> insert(ExaminationPaperDTO record) {
-        ExecuteResult<ExaminationPaperDTO> executeResult = new ExecuteResult<ExaminationPaperDTO>();
+    public ExecuteResult<Integer> insert(ExaminationPaperDTO record) {
+        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
             Integer result = examinationPaperDTOMapper.insert(record);
-            executeResult.setResult(record);
+            executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
             executeResult.setResultMessage("异常错误！");
@@ -55,14 +55,14 @@ public class ExaminationPaperServiceImpl implements ExaminationPaperService {
     }
 
     @Override
-    public ExecuteResult<ExaminationPaperDTO> insertSelective(ExaminationPaperDTO record) {
-        ExecuteResult<ExaminationPaperDTO> executeResult = new ExecuteResult<ExaminationPaperDTO>();
+    public ExecuteResult<Integer> insertSelective(ExaminationPaperDTO record) {
+        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
         try {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
             Integer result = examinationPaperDTOMapper.insertSelective(record);
-            executeResult.setResult(record);
+            executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){
             executeResult.setResultMessage("异常错误！");

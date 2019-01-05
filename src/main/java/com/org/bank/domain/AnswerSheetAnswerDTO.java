@@ -20,9 +20,6 @@ public class AnswerSheetAnswerDTO implements Serializable {
     /** 试题回答 */
     private String examinationPaperAnswer;
 
-    /** 答题者ID */
-    private Integer answerId;
-
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -65,14 +62,6 @@ public class AnswerSheetAnswerDTO implements Serializable {
 
     public void setExaminationPaperAnswer(String examinationPaperAnswer) {
         this.examinationPaperAnswer = examinationPaperAnswer == null ? null : examinationPaperAnswer.trim();
-    }
-
-    public Integer getAnswerId() {
-        return answerId;
-    }
-
-    public void setAnswerId(Integer answerId) {
-        this.answerId = answerId;
     }
 
     public Pager getPager() {

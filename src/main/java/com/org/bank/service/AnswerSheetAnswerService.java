@@ -5,6 +5,8 @@ import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.AnswerSheetAnswerDTO;
 
+import java.util.List;
+
 public interface AnswerSheetAnswerService {
     ExecuteResult<Integer> deleteByPrimaryKey(AnswerSheetAnswerDTO record);
 
@@ -19,4 +21,11 @@ public interface AnswerSheetAnswerService {
     ExecuteResult<Integer> updateByPrimaryKeySelective(AnswerSheetAnswerDTO record);
 
     ExecuteResult<Integer> updateByPrimaryKey(AnswerSheetAnswerDTO record);
+
+    /**
+     * 批量插入
+     * @param records
+     * @return
+     */
+    ExecuteResult<Integer> insertList(List<AnswerSheetAnswerDTO> records);
 }

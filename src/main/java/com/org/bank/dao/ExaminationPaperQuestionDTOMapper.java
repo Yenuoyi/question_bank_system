@@ -1,5 +1,6 @@
 package com.org.bank.dao;
 
+import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.ExaminationPaperQuestionDTO;
 import org.apache.ibatis.annotations.Param;
@@ -24,4 +25,7 @@ public interface ExaminationPaperQuestionDTOMapper {
     int updateByPrimaryKeySelective(ExaminationPaperQuestionDTO record);
 
     int updateByPrimaryKey(ExaminationPaperQuestionDTO record);
+
+    int insertList(@Param("records") List<ExaminationPaperQuestionDTO> records);
+
 }

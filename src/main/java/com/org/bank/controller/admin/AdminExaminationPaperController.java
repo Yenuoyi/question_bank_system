@@ -4,12 +4,19 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.ExaminationPaperDTO;
+import com.org.bank.domain.ExaminationPaperQuestionDTO;
+import com.org.bank.service.ExaminationPaperQuestionService;
 import com.org.bank.service.ExaminationPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 试卷库控制器
@@ -19,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminExaminationPaperController {
     @Autowired
     private ExaminationPaperService examinationPaperService;
+    @Resource
+    private ExaminationPaperQuestionService examinationPaperQuestionService;
     @RequestMapping("/deleteByPrimaryKey")
     public Wrapper<?> deleteByPrimaryKey(@RequestBody ExaminationPaperDTO record){
         ExecuteResult<Integer> executeResult = examinationPaperService.deleteByPrimaryKey(record);
@@ -37,9 +46,25 @@ public class AdminExaminationPaperController {
         return WrapMapper.error().result(executeResult);
     }
 
+    /**
+     * 生成试卷控制器
+     * @param record
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody ExaminationPaperDTO record){
-        ExecuteResult<Integer> executeResult = examinationPaperService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody ExaminationPaperDTO record, HttpServletRequest httpServletRequest){
+        record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
+        examinationPaperService.insertSelective(record);
+
+        /* 开始插入试卷内容 */
+        List<ExaminationPaperQuestionDTO> examinationPaperQuestionDTOList = record.getExaminationPaperQuestionDTOList();
+        for(int i=0;i<examinationPaperQuestionDTOList.size();i++){
+            examinationPaperQuestionDTOList.get(i).setOriginalExaminationPaperId(record.getId());
+        }
+        ExecuteResult<Integer> executeResult = examinationPaperQuestionService.insertList(examinationPaperQuestionDTOList);
+
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

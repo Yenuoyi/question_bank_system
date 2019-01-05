@@ -7,11 +7,9 @@
     <result column="examination_paper_question_id" property="examinationPaperQuestionId" jdbcType="INTEGER" />
     <result column="examination_paper_question" property="examinationPaperQuestion" jdbcType="VARCHAR" />
     <result column="examination_paper_answer" property="examinationPaperAnswer" jdbcType="VARCHAR" />
-    <result column="answer_id" property="answerId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, answer_sheet_id, examination_paper_question_id, examination_paper_question, examination_paper_answer,
-    answer_id
+    id, answer_sheet_id, examination_paper_question_id, examination_paper_question, examination_paper_answer
   </sql>
 
   <sql id="where_fragement">
@@ -31,9 +29,6 @@
       </if>
       <if test="record.examinationPaperAnswer and record.examinationPaperAnswer != ''">
         and examination_paper_answer = #{record.examinationPaperAnswer}
-      </if>
-      <if test="record.answerId and record.answerId != ''">
-        and answer_id = #{record.answerId}
       </if>
     </if>
   </sql>
@@ -75,10 +70,10 @@
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
     insert into examination_paper_answer (answer_sheet_id, examination_paper_question_id, examination_paper_question,
-      examination_paper_answer, answer_id)
+      examination_paper_answer)
     values (#{answerSheetId,jdbcType=INTEGER}, #{examinationPaperQuestionId,jdbcType=INTEGER},
     #{examinationPaperQuestion,jdbcType=VARCHAR},
-      #{examinationPaperAnswer,jdbcType=VARCHAR}, #{answerId,jdbcType=INTEGER})
+      #{examinationPaperAnswer,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
     insert into examination_paper_answer
@@ -95,9 +90,6 @@
       <if test="examinationPaperAnswer != null" >
         examination_paper_answer,
       </if>
-      <if test="answerId != null" >
-        answer_id,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="answerSheetId != null" >
@@ -111,9 +103,6 @@
       </if>
       <if test="examinationPaperAnswer != null" >
         #{examinationPaperAnswer,jdbcType=VARCHAR},
-      </if>
-      <if test="answerId != null" >
-        #{answerId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -132,9 +121,6 @@
       <if test="examinationPaperAnswer != null" >
         examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR},
       </if>
-      <if test="answerId != null" >
-        answer_id = #{answerId,jdbcType=INTEGER},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -143,8 +129,17 @@
     set answer_sheet_id = #{answerSheetId,jdbcType=INTEGER},
       examination_paper_question_id = #{examinationPaperQuestionId,jdbcType=INTEGER},
       examination_paper_question = #{examinationPaperQuestion,jdbcType=VARCHAR},
-      examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR},
-      answer_id = #{answerId,jdbcType=INTEGER}
+      examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="insertList">
+    insert into examination_paper_answer (answer_sheet_id, examination_paper_question_id, examination_paper_question,
+    examination_paper_answer)
+    values
+    <foreach collection="records" item="item" index="index" separator="," >
+      ( #{item.answerSheetId,jdbcType=INTEGER},
+      #{item.examinationPaperQuestion_id,jdbcType=INTEGER}, #{item.examinationPaperQuestion,jdbcType=VARCHAR}, #{item.examinationPaperAnswer,jdbcType=VARCHAR},
+    </foreach>
+  </insert>
 </mapper>

@@ -80,6 +80,9 @@
     values (#{examinationPaperId,jdbcType=INTEGER}, #{answerId,jdbcType=INTEGER},
       #{answererName,jdbcType=VARCHAR}, #{answererType,jdbcType=INTEGER}, #{grade,jdbcType=DOUBLE}
       )
+      <selectKey order="AFTER" keyProperty="id" keyColumn="id" resultType="integer">
+        SELECT LAST_INSERT_ID()
+      </selectKey>
   </insert>
 
   <insert id="insertSelective" parameterType="com.org.bank.domain.AnswerSheetDTO" >
@@ -118,6 +121,9 @@
         #{grade,jdbcType=DOUBLE},
       </if>
     </trim>
+    <selectKey order="AFTER" keyProperty="id" keyColumn="id" resultType="integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
   </insert>
 
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.AnswerSheetDTO" >
