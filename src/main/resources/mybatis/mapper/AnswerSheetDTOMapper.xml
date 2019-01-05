@@ -74,10 +74,10 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.AnswerSheetDTO" >
-    insert into answer_sheet (id, examination_paper_id, answer_id, 
+    insert into answer_sheet (examination_paper_id, answer_id,
       answerer_name, answerer_type, grade
       )
-    values (#{id,jdbcType=INTEGER}, #{examinationPaperId,jdbcType=INTEGER}, #{answerId,jdbcType=INTEGER}, 
+    values (#{examinationPaperId,jdbcType=INTEGER}, #{answerId,jdbcType=INTEGER},
       #{answererName,jdbcType=VARCHAR}, #{answererType,jdbcType=INTEGER}, #{grade,jdbcType=DOUBLE}
       )
   </insert>
@@ -85,9 +85,6 @@
   <insert id="insertSelective" parameterType="com.org.bank.domain.AnswerSheetDTO" >
     insert into answer_sheet
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="examinationPaperId != null" >
         examination_paper_id,
       </if>
@@ -105,9 +102,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="examinationPaperId != null" >
         #{examinationPaperId,jdbcType=INTEGER},
       </if>

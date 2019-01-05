@@ -20,7 +20,7 @@ public interface ClassDTOMapper {
 
     List<ClassDTO> selectList(@Param("record") ClassDTO record, @Param("pager")Pager pager);
 
-    Long countTotal(ClassDTO record);
+    Long countTotal(@Param("record") ClassDTO record);
 
     int updateByPrimaryKeySelective(ClassDTO record);
 

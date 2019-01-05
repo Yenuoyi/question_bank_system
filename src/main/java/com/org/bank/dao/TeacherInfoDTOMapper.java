@@ -21,7 +21,7 @@ public interface TeacherInfoDTOMapper {
 
     List<TeacherInfoDTO> selectList(@Param("record")TeacherInfoDTO teacherInfoDTO, @Param("pager")Pager pager);
 
-    Long countTotal(TeacherInfoDTO record);
+    Long countTotal(@Param("record") TeacherInfoDTO record);
 
     int updateByPrimaryKeySelective(TeacherInfoDTO record);
 

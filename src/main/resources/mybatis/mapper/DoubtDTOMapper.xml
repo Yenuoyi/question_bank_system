@@ -96,10 +96,10 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.DoubtDTO" >
-    insert into doubt (id, questioner_name, questioner_id, 
+    insert into doubt (questioner_name, questioner_id,
       respondent_name, respondent_id, question, 
       answer)
-    values (#{id,jdbcType=INTEGER}, #{questionerName,jdbcType=VARCHAR}, #{questionerId,jdbcType=INTEGER}, 
+    values ( #{questionerName,jdbcType=VARCHAR}, #{questionerId,jdbcType=INTEGER},
       #{respondentName,jdbcType=VARCHAR}, #{respondentId,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, 
       #{answer,jdbcType=VARCHAR})
   </insert>
@@ -107,9 +107,6 @@
   <insert id="insertSelective" parameterType="com.org.bank.domain.DoubtDTO" >
     insert into doubt
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="questionerName != null" >
         questioner_name,
       </if>
@@ -130,9 +127,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="questionerName != null" >
         #{questionerName,jdbcType=VARCHAR},
       </if>

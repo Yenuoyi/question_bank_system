@@ -35,7 +35,7 @@ public class TeacherExaminationPaperController {
     public Wrapper<?> insert(@RequestBody ExaminationPaperDTO record, HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
-        ExecuteResult<Integer> executeResult = examinationPaperService.insert(record);
+        ExecuteResult<ExaminationPaperDTO> executeResult = examinationPaperService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -46,7 +46,7 @@ public class TeacherExaminationPaperController {
     public Wrapper<?> insertSelective(@RequestBody ExaminationPaperDTO record, HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
-        ExecuteResult<Integer> executeResult = examinationPaperService.insertSelective(record);
+        ExecuteResult<ExaminationPaperDTO> executeResult = examinationPaperService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

@@ -25,7 +25,7 @@ public interface WrongBookDTOMapper {
 
     List<WrongBookDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 
-    Long countTotal(WrongBookDTO record);
+    Long countTotal(@Param("record") WrongBookDTO record);
 
     int updateByPrimaryKeySelective(WrongBookDTO record);
 

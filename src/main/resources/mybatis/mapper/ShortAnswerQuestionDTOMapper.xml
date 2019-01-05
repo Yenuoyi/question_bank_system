@@ -88,19 +88,16 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.ShortAnswerQuestionDTO" >
-    insert into short_answer_question (id, short_answer_question, short_answer_answer, 
+    insert into short_answer_question (short_answer_question, short_answer_answer,
       examiner_id, examiner_code, examiner_type
       )
-    values (#{id,jdbcType=INTEGER}, #{shortAnswerQuestion,jdbcType=VARCHAR}, #{shortAnswerAnswer,jdbcType=VARCHAR}, 
+    values (#{shortAnswerQuestion,jdbcType=VARCHAR}, #{shortAnswerAnswer,jdbcType=VARCHAR},
       #{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.ShortAnswerQuestionDTO" >
     insert into short_answer_question
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="shortAnswerQuestion != null" >
         short_answer_question,
       </if>
@@ -115,9 +112,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="shortAnswerQuestion != null" >
         #{shortAnswerQuestion,jdbcType=VARCHAR},
       </if>

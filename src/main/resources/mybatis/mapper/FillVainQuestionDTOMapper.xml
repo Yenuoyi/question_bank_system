@@ -87,17 +87,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.FillVainQuestionDTO" >
-    insert into fill_vain_question (id, fill_vain_question, fill_vain_answer, 
+    insert into fill_vain_question (fill_vain_question, fill_vain_answer,
       examiner_id, examiner_type)
-    values (#{id,jdbcType=INTEGER}, #{fillVainQuestion,jdbcType=VARCHAR}, #{fillVainAnswer,jdbcType=VARCHAR}, 
+    values (#{fillVainQuestion,jdbcType=VARCHAR}, #{fillVainAnswer,jdbcType=VARCHAR},
       #{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.FillVainQuestionDTO" >
     insert into fill_vain_question
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="fillVainQuestion != null" >
         fill_vain_question,
       </if>
@@ -112,9 +109,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="fillVainQuestion != null" >
         #{fillVainQuestion,jdbcType=VARCHAR},
       </if>

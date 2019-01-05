@@ -23,7 +23,7 @@ public interface FillVainQuestionDTOMapper {
 
     List<FillVainQuestionDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 
-    Long countTotal(FillVainQuestionDTO record);
+    Long countTotal(@Param("record") FillVainQuestionDTO record);
 
     int updateByPrimaryKeySelective(FillVainQuestionDTO record);
 

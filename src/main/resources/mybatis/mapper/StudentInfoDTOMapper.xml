@@ -77,19 +77,16 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.StudentInfoDTO" >
-    insert into student_info (id, student_name, student_email, 
+    insert into student_info (student_name, student_email,
       student_iphone, student_password, class_id
       )
-    values (#{id,jdbcType=INTEGER}, #{studentName,jdbcType=VARCHAR}, #{studentEmail,jdbcType=VARCHAR}, 
+    values (#{studentName,jdbcType=VARCHAR}, #{studentEmail,jdbcType=VARCHAR},
       #{studentIphone,jdbcType=VARCHAR}, #{studentPassword,jdbcType=VARCHAR}, #{classId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.StudentInfoDTO" >
     insert into student_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="studentName != null" >
         student_name,
       </if>
@@ -107,9 +104,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="studentName != null" >
         #{studentName,jdbcType=VARCHAR},
       </if>

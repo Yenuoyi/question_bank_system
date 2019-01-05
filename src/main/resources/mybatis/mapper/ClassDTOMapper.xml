@@ -65,18 +65,15 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.ClassDTO" >
-    insert into class (id, class_name, teacher_name, 
+    insert into class (class_name, teacher_name,
       teacher_id)
-    values (#{id,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, 
+    values (#{className,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR},
       #{teacherId,jdbcType=INTEGER})
   </insert>
 
   <insert id="insertSelective" parameterType="com.org.bank.domain.ClassDTO" >
     insert into class
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="className != null" >
         class_name,
       </if>
@@ -88,9 +85,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="className != null" >
         #{className,jdbcType=VARCHAR},
       </if>

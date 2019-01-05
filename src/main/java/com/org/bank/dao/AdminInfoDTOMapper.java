@@ -21,7 +21,7 @@ public interface AdminInfoDTOMapper {
 
     List<AdminInfoDTO> selectList(@Param("record") AdminInfoDTO record, @Param("pager") Pager pager);
 
-    Long countTotal(AdminInfoDTO record);
+    Long countTotal(@Param("record") AdminInfoDTO record);
 
     int updateByPrimaryKeySelective(AdminInfoDTO record);
 

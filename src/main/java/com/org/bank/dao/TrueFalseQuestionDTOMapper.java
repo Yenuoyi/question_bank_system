@@ -23,7 +23,7 @@ public interface TrueFalseQuestionDTOMapper {
 
     List<TrueFalseQuestionDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 
-    Long countTotal(TrueFalseQuestionDTO record);
+    Long countTotal(@Param("record") TrueFalseQuestionDTO record);
 
     int updateByPrimaryKeySelective(TrueFalseQuestionDTO record);
 

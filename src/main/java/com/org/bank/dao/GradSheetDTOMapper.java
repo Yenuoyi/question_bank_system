@@ -19,7 +19,7 @@ public interface GradSheetDTOMapper {
 
     List<GradSheetDTO> selectList(@Param("record") GradSheetDTO record, @Param("pager") Pager pager);
 
-    Long countTotal(GradSheetDTO record);
+    Long countTotal(@Param("record") GradSheetDTO record);
 
     int updateByPrimaryKeySelective(GradSheetDTO record);
 

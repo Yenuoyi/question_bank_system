@@ -11,7 +11,7 @@ import java.util.List;
 public interface SingleChoiceQuestionDTOMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(SingleChoiceQuestionDTO record);
+    int insert( SingleChoiceQuestionDTO record);
 
     int insertSelective(SingleChoiceQuestionDTO record);
 
@@ -27,5 +27,5 @@ public interface SingleChoiceQuestionDTOMapper {
 
     int updateByPrimaryKeySelective(SingleChoiceQuestionDTO record);
 
-    int updateByPrimaryKey(SingleChoiceQuestionDTO record);
+    int updateByPrimaryKey( SingleChoiceQuestionDTO record);
 }

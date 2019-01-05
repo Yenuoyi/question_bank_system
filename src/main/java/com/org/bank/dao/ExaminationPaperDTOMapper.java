@@ -19,7 +19,7 @@ public interface ExaminationPaperDTOMapper {
 
     List<ExaminationPaperDTO> selectList(@Param("record") ExaminationPaperDTO record, @Param("pager") Pager pager);
 
-    Long countTotal(ExaminationPaperDTO record);
+    Long countTotal(@Param("record") ExaminationPaperDTO record);
 
     int updateByPrimaryKeySelective(ExaminationPaperDTO record);
 

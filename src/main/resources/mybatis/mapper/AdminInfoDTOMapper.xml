@@ -75,17 +75,14 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.AdminInfoDTO" >
-    insert into admin_info (id, admin_name, admin_email, 
+    insert into admin_info (admin_name, admin_email,
       admin_password, admin_iphone)
-    values (#{id,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{adminEmail,jdbcType=VARCHAR}, 
+    values (#{adminName,jdbcType=VARCHAR}, #{adminEmail,jdbcType=VARCHAR},
       #{adminPassword,jdbcType=VARCHAR}, #{adminIphone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.AdminInfoDTO" >
     insert into admin_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="adminName != null" >
         admin_name,
       </if>
@@ -100,9 +97,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="adminName != null" >
         #{adminName,jdbcType=VARCHAR},
       </if>

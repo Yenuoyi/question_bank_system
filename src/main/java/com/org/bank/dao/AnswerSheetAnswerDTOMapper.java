@@ -17,7 +17,7 @@ public interface AnswerSheetAnswerDTOMapper {
 
     List<AnswerSheetAnswerDTO> selectList(@Param("record") AnswerSheetAnswerDTO record, @Param("pager") Pager pager);
 
-    Long countTotal(AnswerSheetAnswerDTO record);
+    Long countTotal(@Param("record") AnswerSheetAnswerDTO record);
 
     int updateByPrimaryKeySelective(AnswerSheetAnswerDTO record);
 

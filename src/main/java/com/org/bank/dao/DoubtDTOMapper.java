@@ -25,7 +25,7 @@ public interface DoubtDTOMapper {
 
     List<DoubtDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 
-    Long countTotal(DoubtDTO record);
+    Long countTotal(@Param("record") DoubtDTO record);
 
     int updateByPrimaryKeySelective(DoubtDTO record);
 

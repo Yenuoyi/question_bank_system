@@ -23,7 +23,7 @@ public interface ShortAnswerQuestionDTOMapper {
 
     List<ShortAnswerQuestionDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 
-    Long countTotal(ShortAnswerQuestionDTO record);
+    Long countTotal(@Param("record") ShortAnswerQuestionDTO record);
 
     int updateByPrimaryKeySelective(ShortAnswerQuestionDTO record);
 

@@ -76,19 +76,17 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.GradSheetDTO" >
-    insert into grade_sheet (id, answerer_name, answerer_id, 
+    insert into grade_sheet (answerer_name, answerer_id,
       answerer_type, grade, examination_paper_type, 
       examination_paper_id)
-    values (#{id,jdbcType=INTEGER}, #{answererName,jdbcType=VARCHAR}, #{answererId,jdbcType=INTEGER}, 
+    values (#{answererName,jdbcType=VARCHAR}, #{answererId,jdbcType=INTEGER},
       #{answererType,jdbcType=INTEGER}, #{grade,jdbcType=VARCHAR}, #{examinationPaperType,jdbcType=INTEGER}, 
       #{examinationPaperId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.GradSheetDTO" >
     insert into grade_sheet
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
+
       <if test="answererName != null" >
         answerer_name,
       </if>
@@ -109,9 +107,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="answererName != null" >
         #{answererName,jdbcType=VARCHAR},
       </if>

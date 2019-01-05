@@ -74,18 +74,15 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
-    insert into examination_paper_answer (id, answer_sheet_id, examination_paper_question_id, examination_paper_question,
+    insert into examination_paper_answer (answer_sheet_id, examination_paper_question_id, examination_paper_question,
       examination_paper_answer, answer_id)
-    values (#{id,jdbcType=INTEGER}, #{answerSheetId,jdbcType=INTEGER}, #{examinationPaperQuestionId,jdbcType=INTEGER},
+    values (#{answerSheetId,jdbcType=INTEGER}, #{examinationPaperQuestionId,jdbcType=INTEGER},
     #{examinationPaperQuestion,jdbcType=VARCHAR},
       #{examinationPaperAnswer,jdbcType=VARCHAR}, #{answerId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
     insert into examination_paper_answer
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="answerSheetId != null" >
         answer_sheet_id,
       </if>
@@ -103,9 +100,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="answerSheetId != null" >
         #{answerSheetId,jdbcType=INTEGER},
       </if>

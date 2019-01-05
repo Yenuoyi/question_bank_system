@@ -74,6 +74,7 @@
     select
     <include refid="Base_Column_List" />
     from multiple_choice_question
+    where id in
     <foreach collection="keys" item="item" index="index" open="(" separator="," close=")">
       #{item}
     </foreach>
@@ -91,17 +92,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.MultipleChoiceQuestionDTO" >
-    insert into multiple_choice_question (id, multiple_choice_question, multiple_choice_option, multiple_choice_answer,
+    insert into multiple_choice_question (multiple_choice_question, multiple_choice_option, multiple_choice_answer,
       examiner_id, examiner_type)
-    values (#{id,jdbcType=INTEGER}, #{multipleChoiceQuestion,jdbcType=VARCHAR}, #{multipleChoiceOption,jdbcType=VARCHAR},
+    values ( #{multipleChoiceQuestion,jdbcType=VARCHAR}, #{multipleChoiceOption,jdbcType=VARCHAR},
     #{multipleChoiceAnswer,jdbcType=VARCHAR},#{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.MultipleChoiceQuestionDTO" >
     insert into multiple_choice_question
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="multipleChoiceQuestion != null" >
         multiple_choice_question,
       </if>
@@ -119,9 +117,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="multipleChoiceQuestion != null" >
         #{multipleChoiceQuestion,jdbcType=VARCHAR},
       </if>

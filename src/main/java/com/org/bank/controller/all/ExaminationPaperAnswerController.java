@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- * 所有角色拥有的答卷控制器
+ * 所有角色拥有的答题卡控制器
  */
 @RestController
 @RequestMapping("/all/examinationPaperAnswer")

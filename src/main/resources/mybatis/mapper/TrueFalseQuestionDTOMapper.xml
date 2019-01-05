@@ -88,17 +88,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.TrueFalseQuestionDTO" >
-    insert into true_false_question (id, true_false_question, true_false_answer, 
+    insert into true_false_question (true_false_question, true_false_answer,
       examiner_id, examiner_type)
-    values (#{id,jdbcType=INTEGER}, #{trueFalseQuestion,jdbcType=VARCHAR}, #{trueFalseAnswer,jdbcType=VARCHAR}, 
+    values ( #{trueFalseQuestion,jdbcType=VARCHAR}, #{trueFalseAnswer,jdbcType=VARCHAR},
       #{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.TrueFalseQuestionDTO" >
     insert into true_false_question
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="trueFalseQuestion != null" >
         true_false_question,
       </if>
@@ -113,9 +110,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="trueFalseQuestion != null" >
         #{trueFalseQuestion,jdbcType=VARCHAR},
       </if>

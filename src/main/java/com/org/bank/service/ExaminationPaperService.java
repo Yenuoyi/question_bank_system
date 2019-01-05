@@ -9,9 +9,9 @@ import com.org.bank.domain.ExaminationPaperDTO;
 public interface ExaminationPaperService {
     ExecuteResult<Integer> deleteByPrimaryKey(ExaminationPaperDTO record);
 
-    ExecuteResult<Integer> insert(ExaminationPaperDTO record);
+    ExecuteResult<ExaminationPaperDTO> insert(ExaminationPaperDTO record);
 
-    ExecuteResult<Integer> insertSelective(ExaminationPaperDTO record);
+    ExecuteResult<ExaminationPaperDTO> insertSelective(ExaminationPaperDTO record);
 
     ExecuteResult<ExaminationPaperDTO> selectByPrimaryKey(ExaminationPaperDTO record);
 

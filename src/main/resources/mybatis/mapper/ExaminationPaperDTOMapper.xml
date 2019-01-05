@@ -65,17 +65,17 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
-    insert into examination_paper (id, examiner_id, examiner_type, examination_paper_name
+    insert into examination_paper (examiner_id, examiner_type, examination_paper_name
       )
-    values (#{id,jdbcType=INTEGER}, #{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}, #{examinationPaperName,jdbcType=VARCHAR}
+    values (#{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}, #{examinationPaperName,jdbcType=VARCHAR}
       )
+    <selectKey resultType="integer" keyColumn="id" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
     insert into examination_paper
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="examinerId != null" >
         examiner_id,
       </if>
@@ -87,9 +87,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="examinerId != null" >
         #{examinerId,jdbcType=INTEGER},
       </if>
@@ -100,6 +97,9 @@
         #{examinationPaperName,jdbcType=INTEGER},
       </if>
     </trim>
+    <selectKey resultType="integer" keyColumn="id" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
     update examination_paper
