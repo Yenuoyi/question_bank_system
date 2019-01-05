@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * 教师角色拥有的答题卡内容控制器
  */
 @RestController
-@RequestMapping("/teacher/answerSheetAnswer")
+@RequestMapping("/teacher/answerSheet")
 public class TeacherAnswerSheetController {
     @Resource
     private AnswerSheetService answerSheetService;

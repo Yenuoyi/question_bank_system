@@ -7,10 +7,12 @@ import com.org.bank.dao.AnswerSheetDTOMapper;
 import com.org.bank.domain.AnswerSheetDTO;
 import com.org.bank.service.AnswerSheetService;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.util.List;
 
+@Service
 public class AnswerSheetServiceImpl implements AnswerSheetService {
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
