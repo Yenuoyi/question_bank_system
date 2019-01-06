@@ -24,5 +24,5 @@ public interface AnswerSheetAnswerDTOMapper {
 
     int updateByPrimaryKey(AnswerSheetAnswerDTO record);
 
-    int insertList(@Param("record") List<AnswerSheetAnswerDTO> records);
+    int insertList(@Param("records") List<AnswerSheetAnswerDTO> records);
 }

@@ -1,8 +1,11 @@
 package com.org.bank.domain;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.bank.common.Pager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnswerSheetDTO implements Serializable {
     /**  */
@@ -10,6 +13,9 @@ public class AnswerSheetDTO implements Serializable {
 
     /** 试卷id */
     private Integer examinationPaperId;
+
+    /** 试卷名 */
+    private String examinationPaperName;
 
     /** 答题者id */
     private Integer answerId;
@@ -23,6 +29,8 @@ public class AnswerSheetDTO implements Serializable {
     /** 成绩 */
     private Double grade;
 
+    /* 答卷内容 */
+    private List<AnswerSheetAnswerDTO> answerSheetAnswerDTOS;
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +49,14 @@ public class AnswerSheetDTO implements Serializable {
 
     public void setExaminationPaperId(Integer examinationPaperId) {
         this.examinationPaperId = examinationPaperId;
+    }
+
+    public String getExaminationPaperName() {
+        return examinationPaperName;
+    }
+
+    public void setExaminationPaperName(String examinationPaperName) {
+        this.examinationPaperName = examinationPaperName;
     }
 
     public Integer getAnswerId() {
@@ -75,11 +91,32 @@ public class AnswerSheetDTO implements Serializable {
         this.grade = grade;
     }
 
+    public List<AnswerSheetAnswerDTO> getAnswerSheetAnswerDTOS() {
+        return answerSheetAnswerDTOS;
+    }
+
+    public void setAnswerSheetAnswerDTOS(List<AnswerSheetAnswerDTO> answerSheetAnswerDTOS) {
+        this.answerSheetAnswerDTOS = answerSheetAnswerDTOS;
+    }
+
     public Pager getPager() {
         return pager;
     }
 
     public void setPager(Pager pager) {
         this.pager = pager;
+    }
+
+    public static void main(String[] args){
+        AnswerSheetDTO answerSheetDTO = new AnswerSheetDTO();
+        answerSheetDTO.setExaminationPaperId(3);
+        List<AnswerSheetAnswerDTO> list = new ArrayList<>();
+        AnswerSheetAnswerDTO o1 = new AnswerSheetAnswerDTO();
+        o1.setExaminationPaperQuestionId(3);
+        o1.setExaminationPaperQuestion("世界首例计算机病毒什么时候出现的？");
+        o1.setExaminationPaperAnswer("不知道");
+        list.add(o1);
+        answerSheetDTO.setAnswerSheetAnswerDTOS(list);
+        System.out.print(JSONObject.toJSONString(answerSheetDTO));
     }
 }

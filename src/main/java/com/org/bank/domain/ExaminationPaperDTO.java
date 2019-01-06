@@ -1,8 +1,10 @@
 package com.org.bank.domain;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.bank.common.Pager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExaminationPaperDTO implements Serializable {
@@ -72,4 +74,16 @@ public class ExaminationPaperDTO implements Serializable {
     public void setPager(Pager pager) {
         this.pager = pager;
     }
+
+     public static void main(String[] args){
+        ExaminationPaperDTO examinationPaperDTO = new ExaminationPaperDTO();
+        examinationPaperDTO.setExaminationPaperName("计算机期末试卷");
+        List<ExaminationPaperQuestionDTO> list = new ArrayList<>();
+        ExaminationPaperQuestionDTO question1 = new ExaminationPaperQuestionDTO();
+        question1.setExaminationPaperQuestion("世界首例计算机病毒什么时候出现的？");
+        question1.setExaminationPaperAnswer("不知道!");
+        list.add(question1);
+        examinationPaperDTO.setExaminationPaperQuestionDTOList(list);
+        System.out.print(JSONObject.toJSONString(examinationPaperDTO));
+     }
 }

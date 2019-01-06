@@ -4,13 +4,18 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
+import com.org.bank.domain.AnswerSheetAnswerDTO;
 import com.org.bank.domain.AnswerSheetDTO;
+import com.org.bank.service.AnswerSheetAnswerService;
 import com.org.bank.service.AnswerSheetService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 教师角色拥有的答题卡内容控制器
@@ -20,6 +25,8 @@ import javax.annotation.Resource;
 public class TeacherAnswerSheetController {
     @Resource
     private AnswerSheetService answerSheetService;
+    @Resource
+    private AnswerSheetAnswerService answerSheetAnswerService;
     @RequestMapping("/deleteByPrimaryKey")
     public Wrapper<?> deleteByPrimaryKey(@RequestBody AnswerSheetDTO record){
         ExecuteResult<Integer> executeResult = answerSheetService.deleteByPrimaryKey(record);
@@ -39,8 +46,18 @@ public class TeacherAnswerSheetController {
     }
 
     @RequestMapping("/insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody AnswerSheetDTO record){
-        ExecuteResult<Integer> executeResult = answerSheetService.insertSelective(record);
+    public Wrapper<?> insertSelective(@RequestBody AnswerSheetDTO record, HttpServletRequest httpServletRequest){
+        /* 设置答题卡生成入参,生成答题卡 */
+        record.setAnswererType(UserSecurityContextHolder.getUserRoleType());
+        record.setAnswerId(UserSecurityContextHolder.getUserId(httpServletRequest));
+        record.setAnswererName(UserSecurityContextHolder.getUsername());
+        ExecuteResult<Integer> integerExecuteResult = answerSheetService.insertSelective(record);
+        List<AnswerSheetAnswerDTO> answerSheetAnswerDTOS = record.getAnswerSheetAnswerDTOS();
+        /* 批量插入答题卡内容 */
+        for(int i=0;i<answerSheetAnswerDTOS.size();i++){
+            answerSheetAnswerDTOS.get(i).setAnswerSheetId(record.getId());
+        }
+        ExecuteResult<Integer> executeResult = answerSheetAnswerService.insertList(answerSheetAnswerDTOS);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

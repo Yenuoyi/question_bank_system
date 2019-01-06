@@ -4,6 +4,9 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.Pager;
 import com.org.bank.domain.AnswerSheetDTO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AnswerSheetService {
     ExecuteResult<Integer> deleteByPrimaryKey(AnswerSheetDTO record);
@@ -19,4 +22,7 @@ public interface AnswerSheetService {
     ExecuteResult<Integer> updateByPrimaryKeySelective(AnswerSheetDTO record);
 
     ExecuteResult<Integer> updateByPrimaryKey(AnswerSheetDTO record);
+
+    ExecuteResult<DataUtil<AnswerSheetDTO>> selectSheetPaperList(AnswerSheetDTO record, Pager pager);
+
 }

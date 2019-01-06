@@ -24,4 +24,8 @@ public interface AnswerSheetDTOMapper {
     int updateByPrimaryKeySelective(AnswerSheetDTO record);
 
     int updateByPrimaryKey(AnswerSheetDTO record);
+
+    List<AnswerSheetDTO> selectSheetPaperList(@Param("record") AnswerSheetDTO record, @Param("pager")Pager pager);
+
+    Long countSheetPaperTotal(@Param("record") AnswerSheetDTO record);
 }

@@ -39,16 +39,16 @@
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
-    from examination_paper_answer
+    from answer_sheet_answer
     where id = #{id,jdbcType=INTEGER}
   </select>
 
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from examination_paper_answer
+    from answer_sheet_answer
     <include refid="where_fragement"/>
     ORDER BY id desc
     <if test="pager != null" >
@@ -60,7 +60,7 @@
   <select id="countTotal" resultType="Long">
     select
     count(1)
-    from examination_paper_answer
+    from answer_sheet_answer
     <include refid="where_fragement"/>
   </select>
 
@@ -69,14 +69,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
-    insert into examination_paper_answer (answer_sheet_id, examination_paper_question_id, examination_paper_question,
+    insert into answer_sheet_answer (answer_sheet_id, examination_paper_question_id, examination_paper_question,
       examination_paper_answer)
     values (#{answerSheetId,jdbcType=INTEGER}, #{examinationPaperQuestionId,jdbcType=INTEGER},
     #{examinationPaperQuestion,jdbcType=VARCHAR},
       #{examinationPaperAnswer,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
-    insert into examination_paper_answer
+    insert into answer_sheet_answer
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="answerSheetId != null" >
         answer_sheet_id,
@@ -107,7 +107,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
-    update examination_paper_answer
+    update answer_sheet_answer
     <set >
       <if test="answerSheetId != null" >
         answer_sheet_id = #{answerSheetId,jdbcType=INTEGER},
@@ -125,7 +125,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
-    update examination_paper_answer
+    update answer_sheet_answer
     set answer_sheet_id = #{answerSheetId,jdbcType=INTEGER},
       examination_paper_question_id = #{examinationPaperQuestionId,jdbcType=INTEGER},
       examination_paper_question = #{examinationPaperQuestion,jdbcType=VARCHAR},
@@ -134,12 +134,13 @@
   </update>
 
   <insert id="insertList">
-    insert into examination_paper_answer (answer_sheet_id, examination_paper_question_id, examination_paper_question,
+    insert into answer_sheet_answer (answer_sheet_id, examination_paper_question_id, examination_paper_question,
     examination_paper_answer)
     values
     <foreach collection="records" item="item" index="index" separator="," >
       ( #{item.answerSheetId,jdbcType=INTEGER},
-      #{item.examinationPaperQuestion_id,jdbcType=INTEGER}, #{item.examinationPaperQuestion,jdbcType=VARCHAR}, #{item.examinationPaperAnswer,jdbcType=VARCHAR},
+      #{item.examinationPaperQuestionId,jdbcType=INTEGER},
+      #{item.examinationPaperQuestion,jdbcType=VARCHAR}, #{item.examinationPaperAnswer,jdbcType=VARCHAR})
     </foreach>
   </insert>
 </mapper>

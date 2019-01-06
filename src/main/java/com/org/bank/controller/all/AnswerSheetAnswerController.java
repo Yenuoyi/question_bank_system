@@ -29,20 +29,14 @@ public class AnswerSheetAnswerController {
     private AnswerSheetAnswerService answerSheetAnswerService;
 
     /**
-     * 答题调用此接口
-     * @param records
+     * @param answerSheetAnswerDTO
      * @param httpServletRequest
      * @return
      */
     @RequestMapping("/insertSelective")
-    public Wrapper<?> insertSelective(@RequestBody List<AnswerSheetAnswerDTO> records, HttpServletRequest httpServletRequest){
-        /* 设置答题卡生成入参,生成答题卡 */
-        AnswerSheetDTO answerSheetDTO = new AnswerSheetDTO();
-        answerSheetDTO.setAnswererType(UserSecurityContextHolder.getUserRoleType());
-        answerSheetDTO.setAnswerId(UserSecurityContextHolder.getUserId(httpServletRequest));
-        ExecuteResult<Integer> integerExecuteResult = answerSheetService.insertSelective(answerSheetDTO);
+    public Wrapper<?> insertSelective(@RequestBody AnswerSheetAnswerDTO answerSheetAnswerDTO, HttpServletRequest httpServletRequest){
         /* 批量插入答题卡内容 */
-        ExecuteResult<Integer> executeResult = answerSheetAnswerService.insertList(records);
+        ExecuteResult<Integer> executeResult = answerSheetAnswerService.insertSelective(answerSheetAnswerDTO);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

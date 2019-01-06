@@ -9,6 +9,15 @@
     <result column="answerer_type" property="answererType" jdbcType="INTEGER" />
     <result column="grade" property="grade" jdbcType="DOUBLE" />
   </resultMap>
+  <resultMap id="sheetPaperResultMap" type="com.org.bank.domain.AnswerSheetDTO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="examination_paper_id" property="examinationPaperId" jdbcType="INTEGER" />
+    <result column="examination_paper_name" property="examinationPaperName" jdbcType="VARCHAR" />
+    <result column="answer_id" property="answerId" jdbcType="INTEGER" />
+    <result column="answerer_name" property="answererName" jdbcType="VARCHAR" />
+    <result column="answerer_type" property="answererType" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="DOUBLE" />
+  </resultMap>
   <sql id="Base_Column_List" >
     id, examination_paper_id, answer_id, answerer_name, answerer_type, grade
   </sql>
@@ -21,6 +30,33 @@
       </if>
       <if test="record.examinationPaperId and record.examinationPaperId != ''">
         and examination_paper_id = #{record.examinationPaperId}
+      </if>
+      <if test="record.answerId and record.answerId != ''">
+        and answer_id = #{record.answerId}
+      </if>
+      <if test="record.answererName and record.answererName != ''">
+        and answerer_name = #{record.answererName}
+      </if>
+      <if test="record.answererType and record.answererType != ''">
+        and answerer_type = #{record.answererType}
+      </if>
+      <if test="record.grade and record.grade != ''">
+        and grade = #{record.grade}
+      </if>
+    </if>
+  </sql>
+
+  <sql id="sheet_paper_where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and id = #{record.id}
+      </if>
+      <if test="record.examinationPaperId and record.examinationPaperId != ''">
+        and examination_paper_id = #{record.examinationPaperId}
+      </if>
+      <if test="record.examinationPaperName and record.examinationPaperName != ''">
+        and examination_paper_name = #{record.examinationPaperName}
       </if>
       <if test="record.answerId and record.answerId != ''">
         and answer_id = #{record.answerId}
@@ -52,7 +88,7 @@
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from examination_paper_answer
+    from answer_sheet
     <include refid="where_fragement"/>
     ORDER BY id desc
     <if test="pager != null" >
@@ -64,7 +100,7 @@
   <select id="countTotal" resultType="Long">
     select
     count(1)
-    from examination_paper_answer
+    from answer_sheet
     <include refid="where_fragement"/>
   </select>
 
@@ -157,4 +193,26 @@
       grade = #{grade,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectSheetPaperList" resultMap="sheetPaperResultMap">
+    select
+    sheet.id id,sheet.examination_paper_id examination_paper_id,sheet.answer_id answer_id,
+    sheet.answerer_name answerer_name,sheet.answerer_type answerer_type,sheet.grade grade,
+    paper.examination_paper_name examination_paper_name
+    from answer_sheet sheet
+    INNER JOIN examination_paper paper ON paper.id = sheet.examination_paper_id
+    <include refid="sheet_paper_where_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countSheetPaperTotal" resultType="Long">
+    select
+    count(1)
+    from examination_paper
+    INNER JOIN answer_sheet ON examination_paper.id = answer_sheet.examination_paper_id
+    <include refid="sheet_paper_where_fragement"/>
+  </select>
 </mapper>

@@ -147,6 +147,28 @@ public class AnswerSheetServiceImpl implements AnswerSheetService {
         return executeResult;
     }
 
+    @Override
+    public ExecuteResult<DataUtil<AnswerSheetDTO>> selectSheetPaperList(AnswerSheetDTO record, Pager pager) {
+        ExecuteResult<DataUtil<AnswerSheetDTO>> executeResult = new ExecuteResult<DataUtil<AnswerSheetDTO>>();
+        try {
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<AnswerSheetDTO> result = answerSheetDTOMapper.selectSheetPaperList(record,pager);
+            Integer total = answerSheetDTOMapper.countSheetPaperTotal(record).intValue();
+            DataUtil<AnswerSheetDTO> dtoDataUtil = new DataUtil<AnswerSheetDTO>();
+            dtoDataUtil.setList(result);
+            dtoDataUtil.getPager().setTotalCount(total);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
     public static void main(String[] args){
         Integer var = 0;
         System.out.println(var == 0);

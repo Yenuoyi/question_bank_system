@@ -1,8 +1,11 @@
 package com.org.bank.domain;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.bank.common.Pager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnswerSheetAnswerDTO implements Serializable {
     /**  */
@@ -70,5 +73,15 @@ public class AnswerSheetAnswerDTO implements Serializable {
 
     public void setPager(Pager pager) {
         this.pager = pager;
+    }
+
+    public static void main(String[] args){
+        List<AnswerSheetAnswerDTO> list = new ArrayList<>();
+        AnswerSheetAnswerDTO o1 = new AnswerSheetAnswerDTO();
+        o1.setExaminationPaperQuestionId(2);
+        o1.setExaminationPaperQuestion("世界首例计算机病毒什么时候出现的？");
+        o1.setExaminationPaperQuestionId(3);
+        list.add(o1);
+        System.out.print(JSONObject.toJSONString(list));
     }
 }
