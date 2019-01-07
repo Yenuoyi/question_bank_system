@@ -144,29 +144,22 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
+    /**
+     * 按比例出题
+     * @param record
+     * @return
+     */
     @RequestMapping("/proportionExercise")
     public Wrapper<?> proportionExercise(@RequestBody ExerciseNumberDTO record){
+        /* 计算预计出题数量 */
         int total = 40;
-        int fillVainNumber = total * record.getFillVainProportion();
-        if((total * record.getFillVainProportion()) >= 0.5){
-            ++fillVainNumber;
-        }
-        int multiPleChoice = total * record.getMultipleChoiceProportion();
-        if((total * record.getMultipleChoiceProportion()) >= 0.5){
-            ++multiPleChoice;
-        }
-        int shortAnswer = total * record.getShortAnswerProportion();
-        if((total * record.getShortAnswerProportion()) >= 0.5){
-            ++shortAnswer;
-        }
-        int singleChoice = total * record.getSingleChoiceProportion();
-        if((total * record.getSingleChoiceProportion()) >= 0.5){
-            ++singleChoice;
-        }
-        int trueFalse = total * record.getTrueFalseProportion();
-        if((total * record.getTrueFalseProportion()) >= 0.5){
-            ++trueFalse;
-        }
+        int fillVainNumber = new Double(total * record.getFillVainProportion()).intValue();
+        int multiPleChoice = new Double(total * record.getMultipleChoiceProportion()).intValue();
+        int shortAnswer = new Double(total * record.getShortAnswerProportion()).intValue();
+        int singleChoice = new Double(total * record.getSingleChoiceProportion()).intValue();
+        int trueFalse = new Double(total * record.getTrueFalseProportion()).intValue();
+
+        /* 筛选实际出题数*/
         int realTotal = fillVainNumber + multiPleChoice +shortAnswer +singleChoice + trueFalse;
         if(realTotal > total){
             int margin = realTotal - total;
@@ -196,54 +189,114 @@ public class ExerciseController {
         record.setTrueFalseNumber(trueFalse);
 
         Pager pager = new Pager();
-        pager.setRows(record.getFillVainNumber());
-        List<FillVainQuestionDTO> fillVainQuestionDTOS = (List<FillVainQuestionDTO>) fillVainQuestionService.randomSelectFillVainQuestionList(pager).getResult().getList();
-        record.setFillVainQuestionDTOS(fillVainQuestionDTOS);
+        if(record.getFillVainNumber() > 0){
+            pager.setRows(record.getFillVainNumber());
+            List<FillVainQuestionDTO> fillVainQuestionDTOS = (List<FillVainQuestionDTO>) fillVainQuestionService.randomSelectFillVainQuestionList(pager).getResult().getList();
+            record.setFillVainQuestionDTOS(fillVainQuestionDTOS);
+        }else{
+            List<FillVainQuestionDTO> fillVainQuestionDTOS = new ArrayList<>();
+            record.setFillVainQuestionDTOS(fillVainQuestionDTOS);
+        }
 
-        pager.setRows(record.getMultipleChoiceNumber());
-        List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = (List<MultipleChoiceQuestionDTO>) multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(pager).getResult().getList();
-        record.setMultipleChoiceQuestionDTOS(multipleChoiceQuestionDTOS);
+        if(record.getMultipleChoiceNumber() > 0){
+            pager.setRows(record.getMultipleChoiceNumber());
+            List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = (List<MultipleChoiceQuestionDTO>) multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(pager).getResult().getList();
+            record.setMultipleChoiceQuestionDTOS(multipleChoiceQuestionDTOS);
+        }else{
+            List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = new ArrayList<>();
+            record.setMultipleChoiceQuestionDTOS(multipleChoiceQuestionDTOS);
+        }
 
-        pager.setRows(record.getShortAnswerNumber());
-        List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS= (List<ShortAnswerQuestionDTO>) shortAnswerQuestionService.randomSelectShortAnswerQuestionList(pager).getResult().getList();
-        record.setShortAnswerQuestionDTOS(shortAnswerQuestionDTOS);
+        if(record.getShortAnswerNumber() > 0){
+            pager.setRows(record.getShortAnswerNumber());
+            List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS= (List<ShortAnswerQuestionDTO>) shortAnswerQuestionService.randomSelectShortAnswerQuestionList(pager).getResult().getList();
+            record.setShortAnswerQuestionDTOS(shortAnswerQuestionDTOS);
+        }else{
+            List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS = new ArrayList<>();
+            record.setShortAnswerQuestionDTOS(shortAnswerQuestionDTOS);
+        }
 
-        pager.setRows(record.getSingleChoiceNumber());
-        List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(pager).getResult().getList();
-        record.setSingleChoiceQuestionDTOS(singleChoiceQuestionDTOS);
+        if(record.getSingleChoiceNumber() > 0){
+            pager.setRows(record.getSingleChoiceNumber());
+            List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(pager).getResult().getList();
+            record.setSingleChoiceQuestionDTOS(singleChoiceQuestionDTOS);
+        }else{
+            List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = new ArrayList<>();
+            record.setSingleChoiceQuestionDTOS(singleChoiceQuestionDTOS);
+        }
 
-        pager.setRows(record.getTrueFalseNumber());
-        List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = (List<TrueFalseQuestionDTO>) trueFalseQuestionService.randomSelectTrueFalseQuestionList(pager).getResult().getList();
-        record.setTrueFalseQuestionDTOS(trueFalseQuestionDTOS);
+        if(record.getTrueFalseNumber() > 0){
+            pager.setRows(record.getTrueFalseNumber());
+            List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = (List<TrueFalseQuestionDTO>) trueFalseQuestionService.randomSelectTrueFalseQuestionList(pager).getResult().getList();
+            record.setTrueFalseQuestionDTOS(trueFalseQuestionDTOS);
+        }else{
+            List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = new ArrayList<>();
+            record.setTrueFalseQuestionDTOS(trueFalseQuestionDTOS);
+        }
         return WrapMapper.ok().result(record);
     }
 
+    /**
+     * 按数量出题
+     * @param record
+     * @return
+     */
     @RequestMapping("/numberExercise")
     public Wrapper<?> numberExercise(@RequestBody ExerciseNumberDTO record){
         Pager pager = new Pager();
-        pager.setRows(record.getFillVainNumber());
-        List<FillVainQuestionDTO> fillVainQuestionDTOS = (List<FillVainQuestionDTO>) fillVainQuestionService.randomSelectFillVainQuestionList(pager).getResult().getList();
-        record.setFillVainQuestionDTOS(fillVainQuestionDTOS);
+        if(record.getFillVainNumber() > 0){
+            pager.setRows(record.getFillVainNumber());
+            List<FillVainQuestionDTO> fillVainQuestionDTOS = (List<FillVainQuestionDTO>) fillVainQuestionService.randomSelectFillVainQuestionList(pager).getResult().getList();
+            record.setFillVainQuestionDTOS(fillVainQuestionDTOS);
+        }else{
+            List<FillVainQuestionDTO> fillVainQuestionDTOS = new ArrayList<>();
+            record.setFillVainQuestionDTOS(fillVainQuestionDTOS);
+        }
 
-        pager.setRows(record.getMultipleChoiceNumber());
-        List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = (List<MultipleChoiceQuestionDTO>) multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(pager).getResult().getList();
-        record.setMultipleChoiceQuestionDTOS(multipleChoiceQuestionDTOS);
+        if(record.getMultipleChoiceNumber() > 0){
+            pager.setRows(record.getMultipleChoiceNumber());
+            List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = (List<MultipleChoiceQuestionDTO>) multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(pager).getResult().getList();
+            record.setMultipleChoiceQuestionDTOS(multipleChoiceQuestionDTOS);
+        }else{
+            List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = new ArrayList<>();
+            record.setMultipleChoiceQuestionDTOS(multipleChoiceQuestionDTOS);
+        }
 
-        pager.setRows(record.getShortAnswerNumber());
-        List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS= (List<ShortAnswerQuestionDTO>) shortAnswerQuestionService.randomSelectShortAnswerQuestionList(pager).getResult().getList();
-        record.setShortAnswerQuestionDTOS(shortAnswerQuestionDTOS);
+        if(record.getShortAnswerNumber() > 0){
+            pager.setRows(record.getShortAnswerNumber());
+            List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS= (List<ShortAnswerQuestionDTO>) shortAnswerQuestionService.randomSelectShortAnswerQuestionList(pager).getResult().getList();
+            record.setShortAnswerQuestionDTOS(shortAnswerQuestionDTOS);
+        }else{
+            List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS = new ArrayList<>();
+            record.setShortAnswerQuestionDTOS(shortAnswerQuestionDTOS);
+        }
 
-        pager.setRows(record.getSingleChoiceNumber());
-        List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(pager).getResult().getList();
-        record.setSingleChoiceQuestionDTOS(singleChoiceQuestionDTOS);
+        if(record.getSingleChoiceNumber() > 0){
+            pager.setRows(record.getSingleChoiceNumber());
+            List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(pager).getResult().getList();
+            record.setSingleChoiceQuestionDTOS(singleChoiceQuestionDTOS);
+        }else{
+            List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = new ArrayList<>();
+            record.setSingleChoiceQuestionDTOS(singleChoiceQuestionDTOS);
+        }
 
-        pager.setRows(record.getTrueFalseNumber());
-        List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = (List<TrueFalseQuestionDTO>) trueFalseQuestionService.randomSelectTrueFalseQuestionList(pager).getResult().getList();
-        record.setTrueFalseQuestionDTOS(trueFalseQuestionDTOS);
-
+        if(record.getTrueFalseNumber() > 0){
+            pager.setRows(record.getTrueFalseNumber());
+            List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = (List<TrueFalseQuestionDTO>) trueFalseQuestionService.randomSelectTrueFalseQuestionList(pager).getResult().getList();
+            record.setTrueFalseQuestionDTOS(trueFalseQuestionDTOS);
+        }else{
+            List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = new ArrayList<>();
+            record.setTrueFalseQuestionDTOS(trueFalseQuestionDTOS);
+        }
         return WrapMapper.ok().result(record);
     }
 
+    /**
+     * 检查按数量和按比例出题
+     * @param record
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("/exerciseCheck")
     public Wrapper<?> numberExerciseCheck(@RequestBody ExerciseNumberDTO record, HttpServletRequest httpServletRequest){
         List<Integer> fillVainQuestionKeys = new ArrayList<>();

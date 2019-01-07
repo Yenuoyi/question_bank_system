@@ -10,37 +10,38 @@ public class ExerciseNumberDTO {
     private Integer fillVainNumber;
 
     /** 填空题比例 */
-    private Integer fillVainProportion;
+    private double fillVainProportion;
 
     /** 多选题数量 */
     private Integer MultipleChoiceNumber;
 
     /** 多选题比例 */
-    private Integer MultipleChoiceProportion;
+    private double MultipleChoiceProportion;
 
     /** 简答题数量 */
     private Integer shortAnswerNumber;
 
     /** 简答题比例 */
-    private Integer shortAnswerProportion;
+    private double shortAnswerProportion;
 
     /** 单选题数量 */
     private Integer singleChoiceNumber;
 
     /** 单选题比例 */
-    private Integer singleChoiceProportion;
+    private double singleChoiceProportion;
 
     /** 判断题数量 */
     private Integer trueFalseNumber;
 
     /** 判断题比例 */
-    private Integer trueFalseProportion;
+    private double trueFalseProportion;
 
     List<FillVainQuestionDTO> fillVainQuestionDTOS;
     List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS;
     List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS;
     List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS;
     List<TrueFalseQuestionDTO> trueFalseQuestionDTOS;
+
     public Integer getFillVainNumber() {
         return fillVainNumber;
     }
@@ -49,11 +50,11 @@ public class ExerciseNumberDTO {
         this.fillVainNumber = fillVainNumber;
     }
 
-    public Integer getFillVainProportion() {
+    public double getFillVainProportion() {
         return fillVainProportion;
     }
 
-    public void setFillVainProportion(Integer fillVainProportion) {
+    public void setFillVainProportion(double fillVainProportion) {
         this.fillVainProportion = fillVainProportion;
     }
 
@@ -65,11 +66,11 @@ public class ExerciseNumberDTO {
         MultipleChoiceNumber = multipleChoiceNumber;
     }
 
-    public Integer getMultipleChoiceProportion() {
+    public double getMultipleChoiceProportion() {
         return MultipleChoiceProportion;
     }
 
-    public void setMultipleChoiceProportion(Integer multipleChoiceProportion) {
+    public void setMultipleChoiceProportion(double multipleChoiceProportion) {
         MultipleChoiceProportion = multipleChoiceProportion;
     }
 
@@ -81,11 +82,11 @@ public class ExerciseNumberDTO {
         this.shortAnswerNumber = shortAnswerNumber;
     }
 
-    public Integer getShortAnswerProportion() {
+    public double getShortAnswerProportion() {
         return shortAnswerProportion;
     }
 
-    public void setShortAnswerProportion(Integer shortAnswerProportion) {
+    public void setShortAnswerProportion(double shortAnswerProportion) {
         this.shortAnswerProportion = shortAnswerProportion;
     }
 
@@ -97,11 +98,11 @@ public class ExerciseNumberDTO {
         this.singleChoiceNumber = singleChoiceNumber;
     }
 
-    public Integer getSingleChoiceProportion() {
+    public double getSingleChoiceProportion() {
         return singleChoiceProportion;
     }
 
-    public void setSingleChoiceProportion(Integer singleChoiceProportion) {
+    public void setSingleChoiceProportion(double singleChoiceProportion) {
         this.singleChoiceProportion = singleChoiceProportion;
     }
 
@@ -113,11 +114,11 @@ public class ExerciseNumberDTO {
         this.trueFalseNumber = trueFalseNumber;
     }
 
-    public Integer getTrueFalseProportion() {
+    public double getTrueFalseProportion() {
         return trueFalseProportion;
     }
 
-    public void setTrueFalseProportion(Integer trueFalseProportion) {
+    public void setTrueFalseProportion(double trueFalseProportion) {
         this.trueFalseProportion = trueFalseProportion;
     }
 
