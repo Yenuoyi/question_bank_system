@@ -95,4 +95,18 @@ public class TeacherAnswerSheetAnswerController {
         }
         return WrapMapper.error().result(executeResult);
     }
+
+    /**
+     * 关联表查询试卷原题与答题卡
+     * @param record
+     * @return
+     */
+    @RequestMapping("/selectPaperSheetList")
+    public Wrapper<?> selectPaperSheetList(@RequestBody AnswerSheetAnswerDTO record){
+        ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> executeResult = answerSheetAnswerService.selectPaperSheetList(record,record.getPager());
+        if(executeResult.isSuccess()){
+            return WrapMapper.ok().result(executeResult);
+        }
+        return WrapMapper.error().result(executeResult);
+    }
 }

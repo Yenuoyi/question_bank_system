@@ -20,6 +20,9 @@ public class AnswerSheetAnswerDTO implements Serializable {
     /** 试题问题 */
     private String examinationPaperQuestion;
 
+    /** 试题问题选项 */
+    private String examinationPaperOption;
+
     /** 试题问题类型 1：单选题，2：多选题，3：判断题，4：填空题，5：简单题 */
     private String examinationPaperQuestionType;
 
@@ -85,5 +88,13 @@ public class AnswerSheetAnswerDTO implements Serializable {
 
     public void setExaminationPaperQuestionType(String examinationPaperQuestionType) {
         this.examinationPaperQuestionType = examinationPaperQuestionType;
+    }
+
+    public String getExaminationPaperOption() {
+        return examinationPaperOption;
+    }
+
+    public void setExaminationPaperOption(String examinationPaperOption) {
+        this.examinationPaperOption = examinationPaperOption;
     }
 }

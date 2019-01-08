@@ -33,12 +33,12 @@ public interface AnswerSheetAnswerDTOMapper {
      * @param pager
      * @return
      */
-    List<AnswerSheetAnswerDTO> selectPaperSheetList(AnswerSheetAnswerDTO record, Pager pager);
+    List<AnswerSheetAnswerDTO> selectPaperSheetList(@Param("record") AnswerSheetAnswerDTO record, @Param("pager") Pager pager);
 
     /**
      * 关联表查询试卷原题与答题卡
      * @param record
      * @return
      */
-    Long countTotalPaperSheet(AnswerSheetAnswerDTO record);
+    Long countTotalPaperSheet(@Param("record") AnswerSheetAnswerDTO record);
 }

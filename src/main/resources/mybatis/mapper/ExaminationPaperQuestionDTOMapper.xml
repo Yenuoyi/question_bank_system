@@ -154,8 +154,9 @@
     examination_paper_answer,examination_paper_question_type)
     values
     <foreach collection="records" index="index" item="item" separator="," >
-      (#{item.originalExaminationPaperId,jdbcType=INTEGER}, #{item.examinationPaperQuestion,jdbcType=VARCHAR}, #{item.examinationPaperOption,jdbcType=VARCHAR},
-      #{item.examinationPaperAnswer,jdbcType=VARCHAR},#{examinationPaperQuestionType,jdbcType=INTEGER})
+      (#{item.originalExaminationPaperId,jdbcType=INTEGER}, #{item.examinationPaperQuestion,jdbcType=VARCHAR},
+      #{item.examinationPaperOption,jdbcType=VARCHAR},
+      #{item.examinationPaperAnswer,jdbcType=VARCHAR},#{item.examinationPaperQuestionType,jdbcType=INTEGER})
     </foreach>
   </insert>
 </mapper>

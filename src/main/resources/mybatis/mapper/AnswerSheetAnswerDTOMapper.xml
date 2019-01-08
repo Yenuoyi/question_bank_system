@@ -23,7 +23,8 @@
 
   <sql id="paper_sheet_Column_List" >
     sheet.id id, sheet.answer_sheet_id answer_sheet_id, sheet.examination_paper_question_id examination_paper_question_id,
-    sheet.examination_paper_answer examination_paper_answer, paper.examination_paper_question examination_paper_question,paper.examination_paper_question_type examination_paper_question_type
+    sheet.examination_paper_answer examination_paper_answer, paper.examination_paper_question examination_paper_question,
+    paper.examination_paper_option examination_paper_option,paper.examination_paper_question_type examination_paper_question_type
   </sql>
 
   <sql id="where_fragement">
@@ -63,6 +64,9 @@
 
       <if test="record.examinationPaperQuestion and record.examinationPaperQuestion != ''">
         and paper.examination_paper_question = #{record.examinationPaperQuestion}
+      </if>
+      <if test="record.examinationPaperOption and record.examinationPaperOption != ''">
+        and paper.examination_paper_option = #{record.examinationPaperOption}
       </if>
       <if test="record.examinationPaperQuestionType and record.examinationPaperQuestionType != ''">
         and paper.examination_paper_question_type = #{record.examinationPaperQuestionType}
@@ -185,7 +189,7 @@
   <select id="countTotalPaperSheet" resultType="Long">
     select
     count(1)
-    from answer_sheet_answer
+    from answer_sheet_answer sheet inner join examination_paper_question paper on paper.id = sheet.examination_paper_question_id
     <include refid="paper_sheet_fragement"/>
   </select>
 </mapper>
