@@ -28,4 +28,12 @@ public interface AnswerSheetAnswerService {
      * @return
      */
     ExecuteResult<Integer> insertList(List<AnswerSheetAnswerDTO> records);
+
+    /**
+     * 关联表查询试卷原题与答题卡
+     * @param record
+     * @param pager
+     * @return
+     */
+    ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> selectPaperSheetList(AnswerSheetAnswerDTO record, Pager pager);
 }

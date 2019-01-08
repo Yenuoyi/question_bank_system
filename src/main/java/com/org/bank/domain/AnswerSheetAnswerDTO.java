@@ -11,7 +11,7 @@ public class AnswerSheetAnswerDTO implements Serializable {
     /**  */
     private Integer id;
 
-    /** 源试卷id */
+    /** 答题卡id */
     private Integer answerSheetId;
 
     /** 源试卷问题id */
@@ -19,6 +19,9 @@ public class AnswerSheetAnswerDTO implements Serializable {
 
     /** 试题问题 */
     private String examinationPaperQuestion;
+
+    /** 试题问题类型 1：单选题，2：多选题，3：判断题，4：填空题，5：简单题 */
+    private String examinationPaperQuestionType;
 
     /** 试题回答 */
     private String examinationPaperAnswer;
@@ -75,13 +78,12 @@ public class AnswerSheetAnswerDTO implements Serializable {
         this.pager = pager;
     }
 
-    public static void main(String[] args){
-        List<AnswerSheetAnswerDTO> list = new ArrayList<>();
-        AnswerSheetAnswerDTO o1 = new AnswerSheetAnswerDTO();
-        o1.setExaminationPaperQuestionId(2);
-        o1.setExaminationPaperQuestion("世界首例计算机病毒什么时候出现的？");
-        o1.setExaminationPaperQuestionId(3);
-        list.add(o1);
-        System.out.print(JSONObject.toJSONString(list));
+
+    public String getExaminationPaperQuestionType() {
+        return examinationPaperQuestionType;
+    }
+
+    public void setExaminationPaperQuestionType(String examinationPaperQuestionType) {
+        this.examinationPaperQuestionType = examinationPaperQuestionType;
     }
 }

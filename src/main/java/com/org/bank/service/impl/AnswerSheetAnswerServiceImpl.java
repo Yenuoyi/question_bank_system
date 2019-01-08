@@ -165,4 +165,32 @@ public class AnswerSheetAnswerServiceImpl implements AnswerSheetAnswerService {
         }
         return executeResult;
     }
+
+    /**
+     * 关联表查询答题卡和试卷内容
+     * @param record
+     * @param pager
+     * @return
+     */
+    @Override
+    public ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> selectPaperSheetList(AnswerSheetAnswerDTO record, Pager pager) {
+        ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> executeResult = new ExecuteResult<DataUtil<AnswerSheetAnswerDTO>>();
+        try {
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：对象非空");
+            }
+            List<AnswerSheetAnswerDTO> result = answerSheetAnswerDTOMapper.selectPaperSheetList(record,pager);
+            Integer total = answerSheetAnswerDTOMapper.countTotalPaperSheet(record).intValue();
+            DataUtil<AnswerSheetAnswerDTO> dtoDataUtil = new DataUtil<AnswerSheetAnswerDTO>();
+            dtoDataUtil.setList(result);
+            dtoDataUtil.getPager().setTotalCount(total);
+            executeResult.setResult(dtoDataUtil);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
 }

@@ -5,11 +5,25 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="answer_sheet_id" property="answerSheetId" jdbcType="INTEGER" />
     <result column="examination_paper_question_id" property="examinationPaperQuestionId" jdbcType="INTEGER" />
-    <result column="examination_paper_question" property="examinationPaperQuestion" jdbcType="VARCHAR" />
     <result column="examination_paper_answer" property="examinationPaperAnswer" jdbcType="VARCHAR" />
   </resultMap>
+
+  <resultMap id="PaperSheetResultMap" type="com.org.bank.domain.AnswerSheetAnswerDTO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="answer_sheet_id" property="answerSheetId" jdbcType="INTEGER" />
+    <result column="examination_paper_question_id" property="examinationPaperQuestionId" jdbcType="INTEGER" />
+    <result column="examination_paper_question" property="examinationPaperQuestion" jdbcType="VARCHAR" />
+    <result column="examination_paper_question_type" property="examinationPaperQuestionType" jdbcType="INTEGER" />
+    <result column="examination_paper_answer" property="examinationPaperAnswer" jdbcType="VARCHAR" />
+  </resultMap>
+
   <sql id="Base_Column_List" >
-    id, answer_sheet_id, examination_paper_question_id, examination_paper_question, examination_paper_answer
+    id, answer_sheet_id, examination_paper_question_id, examination_paper_answer
+  </sql>
+
+  <sql id="paper_sheet_Column_List" >
+    sheet.id id, sheet.answer_sheet_id answer_sheet_id, sheet.examination_paper_question_id examination_paper_question_id,
+    sheet.examination_paper_answer examination_paper_answer, paper.examination_paper_question examination_paper_question,paper.examination_paper_question_type examination_paper_question_type
   </sql>
 
   <sql id="where_fragement">
@@ -24,11 +38,34 @@
       <if test="record.examinationPaperQuestionId and record.examinationPaperQuestionId != ''">
         and examination_paper_question_id = #{record.examinationPaperQuestionId}
       </if>
-      <if test="record.examinationPaperQuestion and record.examinationPaperQuestion != ''">
-        and examination_paper_question = #{record.examinationPaperQuestion}
-      </if>
       <if test="record.examinationPaperAnswer and record.examinationPaperAnswer != ''">
         and examination_paper_answer = #{record.examinationPaperAnswer}
+      </if>
+    </if>
+  </sql>
+
+  <sql id="paper_sheet_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and sheet.id = #{record.id}
+      </if>
+      <if test="record.answerSheetId and record.answerSheetId != ''">
+        and sheet.answer_sheet_id = #{record.answerSheetId}
+      </if>
+      <if test="record.examinationPaperQuestionId and record.examinationPaperQuestionId != ''">
+        and sheet.examination_paper_question_id = #{record.examinationPaperQuestionId}
+      </if>
+      <if test="record.examinationPaperAnswer and record.examinationPaperAnswer != ''">
+        and sheet.examination_paper_answer = #{record.examinationPaperAnswer}
+      </if>
+
+
+      <if test="record.examinationPaperQuestion and record.examinationPaperQuestion != ''">
+        and paper.examination_paper_question = #{record.examinationPaperQuestion}
+      </if>
+      <if test="record.examinationPaperQuestionType and record.examinationPaperQuestionType != ''">
+        and paper.examination_paper_question_type = #{record.examinationPaperQuestionType}
       </if>
     </if>
   </sql>
@@ -69,10 +106,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
-    insert into answer_sheet_answer (answer_sheet_id, examination_paper_question_id, examination_paper_question,
+    insert into answer_sheet_answer (answer_sheet_id, examination_paper_question_id,
       examination_paper_answer)
     values (#{answerSheetId,jdbcType=INTEGER}, #{examinationPaperQuestionId,jdbcType=INTEGER},
-    #{examinationPaperQuestion,jdbcType=VARCHAR},
       #{examinationPaperAnswer,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.org.bank.domain.AnswerSheetAnswerDTO" >
@@ -84,9 +120,6 @@
       <if test="examinationPaperQuestionId != null" >
         examination_paper_question_id,
       </if>
-      <if test="examinationPaperQuestion != null" >
-        examination_paper_question,
-      </if>
       <if test="examinationPaperAnswer != null" >
         examination_paper_answer,
       </if>
@@ -97,9 +130,6 @@
       </if>
       <if test="examinationPaperQuestionId != null" >
         #{examinationPaperQuestionId,jdbcType=INTEGER},
-      </if>
-      <if test="examinationPaperQuestion != null" >
-        #{examinationPaperQuestion,jdbcType=VARCHAR},
       </if>
       <if test="examinationPaperAnswer != null" >
         #{examinationPaperAnswer,jdbcType=VARCHAR},
@@ -115,9 +145,6 @@
       <if test="examinationPaperQuestionId != null" >
         examination_paper_question_id = #{examinationPaperQuestionId,jdbcType=INTEGER},
       </if>
-      <if test="examinationPaperQuestion != null" >
-        examination_paper_question = #{examinationPaperQuestionId,jdbcType=VARCHAR},
-      </if>
       <if test="examinationPaperAnswer != null" >
         examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR},
       </if>
@@ -128,7 +155,6 @@
     update answer_sheet_answer
     set answer_sheet_id = #{answerSheetId,jdbcType=INTEGER},
       examination_paper_question_id = #{examinationPaperQuestionId,jdbcType=INTEGER},
-      examination_paper_question = #{examinationPaperQuestion,jdbcType=VARCHAR},
       examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -140,7 +166,26 @@
     <foreach collection="records" item="item" index="index" separator="," >
       ( #{item.answerSheetId,jdbcType=INTEGER},
       #{item.examinationPaperQuestionId,jdbcType=INTEGER},
-      #{item.examinationPaperQuestion,jdbcType=VARCHAR}, #{item.examinationPaperAnswer,jdbcType=VARCHAR})
+      #{item.examinationPaperAnswer,jdbcType=VARCHAR})
     </foreach>
   </insert>
+
+  <select id="selectPaperSheetList" resultMap="PaperSheetResultMap">
+    select
+    <include refid="paper_sheet_Column_List" />
+    from answer_sheet_answer sheet inner join examination_paper_question paper on paper.id = sheet.examination_paper_question_id
+    <include refid="paper_sheet_fragement"/>
+    ORDER BY id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+
+  <select id="countTotalPaperSheet" resultType="Long">
+    select
+    count(1)
+    from answer_sheet_answer
+    <include refid="paper_sheet_fragement"/>
+  </select>
 </mapper>

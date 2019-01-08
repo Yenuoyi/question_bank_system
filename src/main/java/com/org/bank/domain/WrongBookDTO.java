@@ -20,6 +20,9 @@ public class WrongBookDTO implements Serializable {
     /** 问题 */
     private String question;
 
+    /** 选项 */
+    private String questionOption;
+
     /** 答案 */
     private String answer;
 
@@ -63,6 +66,14 @@ public class WrongBookDTO implements Serializable {
 
     public void setQuestion(String question) {
         this.question = question == null ? null : question.trim();
+    }
+
+    public String getQuestionOption() {
+        return questionOption;
+    }
+
+    public void setQuestionOption(String questionOption) {
+        this.questionOption = questionOption;
     }
 
     public String getAnswer() {

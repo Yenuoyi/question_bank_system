@@ -1,5 +1,6 @@
 package com.org.bank.controller.all;
 
+import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
@@ -23,6 +24,15 @@ public class ClassController {
     @RequestMapping("/selectByPrimaryKey")
     public Wrapper<?> selectByPrimaryKey(@RequestBody ClassDTO record){
         ExecuteResult<ClassDTO> executeResult = classService.selectByPrimaryKey(record);
+        if(executeResult.isSuccess()){
+            return WrapMapper.ok().result(executeResult);
+        }
+        return WrapMapper.error().result(executeResult);
+    }
+
+    @RequestMapping("/selectList")
+    public Wrapper<?> selectList(@RequestBody ClassDTO record){
+        ExecuteResult<DataUtil<ClassDTO>> executeResult = classService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

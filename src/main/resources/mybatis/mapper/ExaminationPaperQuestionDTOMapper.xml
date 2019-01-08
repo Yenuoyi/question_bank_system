@@ -6,9 +6,13 @@
     <result column="original_examination_paper_id" property="originalExaminationPaperId" jdbcType="INTEGER" />
     <result column="examination_paper_question" property="examinationPaperQuestion" jdbcType="VARCHAR" />
     <result column="examination_paper_answer" property="examinationPaperAnswer" jdbcType="VARCHAR" />
+    <result column="examination_paper_answer" property="examinationPaperAnswer" jdbcType="VARCHAR" />
+    <result column="examination_paper_question_type" property="examinationPaperQuestionType" jdbcType="INTEGER" />
+
   </resultMap>
   <sql id="Base_Column_List" >
-    id, original_examination_paper_id, examination_paper_question, examination_paper_answer
+    id, original_examination_paper_id, examination_paper_question,
+    examination_paper_option, examination_paper_answer, examination_paper_question_type
   </sql>
 
   <sql id="where_fragement">
@@ -23,8 +27,14 @@
       <if test="record.examinationPaperQuestion and record.examinationPaperQuestion != ''">
         and examination_paper_question = #{record.examinationPaperQuestion}
       </if>
+      <if test="record.examinationPaperQuestion and record.examinationPaperQuestion != ''">
+        and examination_paper_option = #{record.examinationPaperOption}
+      </if>
       <if test="record.examinationPaperAnswer and record.examinationPaperAnswer != ''">
         and examination_paper_answer = #{record.examinationPaperAnswer}
+      </if>
+      <if test="record.examinationPaperQuestionType and record.examinationPaperQuestionType != ''">
+        and examination_paper_question_type = #{record.examinationPaperQuestionType}
       </if>
     </if>
   </sql>
@@ -62,12 +72,14 @@
     delete from examination_paper_question
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >
-    insert into examination_paper_question (original_examination_paper_id, examination_paper_question,
-      examination_paper_answer)
-    values (#{originalExaminationPaperId,jdbcType=INTEGER}, #{examinationPaperQuestion,jdbcType=VARCHAR},
-      #{examinationPaperAnswer,jdbcType=VARCHAR})
+    insert into examination_paper_question (original_examination_paper_id, examination_paper_question, examination_paper_option,
+      examination_paper_answer,examination_paper_question_type)
+    values (#{originalExaminationPaperId,jdbcType=INTEGER}, #{examinationPaperQuestion,jdbcType=VARCHAR}, #{examinationPaperOption,jdbcType=VARCHAR},
+      #{examinationPaperAnswer,jdbcType=VARCHAR},#{record.examinationPaperQuestionType,jdbcType=INTEGER})
   </insert>
+
   <insert id="insertSelective" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >
     insert into examination_paper_question
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -77,8 +89,14 @@
       <if test="examinationPaperQuestion != null" >
         examination_paper_question,
       </if>
+      <if test="examinationPaperOption != null" >
+        examination_paper_option,
+      </if>
       <if test="examinationPaperAnswer != null" >
         examination_paper_answer,
+      </if>
+      <if test="examinationPaperQuestionType != null" >
+        examination_paper_question_type,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -88,11 +106,18 @@
       <if test="examinationPaperQuestion != null" >
         #{examinationPaperQuestion,jdbcType=VARCHAR},
       </if>
+      <if test="examinationPaperOption != null" >
+        #{examinationPaperOption,jdbcType=VARCHAR},
+      </if>
       <if test="examinationPaperAnswer != null" >
         #{examinationPaperAnswer,jdbcType=VARCHAR},
       </if>
+      <if test="examinationPaperQuestionType != null" >
+        #{examinationPaperQuestionType,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >
     update examination_paper_question
     <set >
@@ -102,8 +127,14 @@
       <if test="examinationPaperQuestion != null" >
         examination_paper_question = #{examinationPaperQuestion,jdbcType=VARCHAR},
       </if>
+      <if test="examinationPaperOption != null" >
+        examination_paper_option = #{examinationPaperOption,jdbcType=VARCHAR},
+      </if>
       <if test="examinationPaperAnswer != null" >
         examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="examinationPaperQuestionType != null" >
+        examination_paper_question_type = #{examinationPaperQuestionType,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -112,17 +143,19 @@
     update examination_paper_question
     set original_examination_paper_id = #{originalExaminationPaperId,jdbcType=INTEGER},
       examination_paper_question = #{examinationPaperQuestion,jdbcType=VARCHAR},
-      examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR}
+       examination_paper_option = #{examinationPaperOption,jdbcType=VARCHAR},
+      examination_paper_answer = #{examinationPaperAnswer,jdbcType=VARCHAR},
+      examination_paper_question_type = #{examinationPaperQuestionType,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
   <insert id="insertList">
-    insert into examination_paper_question (original_examination_paper_id, examination_paper_question,
-    examination_paper_answer)
+    insert into examination_paper_question (original_examination_paper_id, examination_paper_question, examination_paper_option,
+    examination_paper_answer,examination_paper_question_type)
     values
     <foreach collection="records" index="index" item="item" separator="," >
-      (#{item.originalExaminationPaperId,jdbcType=INTEGER}, #{item.examinationPaperQuestion,jdbcType=VARCHAR},
-      #{item.examinationPaperAnswer,jdbcType=VARCHAR})
+      (#{item.originalExaminationPaperId,jdbcType=INTEGER}, #{item.examinationPaperQuestion,jdbcType=VARCHAR}, #{item.examinationPaperOption,jdbcType=VARCHAR},
+      #{item.examinationPaperAnswer,jdbcType=VARCHAR},#{examinationPaperQuestionType,jdbcType=INTEGER})
     </foreach>
   </insert>
 </mapper>
