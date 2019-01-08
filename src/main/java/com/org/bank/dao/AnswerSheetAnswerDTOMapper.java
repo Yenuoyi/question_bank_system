@@ -38,7 +38,6 @@ public interface AnswerSheetAnswerDTOMapper {
     /**
      * 关联表查询试卷原题与答题卡
      * @param record
-     * @param pager
      * @return
      */
     Long countTotalPaperSheet(AnswerSheetAnswerDTO record);

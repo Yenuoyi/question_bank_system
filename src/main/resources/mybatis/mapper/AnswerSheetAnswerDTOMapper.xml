@@ -160,7 +160,7 @@
   </update>
 
   <insert id="insertList">
-    insert into answer_sheet_answer (answer_sheet_id, examination_paper_question_id, examination_paper_question,
+    insert into answer_sheet_answer (answer_sheet_id, examination_paper_question_id,
     examination_paper_answer)
     values
     <foreach collection="records" item="item" index="index" separator="," >
