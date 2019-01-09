@@ -21,8 +21,8 @@
       <if test="record.id and record.id != ''">
         and id = #{record.id}
       </if>
-      <if test="record.originalExaminationPaperid and record.originalExaminationPaperid != ''">
-        and original_examination_paper_id = #{record.originalExaminationPaperid}
+      <if test="record.originalExaminationPaperId and record.originalExaminationPaperId != ''">
+        and original_examination_paper_id = #{record.originalExaminationPaperId}
       </if>
       <if test="record.examinationPaperQuestion and record.examinationPaperQuestion != ''">
         and examination_paper_question = #{record.examinationPaperQuestion}
