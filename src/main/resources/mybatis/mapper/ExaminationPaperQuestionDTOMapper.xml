@@ -68,9 +68,15 @@
     from examination_paper_question
     <include refid="where_fragement"/>
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from examination_paper_question
     where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByPaperId" parameterType="java.lang.Integer" >
+    delete from examination_paper_question
+    where original_examination_paper_id = #{originalExaminationPaperid}
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.ExaminationPaperQuestionDTO" >

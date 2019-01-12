@@ -44,4 +44,23 @@ public class DoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
+    /**
+     * 学生提问
+     * @param record
+     * @param httpServletRequest
+     * @return
+     */
+    @RequestMapping("/insertSelective")
+    public Wrapper<?> insertSelective(@RequestBody DoubtDTO record,HttpServletRequest httpServletRequest){
+        int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
+        String username = UserSecurityContextHolder.getUsername();
+        record.setQuestionerId(userId);
+        record.setQuestionerName(username);
+        ExecuteResult<Integer> executeResult = doubtService.insertSelective(record);
+        if(executeResult.isSuccess()){
+            return WrapMapper.ok().result(executeResult);
+        }
+        return WrapMapper.error().result(executeResult);
+    }
+
 }

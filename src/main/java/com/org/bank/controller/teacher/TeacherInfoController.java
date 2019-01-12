@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 教师角色可访问的教师角色控制类
@@ -26,10 +27,10 @@ public class TeacherInfoController {
 
 
     @RequestMapping("/selectByPrimaryKey")
-    public Wrapper<?> selectByPrimaryKey(){
-        String email = UserSecurityContextHolder.getUsername();
+    public Wrapper<?> selectByPrimaryKey(HttpServletRequest httpServletRequest){
+        int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
         TeacherInfoDTO record = new TeacherInfoDTO();
-        record.setTeacherEmail(email);
+        record.setId(userId);
         ExecuteResult<TeacherInfoDTO> executeResult = teacherInfoService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -39,9 +40,9 @@ public class TeacherInfoController {
 
 
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody TeacherInfoDTO record){
-        String email = UserSecurityContextHolder.getUsername();
-        record.setTeacherEmail(email);
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody TeacherInfoDTO record,HttpServletRequest httpServletRequest){
+        int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
+        record.setId(userId);
         ExecuteResult<Integer> executeResult = teacherInfoService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -50,9 +51,9 @@ public class TeacherInfoController {
     }
 
     @RequestMapping("/updateByPrimaryKey")
-    public Wrapper<?> updateByPrimaryKey(@RequestBody TeacherInfoDTO record){
-        String email = UserSecurityContextHolder.getUsername();
-        record.setTeacherEmail(email);
+    public Wrapper<?> updateByPrimaryKey(@RequestBody TeacherInfoDTO record,HttpServletRequest httpServletRequest){
+        int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
+        record.setId(userId);
         ExecuteResult<Integer> executeResult = teacherInfoService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -61,9 +62,9 @@ public class TeacherInfoController {
     }
 
     @RequestMapping("/updatePasswordByPrimaryKey")
-    public Wrapper<?> updatePasswordByPrimaryKey(@RequestBody TeacherInfoDTO record){
-        String email = UserSecurityContextHolder.getUsername();
-        record.setTeacherEmail(email);
+    public Wrapper<?> updatePasswordByPrimaryKey(@RequestBody TeacherInfoDTO record,HttpServletRequest httpServletRequest){
+        int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
+        record.setId(userId);
         ExecuteResult<Integer> executeResult = teacherInfoService.updatePasswordByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

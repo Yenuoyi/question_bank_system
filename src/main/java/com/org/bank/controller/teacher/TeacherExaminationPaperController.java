@@ -30,7 +30,12 @@ public class TeacherExaminationPaperController {
     private ExaminationPaperQuestionService examinationPaperQuestionService;
     @RequestMapping("/deleteByPrimaryKey")
     public Wrapper<?> deleteByPrimaryKey(@RequestBody ExaminationPaperDTO record){
+        /* 删除试卷头 */
         ExecuteResult<Integer> executeResult = examinationPaperService.deleteByPrimaryKey(record);
+        /* 删除试卷内容 */
+        ExaminationPaperQuestionDTO examinationPaperQuestionDTO = new ExaminationPaperQuestionDTO();
+        examinationPaperQuestionDTO.setOriginalExaminationPaperId(record.getId());
+        examinationPaperQuestionService.deleteByPaperId(examinationPaperQuestionDTO);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }

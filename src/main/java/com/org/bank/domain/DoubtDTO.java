@@ -1,5 +1,6 @@
 package com.org.bank.domain;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.bank.common.Pager;
 
 import java.io.Serializable;
@@ -25,9 +26,6 @@ public class DoubtDTO implements Serializable {
 
     /** 答案 */
     private String answer;
-
-    /** 习题练习是否正确，0：错误，1：正确 */
-    private Integer trueOrFalse;
 
     private Pager pager;
 
@@ -89,13 +87,6 @@ public class DoubtDTO implements Serializable {
         this.answer = answer == null ? null : answer.trim();
     }
 
-    public Integer getTrueOrFalse() {
-        return trueOrFalse;
-    }
-
-    public void setTrueOrFalse(Integer trueOrFalse) {
-        this.trueOrFalse = trueOrFalse;
-    }
 
     public Pager getPager() {
         return pager;

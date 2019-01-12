@@ -12,6 +12,8 @@ import java.util.List;
 public interface ExaminationPaperQuestionDTOMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteByPaperId(Integer id);
+
     int insert(ExaminationPaperQuestionDTO record);
 
     int insertSelective(ExaminationPaperQuestionDTO record);

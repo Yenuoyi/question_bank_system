@@ -68,8 +68,18 @@ public class TeacherDoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
+    /**
+     * 更新疑问
+     * @param record
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping("/updateByPrimaryKeySelective")
-    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody DoubtDTO record){
+    public Wrapper<?> updateByPrimaryKeySelective(@RequestBody DoubtDTO record,HttpServletRequest httpServletRequest){
+        int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
+        String username = UserSecurityContextHolder.getUsername();
+        record.setRespondentId(userId);
+        record.setRespondentName(username);
         ExecuteResult<Integer> executeResult = doubtService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

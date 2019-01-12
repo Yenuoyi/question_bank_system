@@ -24,7 +24,25 @@ public class ExaminationPaperQuestionServiceImpl implements ExaminationPaperQues
             if(StringUtils.isEmpty(record.getId())){
                 throw new RuntimeException("参数错误：ID非空");
             }
-            Integer result = examinationPaperQuestionDTOMapper.deleteByPrimaryKey(record.getId());
+            Integer result = examinationPaperQuestionDTOMapper.deleteByPaperId(record.getId());
+            executeResult.setResult(result);
+            executeResult.setResultMessage("成功！");
+        }catch (Exception e){
+            executeResult.setResultMessage("异常错误！");
+            executeResult.getErrorMessages().add(e.getMessage());
+            logger.error(e.getMessage());
+        }
+        return executeResult;
+    }
+
+    @Override
+    public ExecuteResult<Integer> deleteByPaperId(ExaminationPaperQuestionDTO record) {
+        ExecuteResult<Integer> executeResult = new ExecuteResult<Integer>();
+        try {
+            if(StringUtils.isEmpty(record)){
+                throw new RuntimeException("参数错误：ID非空");
+            }
+            Integer result = examinationPaperQuestionDTOMapper.deleteByPrimaryKey(record.getOriginalExaminationPaperId());
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
         }catch (Exception e){

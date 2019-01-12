@@ -11,6 +11,8 @@ import java.util.List;
 public interface ExaminationPaperQuestionService {
     ExecuteResult<Integer> deleteByPrimaryKey(ExaminationPaperQuestionDTO record);
 
+    ExecuteResult<Integer> deleteByPaperId(ExaminationPaperQuestionDTO record);
+
     ExecuteResult<Integer> insert(ExaminationPaperQuestionDTO record);
 
     ExecuteResult<Integer> insertSelective(ExaminationPaperQuestionDTO record);
