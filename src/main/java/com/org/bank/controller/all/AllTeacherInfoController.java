@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/all/teacher")
-public class TeacherInfoController {
+public class AllTeacherInfoController {
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
     private TeacherInfoService teacherInfoService;
