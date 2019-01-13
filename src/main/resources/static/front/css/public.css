@@ -1,0 +1,101 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+/*flex布局*/
+.flex{
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.flex-item{
+    -webkit-flex: 1;
+    flex: 1;
+}	
+ul,li{
+    list-style-type: none;
+}
+.tc{
+	text-align: center;
+}
+/* 登录页 */
+.bg{
+    width: 100%;
+    height: 100%;
+    background: url('../image/login.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+.bg-index{
+    width: 100%;
+    height: 100%;
+    background: url('../image/index.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding: 0;
+}
+.program-title{
+	font-size: 30px;
+	font-family: Microsoft YaHei;
+	font-weight: bold;
+}
+.login-row{
+    margin-top: 12%;
+}
+.login-box{
+    background-image: linear-gradient(-225deg, rgba(44,216,213,0.8) 0%, rgba(197,193,255,0.8) 56%, rgba(73,90,255,0.8) 100%);
+    opacity:0.95;
+    padding: 40px 30px 20px 0;
+    border-radius: 20px;
+}
+.nav-ul-li a{
+	font-size: 18px;
+	font-weight: bold;
+	color: black;
+}
+.content-row{
+	margin: 10px;
+}
+/* 用户界面 */
+#simulate,#question,#manage,#create{
+	display: none;
+}
+.practice-box,.simulate-box,.question-box,.manage-box,.create-box{
+	background-color: #fff;
+	border-radius: 10px;
+}
+.practice-list,.simulate-list,.question-list,.manage-list,.create-list{
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+	padding: 50px 200px;
+}
+.practice-item,.simulate-item,.question-item,.manage-item,.create-item{
+	margin: 20px;
+	border-radius: 10px;
+}
+.all-box-bg{
+	background-color: #fff;
+	border-radius: 10px;
+}
+.all-question-list{
+	padding-top: 20px;
+	text-align: center;
+}
+.title-tc{
+	text-align: center;
+	padding-top: 10px;
+	font-weight: bold;
+	font-size: 20px;		
+}
+.questionTitle{
+	font-weight: bold;
+	font-size: 17px;
+}
+.green{
+	color: green;
+	display: none;
+}
+.red{
+	color: red;
+	display: none;
+}

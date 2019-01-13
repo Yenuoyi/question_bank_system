@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>错题本</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .form-control{
+      display: inline !important;
+      width: 100px;
+      float: right;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 all-box-bg">
+			<div class="title-tc">错题本</div>
+			<table class="table">
+        <thead>
+          <tr>
+            <th class="tr-id">题目</th>
+          </tr>
+        </thead>
+        <tbody id="table-item">
+          <!-- <tr>
+            <td class="td-id ">1<input class="form-control" type="text"></td>
+          </tr> -->
+        </tbody>
+      </table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+      var tempparam = {
+          "pager": {
+                "rows" : "",
+                "page" : ""
+          }
+        }
+      var param = JSON.stringify(tempparam);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/all/wrongBook/selectList',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  for(var i=0;i<data.result.result.list.length;i++){
+                    $("#table-item").append("<tr><td class='td-id'>"+data.result.result.list[i].question+"<input class='form-control' type='text' value='"+data.result.result.list[i].answer+"'></td></tr>");
+                  }
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      }) 
+		})
+	</script>
+</body>
+</html>

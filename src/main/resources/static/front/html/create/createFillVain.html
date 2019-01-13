@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>练习单选题</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+  <style>
+    .create-box{
+      margin-top: 10px; 
+    }
+    .form-control{
+      margin: 10px 0;
+    }
+    .create-btn{
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 all-box-bg">
+			<div class="title-tc">创建填空题</div>
+			 <div class="create-box">
+        <textarea id="Question" rows="5" placeholder="题目" style="width: 100%;" class ="form-control"></textarea>
+        <input id="Answer" type="text" class="form-control" placeholder="答案">     
+       </div>
+        <div class="create-btn">
+          <button class="btn btn-primary create-button" type="submit">创建</button>
+        </div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+      $(".create-button").click(function() {
+        console.log($("#Question").val());
+        var createDetail = {
+          "fillVainQuestion":$("#Question").val(),
+          "fillVainAnswer":$("#Answer").val()
+        }
+        if(createDetail.fillVainQuestion == ''){
+          alert('请输入题目');
+          return
+        }else if(createDetail.fillVainAnswer == ''){
+          alert('请输入答案');
+          return
+        }
+        var param = JSON.stringify(createDetail);
+        console.log(param);
+        $.ajax({
+              type: "post",
+              headers: {
+                "content-Type":"application/json",
+              },
+              contentType:"application/json",
+              url: 'http://47.107.250.149:8081/teacher/fillVainQuestion/insertSelective',
+              data: param,
+              success: function (data) {
+                console.log("这是请求成功的");
+                console.log(JSON.stringify(data));
+                if(data.code == 500){
+                    alert('输入的'+data.result);
+                }else if(data.code == 200){
+                    alert('创建成功');  
+                    window.location.reload();  
+                }else{
+                      alert(data.result);
+                }
+              },
+              error:function (err) {
+                console.log("这是请求失败的");
+              }
+            });
+      });
+		})
+
+	</script>
+</body>
+</html>

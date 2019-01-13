@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>答卷列表</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .td-id{
+      font-size: 20px;
+    }
+    .btn{
+      float: right;
+    }
+    .answer-id,.exam-id{
+      display: none;
+    }
+    .check-box{
+      margin-left:40%;
+    }
+    .on-score{
+      color: green;
+      display: none;
+      margin-right: 10px;
+    }
+    .off-score{
+      color: red;
+      display: none;
+      margin-right: 52px;
+    }
+    .answer-title{
+      width: 500px;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 all-box-bg">
+			<div class="title-tc tc">答卷列表</div>
+			<table class="table">
+        <thead>
+          <tr>
+            <th class="tr-id">答卷用户</th>
+          </tr>
+        </thead>
+        <tbody id="table-item">
+          <!-- <tr>
+            <td class="td-id flex"><div class="answer-title">1dsadasdddsadasdasdasdas sadsasa</div><span class="check-box"><span class="on-score">总分为：100</span><span class="off-score">待评分</span></span><button class="btn btn-primary">评分</button></td>
+          </tr> -->
+        </tbody>
+      </table>
+		</div>
+	</div>
+	<script type="text/javascript">
+    var examinationPaperId=GetQueryString("examinationPaperId");//调用
+    //获取参数
+    function GetQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if(r != null) return decodeURI(r[2]);
+      return null;
+    }
+		$(function(){
+      var tempparam = {
+          "examinationPaperId": examinationPaperId
+        }
+      var param = JSON.stringify(tempparam);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/teacher/answerSheet/selectList',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  for(var i=0;i<data.result.result.list.length;i++){
+                    $("#table-item").append("<tr><td class='td-id flex'><div class='answer-title'>"+data.result.result.list[i].answererName+"</div><span class='check-box'><span class='on-score show"+i+"'>总分为："+data.result.result.list[i].grade+"</span><span class='off-score noshow"+i+"'>待评分</span></span>  <button class='btn btn-primary'>评分</button><p class='answer-id'>"+data.result.result.list[i].id+"</p><p class='exam-id'>"+data.result.result.list[i].examinationPaperId+"</p></td></tr>");
+                    if(data.result.result.list[i].grade != null){
+                      $(".show"+i+"").show();
+                    }else{
+                      $(".noshow"+i+"").show();
+                    }
+                  }
+                  
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      }) 
+      $("#table-item").on("click",".btn",function(){
+        var id = $(this).siblings(".answer-id").html();
+        window.location.href = "answerDetailTeacher.html?answerSheetId="+id+""
+      })
+		})
+	</script>
+</body>
+</html>

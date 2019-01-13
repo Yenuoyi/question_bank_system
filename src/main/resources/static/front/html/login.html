@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/public.css">
+	<title>答题系统</title>
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/public-js.js"></script>
+</head>
+<body class="container-fluid bg">
+	<div class="row text-center login-row">
+		<div class="col-sm-6 col-sm-offset-3 login-box">
+			<form class="form-horizontal">
+				<p class="text-center program-title">程序设计语言题库练习系统</p>
+				<div class="form-group">
+					<label for="userName" class="col-sm-3 control-label">用户名
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="userName" placeholder="请输入用户名">
+						<span class=""></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="passWord" class="col-sm-3 control-label">密码
+						<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+					</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control" id="passWord" placeholder="请输入密码">
+						<span class=""></span>
+					</div>
+				</div>
+				<p class="text-center">
+					<label class="radio-inline">
+						<input type="radio" name="userType" id="student" value="STUDENT"> 学生
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="userType" id="teacher" value="TEACHER"> 教师
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="userType" id="admin" value="ADMIN"> 管理员
+					</label>
+				</p>
+				<div class="form-group">
+					<div class="col-sm-2 col-sm-offset-4">
+						<button type="button" class="btn btn-primary btn-submit">登录</button>
+					</div>
+					<div class="col-sm-1">
+						<button type="button" class="btn btn-default btn-register">注册</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			$("#userName").change(function () {
+                checkInput("#userName","用户名");
+            });
+            $("#passWord").change(function () {
+                checkInput("#passWord","密码");
+            });
+			$(".btn-register").click(function() {
+				$(location).attr("href","register.html");
+			});
+			$(".btn-submit").click(function () { //“登录”按钮单击事件
+				var temp = checkInput("#userName","用户名");
+				var temp1 = checkInput("#passWord","密码");
+                if(temp && temp1){
+           			if($("input[name='userType']:checked").val() == null){
+           				alert('请选择用户类型');
+           				return false
+           			}
+                    var userInfo = {
+                    	"username": $("#userName").val(),
+                    	"password": $("#passWord").val(),
+                    	"role": $("input[name='userType']:checked").val()
+                    } 
+                    console.log(userInfo);
+                    var param = JSON.stringify(userInfo);
+                    $.ajax({
+                    	type: "post",
+                    	headers: {
+                    		"content-Type":"application/json",
+                    	},
+                    	contentType:"application/json",
+                    	url: 'http://47.107.250.149:8081/login',
+                    	data: param,
+                    	success: function (data) {
+                    		console.log("这是请求成功的");
+                    		console.log(userInfo);
+                    		if(data.code == 500){
+                    			alert('输入的'+data.result);
+                    		}else if(data.code == 200 && userInfo.role == "ADMIN"){
+                    			window.location.href = "admin/index_admin.html"
+                    		}else if(data.code == 200 && userInfo.role == "STUDENT"){
+                    			window.location.href = "student/index_student.html"
+                    		}else if(data.code == 200 && userInfo.role == "TEACHER"){
+                    			window.location.href = "teacher/index_teacher.html"
+                    		}else{
+                    			alert(data.result);
+                    		}
+                    	},
+                    	error:function (err) {
+                    		console.log("这是请求失败的");
+                    	}
+                    });
+                }else{
+                	return false;
+                }
+                
+            })
+		})
+	</script>
+</body>
+</html>

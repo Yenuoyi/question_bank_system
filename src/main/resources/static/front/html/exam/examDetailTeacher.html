@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>编辑试卷</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+  <script src="../../js/jquery-3.3.1.min.js"></script>
+  <script src="../../js/bootstrap.min.js"></script>
+  <script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .all-box-bg{
+      padding-bottom: 50px; 
+    }
+    .exam-title{
+      margin-bottom: 20px;
+    }
+    .paper-content{
+      margin-top: 10px;
+    }
+    .paper-title{
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .title-divide{
+      width: 100%;
+      height: 1px;
+      background-color: #C0C0C0;
+      margin: 10px 0;
+    }
+    .add-btn-sc,.add-btn-mc,.add-btn-tf,.add-btn-sa,.add-btn-fv{
+      margin-left: 10px;
+    }
+    .paper-q,.paper-o,.paper-a{
+      width: 600px;
+      margin-right: 10px;
+    }
+    .paper-qtf{
+      width: 1040px;
+      margin-right: 10px;
+    }
+    .paper-a{
+      width: 100px;
+    }
+    .paper-qfv{
+      width: 700px;
+      margin-right: 10px;
+    }
+    .paper-afv{
+      width: 440px;
+    }
+    .paper-qsa,.paper-afv,.paper-asa{
+      margin-right: 10px;
+    }
+    .create-btn{
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .save-btn-sc,.save-btn-mc,.save-btn-tf,.save-btn-fv,.save-btn-sa{
+      margin-right: 10px;
+    }
+    #sc-id,#mc-id,#tf-id,#fv-id,#sa-id,#sc-type,#mc-type,#tf-type,#fv-type,#sa-type{
+      display: none;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+  <div class="row content-row" id="practice">
+    <div class="col-sm-12 all-box-bg">
+      <div class="title-tc">编辑试卷</div>
+      <div class="paper-content">
+        <!-- <div class="col-sm-6 col-sm-offset-3  ">
+          <input type="text" class="form-control exam-title" placeholder="试卷名称">
+        </div> -->
+        <!-- 单选题 -->
+        <div class="sc-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">单选题</p>
+            <button class="btn btn-success add-btn-sc">+</button>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="singleChoice-ul">
+            <!-- <li class="list-group-item flex singleChoice-li">
+              <textarea id="sc-Question" rows="3" placeholder="题目" class="form-control paper-q"></textarea>
+              <textarea id="sc-Option" rows="3" placeholder="选项" class="form-control paper-o"></textarea>
+              <input id="sc-Answer" type="text" class="form-control paper-a" placeholder="答案">
+              <button class="btn btn-primary save-btn-sc">保存</button>
+              <button class="btn btn-danger del-btn-sc">-</button>
+              <span id="sc-id"></span>
+            </li> -->
+          </ul>
+        </div>
+        <!-- 多选题 -->
+        <div class="mc-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">多选题</p>
+            <button class="btn btn-success add-btn-mc">+</button>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="multipleChoice-ul">
+            <!-- <li class="list-group-item flex multipleChoice-li">
+              <textarea id="mc-Question" rows="3" placeholder="题目" class="form-control paper-q"></textarea>
+              <textarea id="mc-Option" rows="3" placeholder="选项" class="form-control paper-o"></textarea>
+              <input id="mc-Answer" type="text" class="form-control paper-a" placeholder="答案">
+              <button class="btn btn-primary save-btn-mc">保存</button>
+              <button class="btn btn-danger del-btn-mc">-</button>
+              <span id="mc-id"></span>
+            </li> -->
+          </ul>
+        </div>
+        <!-- 判断题 -->
+        <div class="tf-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">判断题</p>
+            <button class="btn btn-success add-btn-tf">+</button>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="Judge-ul">
+            <!-- <li class="list-group-item flex Judge-li">
+              <textarea id="tf-Question" rows="3" placeholder="题目" class="form-control paper-qtf"></textarea>
+              <input id="tf-Answer" type="text" class="form-control paper-a" placeholder="答案">
+              <button class="btn btn-primary save-btn-tf">保存</button>
+              <button class="btn btn-danger del-btn-tf">-</button>
+              <span id="tf-id"></span>
+            </li> -->
+          </ul>
+        </div>
+        <!-- 填空题 -->
+        <div class="fv-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">填空题</p>
+            <button class="btn btn-success add-btn-fv">+</button>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="fillVain-ul">
+            <!-- <li class="list-group-item flex fillVain-li">
+              <textarea id="fv-Question" rows="3" placeholder="题目" class="form-control paper-qfv"></textarea>
+              <input id="fv-Answer" type="text" class="form-control paper-afv" placeholder="答案">
+              <button class="btn btn-primary save-btn-fv">保存</button>
+              <button class="btn btn-danger del-btn-fv">-</button>
+              <span id="fv-id"></span>
+            </li> -->
+          </ul>
+        </div>
+        <!-- 简答题 -->
+        <div class="sa-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">简答题</p>
+            <button class="btn btn-success add-btn-sa">+</button>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="shortAnswer-ul">
+            <!-- <li class="list-group-item flex shortAnswer-li">
+              <textarea id="sa-Question" rows="5" placeholder="题目" class="form-control paper-qsa"></textarea>
+              <textarea id="sa-Answer" rows="5" placeholder="答案" class="form-control paper-asa"></textarea>
+              <button class="btn btn-primary save-btn-sa">保存</button>
+              <button class="btn btn-danger del-btn-sa">-</button>
+              <span id="sa-id"></span>
+            </li> -->
+          </ul>
+        </div>
+        <div class="create-btn col-sm-10 col-sm-offset-1">
+          <button class="btn btn-warning return-button">返回</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var originalExaminationPaperid=GetQueryString("originalExaminationPaperid");//调用
+    //定义题目id
+    var singleChoiceQuestionID = [];
+    var multipleChoiceQuestionID = [];
+    var JudgeQuestionID = [];
+    var fillVainQuestionID = [];
+    var shortAnswerQuestionID = [];
+    //获取参数
+    function GetQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if(r != null) return decodeURI(r[2]);
+      return null;
+    }
+    $(function(){
+      var tempP = {
+          "originalExaminationPaperId" : originalExaminationPaperid
+      }
+      console.log(tempP);
+      var param = JSON.stringify(tempP);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/teacher/examinationPaperQuestion/selectList',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                alert('输入的'+data.result);
+            }else if(data.code == 200){
+              var examList = data.result.result.list;
+              console.log(examList);
+              //遍历dom节点
+              for(var i=0;i<examList.length;i++){
+                if(examList[i].examinationPaperQuestionType == '1'){
+                  $("#singleChoice-ul").append("<li class='list-group-item flex singleChoice-li'><textarea id='sc-Question' rows='3' placeholder='题目' class='form-control paper-q'>"+examList[i].examinationPaperQuestion+"</textarea><textarea id='sc-Option' rows='3' placeholder='选项' class='form-control paper-o'>"+examList[i].examinationPaperOption+"</textarea><input id='sc-Answer' type='text' class='form-control paper-a' placeholder='答案' value='"+examList[i].examinationPaperAnswer+"''><button class='btn btn-primary save-btn-sc'>保存</button><button class='btn btn-danger del-btn-sc'>-</button><span id='sc-id'>"+examList[i].id+"</span><span id='sc-type'>"+examList[i].examinationPaperQuestionType+"</span></li>")
+                  singleChoiceQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '2'){
+                  $("#multipleChoice-ul").append("<li class='list-group-item flex multipleChoice-li'><textarea id='mc-Question' rows='3' placeholder='题目' class='form-control paper-q'>"+examList[i].examinationPaperQuestion+"</textarea><textarea id='mc-Option' rows='3' placeholder='选项' class='form-control paper-o'>"+examList[i].examinationPaperOption+"</textarea><input id='mc-Answer' type='text' class='form-control paper-a' placeholder='答案' value='"+examList[i].examinationPaperAnswer+"'><button class='btn btn-primary save-btn-mc'>保存</button><button class='btn btn-danger del-btn-mc'>-</button><span id='mc-id'>"+examList[i].id+"</span><span id='mc-type'>"+examList[i].examinationPaperQuestionType+"</span></li>")
+                  multipleChoiceQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '3'){
+                  $("#Judge-ul").append("<li class='list-group-item flex Judge-li'><textarea id='tf-Question' rows='3' placeholder='题目' class='form-control paper-qtf'>"+examList[i].examinationPaperQuestion+"</textarea><input id='tf-Answer' type='text' class='form-control paper-a' placeholder='答案' value='"+examList[i].examinationPaperAnswer+"'><button class='btn btn-primary save-btn-tf'>保存</button><button class='btn btn-danger del-btn-tf'>-</button><span id='tf-id'>"+examList[i].id+"</span><span id='tf-type'>"+examList[i].examinationPaperQuestionType+"</span></li>")
+                  JudgeQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '4'){
+                  $("#fillVain-ul").append("<li class='list-group-item flex fillVain-li'><textarea id='fv-Question' rows='3' placeholder='题目' class='form-control paper-qfv'>"+examList[i].examinationPaperQuestion+"</textarea><input id='fv-Answer' type='text' class='form-control paper-afv' placeholder='答案' value='"+examList[i].examinationPaperAnswer+"'><button class='btn btn-primary save-btn-fv'>保存</button><button class='btn btn-danger del-btn-fv'>-</button><span id='fv-id'>"+examList[i].id+"</span><span id='fv-type'>"+examList[i].examinationPaperQuestionType+"</span></li>")
+                  fillVainQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '5'){
+                  $("#shortAnswer-ul").append("<li class='list-group-item flex shortAnswer-li'><textarea id='sa-Question' rows='5' placeholder='题目' class='form-control paper-qsa'>"+examList[i].examinationPaperQuestion+"</textarea><textarea id='sa-Answer' rows='5' placeholder='答案' class='form-control paper-asa'>"+examList[i].examinationPaperAnswer+"</textarea><button class='btn btn-primary save-btn-sa'>保存</button><button class='btn btn-danger del-btn-sa'>-</button><span id='sa-id'>"+examList[i].id+"</span><span id='sa-type'>"+examList[i].examinationPaperQuestionType+"</span></li>")
+                  shortAnswerQuestionID.push(examList[i].id);
+                }
+              }
+            }else{
+              alert(data.result);
+            }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      });
+    })
+
+
+
+      //增加事件
+      $(".add-btn-sc").click(function(){
+        $("#singleChoice-ul").append("<li class='list-group-item flex singleChoice-li'><textarea id='sc-Question' rows='3' placeholder='题目'' class='form-control paper-q'></textarea><textarea id='sc-Option' rows='3' placeholder='选项'' class='form-control paper-o'></textarea><input id='sc-Answer' type='text' class='form-control paper-a' placeholder='答案'><button class='btn btn-primary save-btn-sc'>保存</button><button class='btn btn-danger del-btn-sc'>-</button><span id='sc-id'></span><span id='sc-type'>1</span></li>")
+      })
+      $(".add-btn-mc").click(function(){
+        $("#multipleChoice-ul").append("<li class='list-group-item flex multipleChoice-li'><textarea id='mc-Question' rows='3' placeholder='题目'' class='form-control paper-q'></textarea><textarea id='mc-Option' rows='3' placeholder='选项'' class='form-control paper-o'></textarea><input id='mc-Answer' type='text' class='form-control paper-a' placeholder='答案'><button class='btn btn-primary save-btn-mc'>保存</button><button class='btn btn-danger del-btn-mc'>-</button><span id='mc-id'>2</span><span id='mc-type'>2</span></li>")
+      })
+      $(".add-btn-tf").click(function(){
+        $("#Judge-ul").append("<li class='list-group-item flex Judge-li'><textarea id='tf-Question' rows='3' placeholder='题目'' class='form-control paper-qtf'></textarea><input id='tf-Answer' type='text' class='form-control paper-a' placeholder='答案'><button class='btn btn-primary save-btn-tf'>保存</button><button class='btn btn-danger del-btn-tf'>-</button><span id='tf-id'></span><span id='tf-type'>3</span></li>")
+      })
+      $(".add-btn-fv").click(function(){
+        $("#fillVain-ul").append("<li class='list-group-item flex fillVain-li'><textarea id='fv-Question' rows='3' placeholder='题目'' class='form-control paper-qfv'></textarea><input id='fv-Answer' type='text' class='form-control paper-afv' placeholder='答案'><button class='btn btn-primary save-btn-fv'>保存</button><button class='btn btn-danger del-btn-fv'>-</button><span id='fv-id'></span><span id='fv-type'>4</span></li>")
+      })
+      $(".add-btn-sa").click(function(){
+        $("#shortAnswer-ul").append("<li class='list-group-item flex shortAnswer-li'><textarea id='sa-Question' rows='5' placeholder='题目'' class='form-control paper-qsa'></textarea><textarea id='sa-Answer' rows='5' placeholder='答案'' class='form-control paper-asa'></textarea><button class='btn btn-primary save-btn-sa'>保存</button><button class='btn btn-danger del-btn-sa'>-</button><span id='sa-id'></span><span id='sa-type'>5</span></li>")
+      })
+      //保存事件
+      $("#singleChoice-ul").on("click",".save-btn-sc",function(){
+        var temp = {
+          "examinationPaperQuestion" : $(this).siblings('#sc-Question').val(),
+          "examinationPaperOption" : $(this).siblings('#sc-Option').val(),
+          "examinationPaperAnswer" : $(this).siblings('#sc-Answer').val(),
+          "examinationPaperQuestionType" : $(this).siblings('#sc-type').html(),
+          "id" : $(this).siblings('#sc-id').html(),
+          "originalExaminationPaperId" : originalExaminationPaperid
+        }
+        if(temp.examinationPaperQuestion == ''){
+          alert('题目不能为空');
+          return
+        }
+        if(temp.examinationPaperOption == ''){
+          alert('选项不能为空');
+          return
+        }
+        if(temp.examinationPaperAnswer == ''){
+          alert('答案不能为空');
+          return
+        }
+        var param = JSON.stringify(temp);
+        if(temp.id != ''){
+          update(param);
+        }else{
+          insert(param);
+        }
+      })
+      $("#multipleChoice-ul").on("click",".save-btn-mc",function(){
+        var temp = {
+          "examinationPaperQuestion" : $(this).siblings('#mc-Question').val(),
+          "examinationPaperOption" : $(this).siblings('#mc-Option').val(),
+          "examinationPaperAnswer" : $(this).siblings('#mc-Answer').val(),
+          "examinationPaperQuestionType" : $(this).siblings('#mc-type').html(),
+          "id" : $(this).siblings('#mc-id').html(),
+          "originalExaminationPaperId" : originalExaminationPaperid
+        }
+        if(temp.examinationPaperQuestion == ''){
+          alert('题目不能为空');
+          return
+        }
+        if(temp.examinationPaperOption == ''){
+          alert('选项不能为空');
+          return
+        }
+        if(temp.examinationPaperAnswer == ''){
+          alert('答案不能为空');
+          return
+        }
+        var param = JSON.stringify(temp);
+        if(temp.id != ''){
+          update(param);
+        }else{
+          insert(param);
+        }
+      })
+      $("#Judge-ul").on("click",".save-btn-tf",function(){
+        var temp = {
+          "examinationPaperQuestion" : $(this).siblings('#tf-Question').val(),
+          "examinationPaperAnswer" : $(this).siblings('#tf-Answer').val(),
+          "examinationPaperQuestionType" : $(this).siblings('#tf-type').html(),
+          "id" : $(this).siblings('#tf-id').html(),
+          "originalExaminationPaperId" : originalExaminationPaperid
+        }
+        if(temp.examinationPaperQuestion == ''){
+          alert('题目不能为空');
+          return
+        }
+        if(temp.examinationPaperAnswer == ''){
+          alert('答案不能为空');
+          return
+        }
+        var param = JSON.stringify(temp);
+        if(temp.id != ''){
+          update(param);
+        }else{
+          insert(param);
+        }
+      })
+      $("#fillVain-ul").on("click",".save-btn-fv",function(){
+        var temp = {
+          "examinationPaperQuestion" : $(this).siblings('#fv-Question').val(),
+          "examinationPaperAnswer" : $(this).siblings('#fv-Answer').val(),
+          "examinationPaperQuestionType" : $(this).siblings('#fv-type').html(),
+          "id" : $(this).siblings('#fv-id').html(),
+          "originalExaminationPaperId" : originalExaminationPaperid
+        }
+        if(temp.examinationPaperQuestion == ''){
+          alert('题目不能为空');
+          return
+        }
+        if(temp.examinationPaperAnswer == ''){
+          alert('答案不能为空');
+          return
+        }
+        var param = JSON.stringify(temp);
+        if(temp.id != ''){
+          update(param);
+        }else{
+          insert(param);
+        }
+      })
+      $("#shortAnswer-ul").on("click",".save-btn-sa",function(){
+        var temp = {
+          "examinationPaperQuestion" : $(this).siblings('#sa-Question').val(),
+          "examinationPaperAnswer" : $(this).siblings('#sa-Answer').val(),
+          "examinationPaperQuestionType" : $(this).siblings('#sa-type').html(),
+          "id" : $(this).siblings('#sa-id').html(),
+          "originalExaminationPaperId" : originalExaminationPaperid
+        }
+        if(temp.examinationPaperQuestion == ''){
+          alert('题目不能为空');
+          return
+        }
+        if(temp.examinationPaperAnswer == ''){
+          alert('答案不能为空');
+          return
+        }
+        var param = JSON.stringify(temp);
+        if(temp.id != ''){
+          update(param);
+        }else{
+          insert(param);
+        }
+      })
+      //删除事件
+      $("#singleChoice-ul").on("click",".del-btn-sc",function(){
+        $(this).parent().remove();
+        var temp = {
+          // "examinationPaperQuestion" : $(this).siblings('#sc-Question').val(),
+          // "examinationPaperOption" : $(this).siblings('#sc-Option').val(),
+          // "examinationPaperAnswer" : $(this).siblings('#sc-Answer').val(),
+          // "examinationPaperQuestionType" : $(this).siblings('#sc-type').html(),
+          "id" : $(this).siblings('#sc-id').html(),
+          // "originalExaminationPaperId" : originalExaminationPaperid
+        }
+        var param = JSON.stringify(temp);
+        del(param);
+      })
+      $("#multipleChoice-ul").on("click",".del-btn-mc",function(){
+        $(this).parent().remove();
+      })
+      $("#Judge-ul").on("click",".del-btn-tf",function(){
+        $(this).parent().remove();
+      })
+      $("#fillVain-ul").on("click",".del-btn-fv",function(){
+        $(this).parent().remove();
+      })
+      $("#shortAnswer-ul").on("click",".del-btn-sa",function(){
+        $(this).parent().remove();
+      })
+      //返回按钮点击事件
+      $(".return-button").click(function(){
+        window.history.go(-1);
+      })
+    
+    function update(param){
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/teacher/examinationPaperQuestion/updateByPrimaryKeySelective',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                alert('输入的'+data.result);
+            }else if(data.code == 200){
+                alert('保存成功');  
+                window.location.reload();  
+            }else{
+                  alert(data.result);
+            }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+        });
+    }
+
+    function insert(param){
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/teacher/examinationPaperQuestion/insertSelective',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                alert('输入的'+data.result);
+            }else if(data.code == 200){
+                alert('保存成功');  
+                window.location.reload();  
+            }else{
+                  alert(data.result);
+            }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+        });
+    }
+
+    function del(param){
+      console.log(param);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/teacher/examinationPaperQuestion/deleteByPrimaryKey',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                alert('输入的'+data.result);
+            }else if(data.code == 200){
+                alert('删除成功');  
+                window.location.reload();  
+            }else{
+                  alert(data.result);
+            }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+        });
+    }
+</script>
+</body>
+</html>

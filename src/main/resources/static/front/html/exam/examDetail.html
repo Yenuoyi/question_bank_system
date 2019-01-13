@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>模拟考试</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+  <script src="../../js/jquery-3.3.1.min.js"></script>
+  <script src="../../js/bootstrap.min.js"></script>
+  <script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .all-box-bg{
+      padding-bottom: 50px; 
+    }
+    .paper-content{
+      margin-top: 10px;
+    }
+    .paper-title{
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .title-divide{
+      width: 100%;
+      height: 1px;
+      background-color: #C0C0C0;
+      margin: 10px 0;
+    }
+    .create-btn{
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .question-option-box{
+      flex: 1;
+      word-break:break-all;
+    }
+    .option-btn-box{
+      margin-left: 150px;
+    }
+    .question-box{
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .question-box-no{
+      margin-bottom: 0;
+    }
+
+    .option-input-box{
+      margin-left: 150px;
+    }
+    .option-input-box input,.option-input-box textarea{
+      width: 400px;
+    }
+    .question-id{
+      display: none;  
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+  <div class="row content-row" id="practice">
+    <div class="col-sm-12 all-box-bg">
+      <div class="title-tc">模拟考试</div>
+      <div class="paper-content">
+        <!-- 单选题 -->
+        <div class="sc-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">单选题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="singleChoice-ul">
+            <!-- <li class="list-group-item singleChoice-li flex">
+              <div class="question-option-box">
+                <div id="sc-Question" class="question-box"></div>
+                <div id="sc-Option" class="option-box"></div>
+              </div>
+              <div class="btn btn-primary option-btn-box">
+                <input type="radio" name="options">A
+                <input type="radio" name="options">B
+                <input type="radio" name="options">C
+                <input type="radio" name="options">D
+              </div>            
+            </li> -->
+          </ul>
+        </div>
+        <!-- 多选题 -->
+        <div class="mc-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">多选题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="multipleChoice-ul">
+            <!-- <li class="list-group-item multipleChoice-li flex">
+              <div class="question-option-box">
+                <div id="mc-Question" class="question-box"></div>
+                <div id="mc-Option" class="option-box"></div>
+              </div>
+              <div class="btn btn-primary option-btn-box">
+                <input type="checkbox" name="options">A
+                <input type="checkbox" name="options">B
+                <input type="checkbox" name="options">C
+                <input type="checkbox" name="options">D
+              </div>            
+            </li> -->
+          </ul>
+        </div>
+        <!-- 判断题 -->
+        <div class="tf-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">判断题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="Judge-ul">
+            <!-- <li class="list-group-item Judge-li flex">
+              <div class="question-option-box">
+                <div id="tf-Question" class="question-box-no"></div>
+              </div>
+              <div class="btn btn-primary option-btn-box">
+                <input type="radio" name="options">正确
+                <input type="radio" name="options">错误
+              </div>            
+            </li> -->
+          </ul>
+        </div>
+        <!-- 填空题 -->
+        <div class="fv-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">填空题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="fillVain-ul">
+            <!-- <li class="list-group-item fillVain-li flex">
+              <div class="question-option-box">
+                <div id="fv-Question" class="question-box-no"></div>
+              </div>
+              <div class="option-input-box">
+                <input type="text" name="options">
+              </div>            
+            </li> -->
+          </ul>
+        </div>
+        <!-- 简答题 -->
+        <div class="sa-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">简答题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="shortAnswer-ul">
+            <!-- <li class="list-group-item shortAnswer-li flex">
+              <div class="question-option-box">
+                <div id="sa-Question" class="question-box-no"></div>
+              </div>
+              <div class="option-input-box">
+                <textarea name="options" rows="5"></textarea>
+              </div>            
+            </li> -->
+          </ul>
+        </div>
+        <div class="create-btn col-sm-10 col-sm-offset-1">
+          <button class="btn btn-primary create-button" type="submit">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var originalExaminationPaperid=GetQueryString("originalExaminationPaperid");//调用
+    //定义题目id
+    var singleChoiceQuestionID = [];
+    var multipleChoiceQuestionID = [];
+    var JudgeQuestionID = [];
+    var fillVainQuestionID = [];
+    var shortAnswerQuestionID = [];
+    //获取参数
+    function GetQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if(r != null) return decodeURI(r[2]);
+      return null;
+    }
+    $(function(){
+      var tempP = {
+          "originalExaminationPaperId" : originalExaminationPaperid
+      }
+      console.log(tempP);
+      var param = JSON.stringify(tempP);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/all/examinationPaperQuestion/selectList',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                alert('输入的'+data.result);
+            }else if(data.code == 200){
+              var examList = data.result.result.list;
+              console.log(examList);
+              //遍历dom节点
+              for(var i=0;i<examList.length;i++){
+                if(examList[i].examinationPaperQuestionType == '1'){
+                  $("#singleChoice-ul").append("<li class='list-group-item singleChoice-li flex'><div class='question-option-box'><div id='sc-Question' class='question-box'>"+examList[i].examinationPaperQuestion+"</div><div id='sc-Option' class='option-box'>"+examList[i].examinationPaperOption+"</div></div><div class='btn btn-primary option-btn-box'><input type='radio' name='options"+i+"' class='options-sc' value='A'>A <input type='radio' name='options"+i+"' class='options-sc' value='B'>B<input type='radio' name='options"+i+"' class='options-sc' value='C'>C <input type='radio' name='options"+i+"' class='options-sc' value='D'>D<p class='question-id'>"+examList[i].id+"</p></div></li>")
+                  singleChoiceQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '2'){
+                  $("#multipleChoice-ul").append("<li class='list-group-item multipleChoice-li flex'><div class='question-option-box'><div id='mc-Question' class='question-box'>"+examList[i].examinationPaperQuestion+"</div><div id='mc-Option' class='option-box'>"+examList[i].examinationPaperOption+"</div></div><div class='btn btn-primary option-btn-box'><input type='checkbox' name='options"+i+"' class='options-mc' value='A'>A <input type='checkbox' name='options"+i+"' class='options-mc' value='B'>B <input type='checkbox' name='options"+i+"' class='options-mc' value='C'>C <input type='checkbox' name='options"+i+"' class='options-mc' value='D'>D<p class='question-id'>"+examList[i].id+"</p></div></li>")
+                  multipleChoiceQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '3'){
+                  $("#Judge-ul").append("<li class='list-group-item Judge-li flex'><div class='question-option-box'><div id='tf-Question' class='question-box-no'>"+examList[i].examinationPaperQuestion+"</div></div><div class='btn btn-primary option-btn-box'><input type='checkbox' name='options"+i+"' class='options-tf' value='正确'>正确 <input type='checkbox' name='options"+i+"' class='options-tf' value='错误'>错误</div><p class='question-id'>"+examList[i].id+"</p></li>")
+                  JudgeQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '4'){
+                  $("#fillVain-ul").append("<li class='list-group-item fillVain-li flex'><div class='question-option-box'><div id='tf-Question' class='question-box-no'>"+examList[i].examinationPaperQuestion+"</div></div><div class='option-input-box'><input type='text' name='options"+i+"' class='options-fv form-control'></div><p class='question-id'>"+examList[i].id+"</p></li>")
+                  fillVainQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '5'){
+                  $("#shortAnswer-ul").append("<li class='list-group-item shortAnswer-li flex'><div class='question-option-box'><div id='tf-Question' class='question-box-no'>"+examList[i].examinationPaperQuestion+"</div></div><div class='option-input-box'><textarea name='options"+i+"' rows='5' class='options-sa form-control'></textarea></div><p class='question-id'>"+examList[i].id+"</p></li>")
+                  shortAnswerQuestionID.push(examList[i].id);
+                }
+              }
+            }else{
+                  alert(data.result);
+            }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      });
+      //提交事件
+      $(".create-button").click(function(){
+        //获取题目数量
+        var singleChoiceNum = $("#singleChoice-ul").children().length;
+        var multipleChoiceNum = $("#multipleChoice-ul").children().length;
+        var JudgeNum = $("#Judge-ul").children().length;
+        var fillVainNum = $("#fillVain-ul").children().length;
+        var shortAnswerNum = $("#shortAnswer-ul").children().length;
+        var tempParam = {
+          "examinationPaperId" : originalExaminationPaperid,
+          "answerSheetAnswerDTOS" :[]
+        }
+        //遍历答案及入参
+        //单选题
+        if(singleChoiceNum != 0){
+          for(var i=1;i<=singleChoiceNum;i++){
+            var temp = {};
+            var j = i-1;
+            temp.examinationPaperAnswer = $(".singleChoice-li:nth-child("+i+") input[class='options-sc']:checked").val();
+            temp.examinationPaperQuestionId = singleChoiceQuestionID[j];
+            tempParam.answerSheetAnswerDTOS.push(temp);
+          }
+        }
+        //多选题
+        if(multipleChoiceNum != 0){
+          for(var i=1;i<=multipleChoiceNum;i++){
+            var choiceAnswer = '';
+            var temp = {};
+            var j = i-1;
+            $.each($(".multipleChoice-li:nth-child("+i+") input[class='options-mc']:checked"),function(){
+              choiceAnswer += $(this).val();
+            });
+            temp.examinationPaperAnswer = choiceAnswer;
+            temp.examinationPaperQuestionId = multipleChoiceQuestionID[j];
+            tempParam.answerSheetAnswerDTOS.push(temp);
+          }
+        }
+        //判断题
+        if(JudgeNum != 0){
+          for(var i=1;i<=JudgeNum;i++){
+            var choiceAnswer = '';
+            var temp = {};
+            var j = i-1;
+            temp.examinationPaperAnswer = $(".Judge-li:nth-child("+i+") input[class='options-tf']:checked").val();
+            temp.examinationPaperQuestionId = JudgeQuestionID[j];
+            tempParam.answerSheetAnswerDTOS.push(temp);
+          }
+        }
+        //填空题
+        if(fillVainNum != 0){
+          for(var i=1;i<=fillVainNum;i++){
+            var choiceAnswer = '';
+            var temp = {};
+            var j = i-1;
+            temp.examinationPaperAnswer = $(".fillVain-li:nth-child("+i+") input[class='options-fv']").val();
+            temp.examinationPaperQuestionId = fillVainQuestionID[j];
+            tempParam.answerSheetAnswerDTOS.push(temp);
+          }
+        }
+        //简答题
+        if(shortAnswerNum != 0){
+          for(var i=1;i<=shortAnswerNum;i++){
+            var choiceAnswer = '';
+            var temp = {};
+            var j = i-1;
+            temp.examinationPaperAnswer = $(".shortAnswer-li:nth-child("+i+") textarea[class='options-sa']").val();
+            temp.examinationPaperQuestionId = shortAnswerQuestionID[j];
+            tempParam.answerSheetAnswerDTOS.push(temp);
+          }
+        }
+        var param = JSON.stringify(tempParam);
+        console.log(param);
+        $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/all/answerSheet/insertSelective',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  alert("提交成功");
+                  window.history.go(-1);
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      }) 
+      })
+    })
+  </script>
+</body>
+</html>

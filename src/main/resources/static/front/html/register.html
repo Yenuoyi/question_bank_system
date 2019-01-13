@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/public.css">
+	<title>答题系统</title>
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script src="../js/public-js.js"></script>
+</head>
+<body class="container-fluid bg">
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-3 login-box">
+			<form class="form-horizontal">
+				<p class="text-center program-title">账号注册</p>
+				<div class="form-group">
+					<label for="userName" class="col-sm-3 control-label">用户名</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="studentName" placeholder="请输入用户名">
+						<span class=""></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="passWord" class="col-sm-3 control-label">密码</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control" id="studentPassword" placeholder="请输入密码">
+						<span class=""></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="passWord" class="col-sm-3 control-label">联系电话</label>
+					<div class="col-sm-7">
+						<input type="tel" class="form-control" id="studentIphone" placeholder="请输入联系电话">
+						<span class=""></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="passWord" class="col-sm-3 control-label">邮箱</label>
+					<div class="col-sm-7">
+						<input type="email" class="form-control" id="studentEmail" placeholder="请输入邮箱">
+						<span class=""></span>
+					</div>
+				</div>
+				<!-- <p class="text-center">
+					<label class="radio-inline">
+						<input type="radio" name="userType" id="student" value="option1"> 学生
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="userType" id="teacher" value="option2"> 教师
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="userType" id="admin" value="option3"> 管理员
+					</label>
+				</p> -->
+				<div class="form-group">
+					<div class="text-center">
+						<button type="button" class="btn btn-primary" id="submitR">确定</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+		$(function(){
+			$("#studentName").change(function () {
+                checkInput("#studentName","用户名");
+            });
+            $("#studentPassword").change(function () {
+                checkInput("#studentPassword","密码");
+            });
+            $("#studentIphone").change(function () {
+                checkInput("#studentIphone","联系电话");
+            });
+            $("#studentEmail").change(function () {
+                checkInput("#studentEmail","邮箱");
+            });
+			$("#submitR").click(function() {
+				var temp = checkInput("#studentName","用户名");
+				var temp1 = checkInput("#studentPassword","密码");
+				var temp2 = checkInput("#studentIphone","联系电话");
+				var temp3 = checkInput("#studentEmail","邮箱");
+                if(temp && temp1 && temp2 && temp3){
+                    var registerInfo = {
+                    	"studentName": $("#studentName").val(),
+                    	"studentPassword": $("#studentPassword").val(),
+                    	"studentIphone": $("#studentIphone").val(),
+                    	"studentEmail": $("#studentEmail").val()
+                    } 
+                    console.log(registerInfo);
+                    var param = JSON.stringify(registerInfo);
+                    // $.ajax({
+                    // 	type: "post",
+                    // 	headers: {
+                    // 		"content-Type":"application/json",
+                    // 	},
+                    // 	contentType:"application/json",
+                    // 	url: 'http://localhost:8081/all/student/insertSelective',
+                    // 	data: param,
+                    // 	success: function (data) {
+                    // 		console.log("这是请求成功的");
+                    // 		if(data.code == 500){
+                    // 			alert('输入的'+data.result);
+                    // 		}
+                    // 	},
+                    // 	error:function (err) {
+                    // 		console.log("这是请求失败的");
+                    // 	}
+                    // });
+                }else{
+                	return false;
+                }
+    // var temp = {
+    // 	"pager":{
+    // 		"rows":40
+    // 	}
+    // }
+    // var param = JSON.stringify(temp);
+    // $.ajax({
+    // 	type: "post",
+    // 	headers: {
+    // 		"content-Type":"application/json",
+    // 	},
+    // 	contentType:"application/json",
+    // 	url: 'http://47.107.250.149:8081/all/exercise/randomSelectSingleChoiceQuestionList',
+    // 	data: param,
+    // 	success: function (data) {
+    // 		console.log("这是请求成功的");
+    // 		console.log(data);
+    // 		// if(data.code == 500){
+    // 		// 	alert('输入的'+data.result);
+    // 		// }
+    // 	},
+    // 	error:function (err) {
+    // 		console.log("这是请求失败的");
+    // 	}
+    // });
+			});
+		})
+	</script>
+</body>
+</html>

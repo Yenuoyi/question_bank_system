@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>查看/修改简答题</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .r-btn{
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .btn-choice{
+      margin-top: 10px;
+    }
+    .tr-id{
+      width:100px;
+    }
+    .td-id{
+      padding-top: 40px !important;
+    }
+    .td-btn{
+      padding-top: 40px !important;
+      width:150px;
+    }
+    .td-answer{
+      width: 700px;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 all-box-bg">
+			<div class="title-tc">查看/修改简答题</div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="tr-id">编号</th>
+            <th>题目</th>
+            <th>答案</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="table-item">
+          <!-- <tr>
+            <td class="td-id">1</td>
+            <td class="td-question">
+              <textarea name="td-question" rows="4" class="form-control">
+              </textarea>
+            </td>
+            <td class="td-answer">
+              <input type='text' class='form-control' value=''>
+            </td>
+            <td class="td-btn">
+              <button class="btn btn-primary">保存</button>
+              <button class="btn btn-warning">删除</button>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+            var editMultipleChoice = {
+            	// "pager": {
+            	// 	"rows" : "10",
+            	// 	"page" : "1"
+            	// }
+            } 
+            var Answer = [];
+            var questionArr = '';
+            console.log(editMultipleChoice);
+            var param = JSON.stringify(editMultipleChoice);
+            $.ajax({
+            	type: "post",
+            	headers: {
+            		"content-Type":"application/json",
+            	},
+            	contentType:"application/json",
+            	url: 'http://47.107.250.149:8081/admin/shortAnswerQuestion/selectList',
+            	data: param,
+            	success: function (data) {
+            		console.log("这是请求成功的");
+                console.log(data);
+            		if(data.code == 500){
+                    	alert(data.result);
+                    }else if(data.code == 200){
+                    	questionArr = data.result.result.list;
+                    	console.log(questionArr);
+                    	//遍历问题和选项
+                    	for(var i=0;i<questionArr.length;i++){
+                    		$("#table-item").append("<tr><td class='td-id'>"+questionArr[i].id+"</td><td class='td-question'><textarea name='td-question' rows='4' class='form-control'>"+questionArr[i].shortAnswerQuestion+"</textarea></td><td class='td-answer'><textarea rows='4' class='form-control'>"+questionArr[i].shortAnswerAnswer+"</textarea></td><td class='td-btn'><button class='btn btn-primary btn-save'>保存</button> <button class='btn btn-warning btn-delete'>删除</button></td></tr>");
+
+                    	}
+                    }else{
+                    	alert(data.result);
+                    }
+            	},
+            	error:function (err) {
+            		console.log("这是请求失败的");
+            	}
+            });
+            //保存按钮提交事件
+            $("#table-item").on("click",".btn-save",function(){
+              var editQuestion = $(this).parent().siblings(".td-question").children().val();
+              var editAnswer = $(this).parent().siblings(".td-answer").children().val();
+              var editId = $(this).parent().siblings(".td-id")[0].innerHTML;
+              var tempP = {
+                'shortAnswerQuestion' : editQuestion,
+                'shortAnswerAnswer' : editAnswer,
+                'id' : editId
+              }
+              var param = JSON.stringify(tempP);
+              console.log(param);
+              $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.107.250.149:8081/admin/shortAnswerQuestion/updateByPrimaryKeySelective',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        alert('保存成功');  
+                        window.location.reload(); 
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+              })
+            })
+            //删除按钮提交事件
+            $("#table-item").on("click",".btn-delete",function(){
+              var editId = $(this).parent().siblings(".td-id")[0].innerHTML;
+              var tempP = {
+                'id' : editId
+              }
+              var param = JSON.stringify(tempP);
+              console.log(param);
+              $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.107.250.149:8081/admin/shortAnswerQuestion/deleteByPrimaryKey',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        alert('删除成功');  
+                        window.location.reload(); 
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+              })
+            })
+		})
+
+	</script>
+</body>
+</html>

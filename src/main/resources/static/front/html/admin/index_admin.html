@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<title>答题系统</title>
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+</head>
+<body class="container-fluid bg-index">
+	<ul class="nav nav-pills nav-justified nav-ul-li">
+		<li role="presentation" class="nav-li practice-i active"><a href="#">练习宝库</a></li>
+		<!-- <li role="presentation" class="nav-li simulate-i"><a href="#">模拟实战</a></li> -->
+		<!-- <li role="presentation" class="nav-li create-i"><a href="#">创造中心</a></li> -->
+		<li role="presentation" class="nav-li manage-i"><a href="#">用户天地</a></li>
+	</ul>
+	<!-- 练习宝库 -->
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 practice-box">
+			<div class="list-group practice-list">
+  				<a href="#" class="practice-item list-group-item">查看/修改单选题</a>
+  				<a href="#" class="practice-item list-group-item">查看/修改多选题</a>
+  				<a href="#" class="practice-item list-group-item">查看/修改判断题</a>
+  				<a href="#" class="practice-item list-group-item">查看/修改填空题</a>
+  				<a href="#" class="practice-item list-group-item">查看/修改简答题</a>
+			</div>
+		</div>
+	</div>
+	<!-- 模拟实战 -->
+	<!-- <div class="row content-row" id="simulate">
+		<div class="col-sm-12 simulate-box">
+			<div class="list-group simulate-list">
+  				<a href="#" class="simulate-item list-group-item">查看/修改自己出卷</a>
+  				<a href="#" class="simulate-item list-group-item">查看成绩</a>
+			</div>
+		</div>
+	</div> -->
+	<!-- 寻根问底 -->
+	<!-- <div class="row content-row" id="create">
+		<div class="col-sm-12 create-box">
+			<div class="list-group create-list">
+  				<a href="#" class="create-item list-group-item">上传单选题</a>
+  				<a href="#" class="create-item list-group-item">上传多选题</a>
+  				<a href="#" class="create-item list-group-item">上传判断题</a>
+  				<a href="#" class="create-item list-group-item">上传填空题</a>
+  				<a href="#" class="create-item list-group-item">上传简答题</a>
+  				<a href="#" class="create-item list-group-item">上传试卷</a>
+			</div>
+		</div>
+	</div> -->
+	<!-- 用户天地 -->
+	<div class="row content-row" id="manage">
+		<div class="col-sm-12 manage-box">
+			<div class="list-group manage-list">
+  				<a href="#" class="manage-item list-group-item">查看/修改学生信息</a>
+  				<a href="#" class="manage-item list-group-item">查看/修改教师信息</a>
+  				<a href="#" class="manage-item list-group-item">查看/修改密码</a>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+  			$(".practice-item,.simulate-item,.create-item,.manage-item").mouseover(select);
+  			$(".practice-item,.simulate-item,.create-item,.manage-item").mouseout(Notselect);
+  			$(".practice-i").click(function() {
+  				$(".nav-li").removeClass('active');
+  				$(this).addClass('active');
+  				$("#practice").css('display','block');
+  				$("#simulate").css('display','none');
+  				$("#create").css('display','none');
+  				$("#manage").css('display','none');
+  			});
+  			$(".simulate-i").click(function() {
+  				$(".nav-li").removeClass('active');
+  				$(this).addClass('active');
+  				$("#practice").css('display','none');
+  				$("#simulate").css('display','block');
+  				$("#create").css('display','none');
+  				$("#manage").css('display','none');
+  			});
+  			$(".create-i").click(function() {
+  				$(".nav-li").removeClass('active');
+  				$(this).addClass('active');
+  				$("#practice").css('display','none');
+  				$("#simulate").css('display','none');
+  				$("#create").css('display','block');
+  				$("#manage").css('display','none');
+  			});
+  			$(".manage-i").click(function() {
+  				$(".nav-li").removeClass('active');
+  				$(this).addClass('active');
+  				$("#practice").css('display','none');
+  				$("#simulate").css('display','none');
+  				$("#create").css('display','none');
+  				$("#manage").css('display','block');
+  			});
+        //练习宝库点击事件
+        $(".practice-item:nth-child(1)").click(function(){
+          window.location.href = "../edit/editSingleChoiceAdmin.html"
+        })
+        $(".practice-item:nth-child(2)").click(function(){
+          window.location.href = "../edit/editMultipleChoiceAdmin.html"
+        })
+        $(".practice-item:nth-child(3)").click(function(){
+          window.location.href = "../edit/editJudgeAdmin.html"
+        })
+        $(".practice-item:nth-child(4)").click(function(){
+          window.location.href = "../edit/editFillVainAdmin.html"
+        })
+        $(".practice-item:nth-child(5)").click(function(){
+          window.location.href = "../edit/editShortAnswerAdmin.html"
+        })
+  			function select(){
+  				$(this).addClass('active');
+  			}
+  			function Notselect(){
+  				$(this).removeClass('active');
+  			}
+		})
+	</script>
+</body>
+</html>

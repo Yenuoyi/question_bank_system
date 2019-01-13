@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>按比例抽题组卷</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+  <script src="../../js/jquery-3.3.1.min.js"></script>
+  <script src="../../js/bootstrap.min.js"></script>
+  <script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .all-box-bg{
+      padding-bottom: 50px;
+    }
+    .title-tc{
+      margin-bottom: 10px;
+    }
+    .number-input{
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 80px;
+    }
+    .btn-sub{
+      margin-top: 10px;
+    }
+    .tips{
+      color: red;
+      text-align: center;
+      font-size: 15px;
+    }
+    .question-title{
+      text-align: left;
+    }
+    #Answer{
+        width: 50%
+    }
+    .btn-choice .btn{
+        margin-bottom: 25px;
+    }
+    .return-btn{
+      text-align: center;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+  <div class="row content-row" id="practice">
+    <div class="col-sm-12 all-box-bg">
+      <div class="title-tc">按比例抽题组卷练习</div>
+      <div class="number-input">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2">单选题<input type='text' class='form-control s-input' value='0'></div>
+        <div class="col-sm-2">多选题<input type='text' class='form-control m-input' value='0'></div>
+        <div class="col-sm-2">判断题<input type='text' class='form-control j-input' value='0'></div>
+        <div class="col-sm-2">填空题<input type='text' class='form-control f-input' value='0'></div>
+        <div class="col-sm-2">简答题<input type='text' class='form-control a-input' value='0'></div>
+        <div class="col-sm-1"> 
+          <button class="btn btn-primary btn-sub">出题</button>
+        </div>
+      </div>
+      <div class="col-sm-12 tips">
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true">温馨提示：出题比例不能大于100%</span>
+      </div>
+      <div class="question-box col-sm-10 col-sm-offset-1">
+        <div>
+          <ul class="list-group all-question-list" id="ul-list">
+            <!-- <h3 class="question-title">单选题</h3>
+            <li class="list-group-item">
+              <div>Cras justo odio</div>
+              <div>A/B/C/D</div>  
+              <div class="btn btn-primary">
+                <input type="radio" name="options">A
+                <input type="radio" name="options">B
+                <input type="radio" name="options">C
+                <input type="radio" name="options">D
+              </div>
+              <span class="glyphicon glyphicon-ok green" aria-hidden="true"> 回答正确！正确答案为</span>
+              <span class="glyphicon glyphicon-remove red" aria-hidden="true"> 回答错误！正确答案为</span>
+            </li> -->
+          </ul>
+          <div class="return-btn">
+            <button class="btn btn-warning return">返回</button>
+            <button class="btn btn-success submit">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var singleChoiceAnswer = [];
+    var multipleChoiceAnswer = [];
+    var trueFalseAnswer = [];
+    var fillVainAnswer = [];
+    var shortAnswerAnswer = [];
+    $(function(){
+      $(".btn-sub").click(function(){
+        var singleChoiceNumber = parseInt($(".s-input").val());
+        var multipleChoiceNumber = parseInt($(".m-input").val());
+        var trueFalseNumber = parseInt($(".j-input").val());
+        var fillVainNumber = parseInt($(".f-input").val());
+        var shortAnswerNumber = parseInt($(".a-input").val());
+        var singleChoiceProportion =+ (singleChoiceNumber / 100).toFixed(1);
+        var multipleChoiceProportion =+ (multipleChoiceNumber / 100).toFixed(1);
+        var trueFalseProportion =+ (trueFalseNumber / 100).toFixed(1);
+        var fillVainProportion =+ (fillVainNumber / 100);
+        var shortAnswerProportion =+ (shortAnswerNumber / 100);
+        if(singleChoiceProportion + multipleChoiceProportion + trueFalseProportion + fillVainProportion + shortAnswerProportion == 0 ){
+          alert('出题比例不能为0！');
+          return
+        }
+        if(singleChoiceProportion + multipleChoiceProportion + trueFalseProportion + fillVainProportion + shortAnswerProportion > 1.0 ){
+          alert('出题比例大于100%！');
+          return
+        }
+        var tempparam = {
+          "singleChoiceProportion" : singleChoiceProportion,
+          "multipleChoiceProportion" : multipleChoiceProportion,
+          "trueFalseProportion" : trueFalseProportion,
+          "fillVainProportion" : fillVainProportion,
+          "shortAnswerProportion" :shortAnswerProportion
+        }
+        var param = JSON.stringify(tempparam);
+        $.ajax({
+            type: "post",
+            headers: {
+              "content-Type":"application/json",
+            },
+            contentType:"application/json",
+            url: 'http://47.107.250.149:8081/all/exercise/proportionExercise',
+            data: param,
+            success: function (data) {
+              console.log("这是请求成功的");
+              console.log(data);
+              if(data.code == 500){
+                    alert(data.result);
+                  }else if(data.code == 200){
+                    if(data.result.singleChoiceQuestionDTOS.length > 0){
+                      showSingleChoice(data.result.singleChoiceQuestionDTOS);
+                      $(".btn-sub").attr({"disabled":"disabled"});
+                      $(".tips").css("display","none");
+                    }
+                    if(data.result.multipleChoiceQuestionDTOS.length > 0){
+                      showMultipleChoice(data.result.multipleChoiceQuestionDTOS);
+                      $(".btn-sub").attr({"disabled":"disabled"});
+                      $(".tips").css("display","none");
+                    }
+                    if(data.result.trueFalseQuestionDTOS.length > 0){
+                      showTrueFalse(data.result.trueFalseQuestionDTOS);
+                      $(".btn-sub").attr({"disabled":"disabled"});
+                      $(".tips").css("display","none");
+                    }
+                    if(data.result.fillVainQuestionDTOS.length > 0){
+                      showFillVain(data.result.fillVainQuestionDTOS);
+                      $(".btn-sub").attr({"disabled":"disabled"});
+                      $(".tips").css("display","none");
+                    }
+                    if(data.result.shortAnswerQuestionDTOS.length > 0){
+                      showShortAnswer(data.result.shortAnswerQuestionDTOS);
+                      $(".btn-sub").attr({"disabled":"disabled"});
+                      $(".tips").css("display","none");
+                    }
+                  }else{
+                    alert(data.result);
+                  }
+            },
+            error:function (err) {
+              console.log("这是请求失败的");
+            }
+        })
+      })
+      //返回按钮点击事件
+      $(".return").click(function(){
+        window.history.go(-1);
+      })
+      //提交按钮点击事件
+      $(".submit").click(function(){
+        var singleChoiceNum = parseInt($(".s-input").val());
+        var multipleChoiceNum = parseInt($(".m-input").val());
+        var trueFalseNum = parseInt($(".j-input").val());
+        var fillVainNum = parseInt($(".f-input").val());
+        var shortAnswerNum = parseInt($(".a-input").val());
+        if(singleChoiceNum+multipleChoiceNum+trueFalseNum+fillVainNum+shortAnswerNum != 0){
+          $(".submit").attr({"disabled":"disabled"});
+        }
+        for(var i=0;i<singleChoiceNum;i++){
+          if(singleChoiceAnswer[i] == $(".sc-item"+i+":checked").val()){
+            $(".item-sc"+i+" .green").css("display","block");
+            $(".item-sc"+i+" .red").css("display","none");
+          }else{
+            $(".item-sc"+i+" .green").css("display","none");
+            $(".item-sc"+i+" .red").css("display","block");
+          }
+        }
+        for(var i=0;i<multipleChoiceNum;i++){
+          var choiceAnswer = '';
+          $.each($(".mc-item"+i+":checked"),function(){
+            choiceAnswer += $(this).val();
+          });
+          if(multipleChoiceAnswer[i] == choiceAnswer){
+            $(".item-mc"+i+" .green").css("display","block");
+            $(".item-mc"+i+" .red").css("display","none");
+          }else{
+            $(".item-mc"+i+" .green").css("display","none");
+            $(".item-mc"+i+" .red").css("display","block");
+          }
+        }
+        for(var i=0;i<trueFalseNum;i++){
+          if(trueFalseAnswer[i] == $(".tf-item"+i+":checked").val()){
+            $(".item-tf"+i+" .green").css("display","block");
+            $(".item-tf"+i+" .red").css("display","none");
+          }else{
+            $(".item-tf"+i+" .green").css("display","none");
+            $(".item-tf"+i+" .red").css("display","block");
+          }
+        }
+        for(var i=0;i<fillVainNum;i++){
+          $(".item-fv"+i+" .green").css("display","block");
+        }
+        for(var i=0;i<shortAnswerNum;i++){
+          $(".item-sa"+i+" .green").css("display","block");
+        }
+
+      })
+    })
+
+    function showSingleChoice(data){
+      $("#ul-list").append("<h3 class='question-title'>单选题</h3>");
+      for(var i=0;i<data.length;i++){
+        $("#ul-list").append("<li class='list-group-item item-sc"+i+"'><div class='questionTitle'>"+data[i].singleChoiceQuestion+"</div><div class='questionOption'>"+data[i].singleChoiceOption+"</div><div class='btn btn-primary btn-choice'><input type='radio' name='options-sc"+i+"' value='A' class='sc-item"+i+"'>A <input type='radio' name='options-sc"+i+"' value='B' class='sc-item"+i+"'>B <input type='radio' name='options-sc"+i+"' value='C' class='sc-item"+i+"'>C <input type='radio' name='options-sc"+i+"' value='D' class='sc-item"+i+"'>D </div><span class='glyphicon glyphicon-ok green' aria-hidden='true'> 回答正确！正确答案为"+data[i].singleChoiceAnswer+"</span><span class='glyphicon glyphicon-remove red' aria-hidden='true'> 回答错误！正确答案为"+data[i].singleChoiceAnswer+"</span> </li>");
+          singleChoiceAnswer[i] = data[i].singleChoiceAnswer;
+      }
+    }
+
+    function showMultipleChoice(data){
+      console.log(data);
+      $("#ul-list").append("<h3 class='question-title'>多选题</h3>");
+      for(var i=0;i<data.length;i++){
+        $("#ul-list").append("<li class='list-group-item item-mc"+i+"'><div class='questionTitle'>"+data[i].multipleChoiceQuestion+"</div><div class='questionOption'>"+data[i].multipleChoiceOption+"</div><div class='btn btn-primary btn-choice'><input type='checkbox' name='options-mc"+i+"' value='A' class='mc-item"+i+"'>A <input type='checkbox' name='options-mc"+i+"' value='B' class='mc-item"+i+"'>B <input type='checkbox' name='options-mc"+i+"' value='C' class='mc-item"+i+"'>C <input type='checkbox' name='options-mc"+i+"' value='D' class='mc-item"+i+"'>D</div><span class='glyphicon glyphicon-ok green' aria-hidden='true'> 回答正确！正确答案为"+data[i].multipleChoiceAnswer+"</span><span class='glyphicon glyphicon-remove red' aria-hidden='true'> 回答错误！正确答案为"+data[i].multipleChoiceAnswer+"</span> </li>");
+          multipleChoiceAnswer[i] = data[i].multipleChoiceAnswer;
+      }
+    }
+
+    function showTrueFalse(data){
+      $("#ul-list").append("<h3 class='question-title'>判断题</h3>");
+      for(var i=0;i<data.length;i++){
+        $("#ul-list").append("<li class='list-group-item item-tf"+i+"'><div class='questionTitle'>"+data[i].trueFalseQuestion+"</div><div class='btn btn-primary btn-choice'><input type='radio' name='options-tf"+i+"' value='正确' class='tf-item"+i+"'>正确 <input type='radio' name='options-tf"+i+"' value='错误' class='tf-item"+i+"'>错误 </div><span class='glyphicon glyphicon-ok green' aria-hidden='true'> 回答正确！正确答案为"+data[i].trueFalseAnswer+"</span><span class='glyphicon glyphicon-remove red' aria-hidden='true'> 回答错误！正确答案为"+data[i].trueFalseAnswer+"</span> </li>");
+          trueFalseAnswer[i] = data[i].trueFalseAnswer;
+      }
+    }
+
+    function showFillVain(data){
+      $("#ul-list").append("<h3 class='question-title'>填空题</h3>");
+      for(var i=0;i<data.length;i++){
+        $("#ul-list").append("<li class='list-group-item item-fv"+i+"'><div class='questionTitle'>"+data[i].fillVainQuestion+"</div><div><input type='text' name='options-fv"+i+"'> <span class='glyphicon glyphicon-paperclip green' aria-hidden='true'> 参考答案："+data[i].fillVainAnswer+"</span></li>");
+          fillVainAnswer[i] = data[i].fillVainAnswer;
+      }
+    }
+
+    function showShortAnswer(data){
+      $("#ul-list").append("<h3 class='question-title'>简答题</h3>");
+      for(var i=0;i<data.length;i++){
+        $("#ul-list").append("<li class='list-group-item item-sa"+i+"'><div class='questionTitle'>"+data[i].shortAnswerQuestion+"</div><div class='btn-choice'><textarea name='options-sa"+i+"' rows='5' id='Answer'></textarea></div><span class='glyphicon glyphicon-paperclip green' aria-hidden='true'> 参考答案："+data[i].shortAnswerAnswer+"</span></li>");
+          shortAnswerAnswer[i] = data[i].shortAnswerAnswer;
+      }
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>答卷评分</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+  <script src="../../js/jquery-3.3.1.min.js"></script>
+  <script src="../../js/bootstrap.min.js"></script>
+  <script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .all-box-bg{
+      padding-bottom: 50px; 
+    }
+    .paper-content{
+      margin-top: 10px;
+    }
+    .paper-title{
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .title-divide{
+      width: 100%;
+      height: 1px;
+      background-color: #C0C0C0;
+      margin: 10px 0;
+    }
+    .create-btn{
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .question-option-box{
+      flex: 1;
+      word-break:break-all;
+    }
+    .option-input-box{
+      margin-left: 150px;
+    }
+    .question-box{
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .question-box-no{
+      margin-bottom: 0;
+    }
+
+    .option-input-box{
+      margin-left: 50px;
+    }
+    .option-input-box input,.option-input-box textarea{
+      width: 400px;
+    }
+    .question-id{
+      display: none;  
+    }
+    .form-control{
+      width: 120px !important;
+    }
+    .other-input{
+      width: 400px !important;
+    }
+    .other-textarea{
+      width: 400px !important;
+      height: 100px !important;
+    }
+    .fv-score,.sa-score{
+      margin: 0 auto;
+    }
+    .cal-box{
+      text-align: right;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+  <div class="row content-row" id="practice">
+    <div class="col-sm-12 all-box-bg">
+      <div class="title-tc">答卷评分</div>
+      <div class="paper-content">
+        <!-- 单选题 -->
+        <div class="sc-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">单选题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="singleChoice-ul">
+            <!-- <li class="list-group-item singleChoice-li flex">
+              <div class="question-option-box">
+                <div id="sc-Question" class="question-box"></div>
+                <div id="sc-Option" class="option-box"></div>
+              </div>
+              <div class="option-input-box">
+                <div class="tc">所选答案</div><input type="text" name="options" class="form-control" disabled>
+                <div class="tc">得分</div><input type="text" name="options" class="form-control sc-score">
+              </div>            
+            </li> -->
+          </ul>
+        </div>
+        <!-- 多选题 -->
+        <div class="mc-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">多选题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="multipleChoice-ul">
+            <!-- <li class="list-group-item multipleChoice-li flex">
+              <div class="question-option-box">
+                <div id="mc-Question" class="question-box"></div>
+                <div id="mc-Option" class="option-box"></div>
+              </div>
+              <div class="option-input-box">
+                <div class="tc">所选答案</div><input type="text" name="options" class="form-control" disabled>
+                <div class="tc">得分</div><input type="text" name="options" class="form-control mc-score">
+              </div>           
+            </li> -->
+          </ul>
+        </div>
+        <!-- 判断题 -->
+        <div class="tf-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">判断题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="Judge-ul">
+            <!-- <li class="list-group-item Judge-li flex">
+              <div class="question-option-box">
+                <div id="tf-Question" class="question-box-no"></div>
+              </div>
+              <div class="option-input-box">
+                <div class="tc">所选答案</div><input type="text" name="options" class="form-control" disabled>
+                <div class="tc">得分</div><input type="text" name="options" class="form-control tf-score">
+              </div>              
+            </li> -->
+          </ul>
+        </div>
+        <!-- 填空题 -->
+        <div class="fv-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">填空题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="fillVain-ul">
+            <!-- <li class="list-group-item fillVain-li flex">
+              <div class="question-option-box">
+                <div id="fv-Question" class="question-box-no"></div>
+              </div>
+              <div class="option-input-box">
+                <div class="tc">所填答案</div><input type="text" name="options" class="form-control other-input" disabled>
+                <div class="tc">得分</div><input type="text" name="options" class="form-control fv-score">
+              </div>            
+            </li> -->
+          </ul>
+        </div>
+        <!-- 简答题 -->
+        <div class="sa-paper col-sm-10 col-sm-offset-1">
+          <div class="flex">
+            <p class="paper-title">简答题</p>
+          </div>
+          <div class="title-divide"></div>
+          <ul class="list-group" id="shortAnswer-ul">
+            <!-- <li class="list-group-item shortAnswer-li flex">
+              <div class="question-option-box">
+                <div id="sa-Question" class="question-box-no"></div>
+              </div>
+              <div class="option-input-box">
+                <textarea name="options" rows="5"></textarea>
+              </div>            
+              <div class="option-input-box">
+                <div class="tc">所填答案</div><textarea name="options" rows="5" class="form-control" disabled>
+                <div class="tc">得分</div><input type="text" name="options" class="form-control sa-score">
+              </div>
+            </li> -->
+          </ul>
+        </div>
+        <div class="create-btn col-sm-10 col-sm-offset-1">
+          <div class="cal-box">
+            <button class="btn btn-info cal-button" type="submit">计算总分</button>
+          </div>
+          <button class="btn btn-primary save-button" type="submit">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var answerSheetId=parseInt(GetQueryString("answerSheetId"));//调用
+    //定义题目id
+    var singleChoiceQuestionID = [];
+    var multipleChoiceQuestionID = [];
+    var JudgeQuestionID = [];
+    var fillVainQuestionID = [];
+    var shortAnswerQuestionID = [];
+    //获取参数
+    function GetQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if(r != null) return decodeURI(r[2]);
+      return null;
+    }
+    $(function(){
+      var tempP = {
+          "answerSheetId" : answerSheetId
+      }
+      console.log(tempP);
+      var param = JSON.stringify(tempP);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/teacher/answerSheetAnswer/selectPaperSheetList',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                alert('输入的'+data.result);
+            }else if(data.code == 200){
+              var examList = data.result.result.list;
+              console.log(examList);
+              // 遍历dom节点
+              for(var i=0;i<examList.length;i++){
+                if(examList[i].examinationPaperQuestionType == '1'){
+                  $("#singleChoice-ul").append("<li class='list-group-item singleChoice-li flex'><div class='question-option-box'><div id='sc-Question' class='question-box'>"+examList[i].examinationPaperQuestion+"</div><div id='sc-Option' class='option-box'>"+examList[i].examinationPaperOption+"</div></div><div class='option-input-box'><div class='tc'>所选答案</div><input type='text' name='options"+i+"' class='form-control' value='"+examList[i].examinationPaperAnswer+"' disabled><div class='tc'>得分</div><input type='text' name='options"+i+"' class='form-control sc-score'></div></li>")
+                  singleChoiceQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '2'){
+                  $("#multipleChoice-ul").append("<li class='list-group-item multipleChoice-li flex'><div class='question-option-box'><div id='mc-Question' class='question-box'>"+examList[i].examinationPaperQuestion+"</div><div id='mc-Option' class='option-box'>"+examList[i].examinationPaperOption+"</div></div><div class='option-input-box'><div class='tc'>所选答案</div><input type='text' name='options"+i+"' class='form-control' value='"+examList[i].examinationPaperAnswer+"' disabled><div class='tc'>得分</div><input type='text' name='options"+i+"' class='form-control mc-score'></div></li>")
+                  multipleChoiceQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '3'){
+                  $("#Judge-ul").append("<li class='list-group-item Judge-li flex'><div class='question-option-box'><div id='tf-Question' class='question-box-no'>"+examList[i].examinationPaperQuestion+"</div></div><div class='option-input-box'><div class='tc'>所选答案</div><input type='text' name='options"+i+"' class='form-control' value='"+examList[i].examinationPaperAnswer+"' disabled><div class='tc'>得分</div><input type='text' name='options"+i+"' class='form-control tf-score'></div></li>")
+                  JudgeQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '4'){
+                  $("#fillVain-ul").append("<li class='list-group-item fillVain-li flex'><div class='question-option-box'><div id='tf-Question' class='question-box-no'>"+examList[i].examinationPaperQuestion+"</div></div><div class='option-input-box'><div class='tc'>所填答案</div><input type='text' name='options"+i+"' class='form-control other-input' value='"+examList[i].examinationPaperAnswer+"' disabled><div class='tc'>得分</div><input type='text' name='options"+i+"' class='form-control fv-score'></div></li>")
+                  fillVainQuestionID.push(examList[i].id);
+                }
+                if(examList[i].examinationPaperQuestionType == '5'){
+                  $("#shortAnswer-ul").append("<li class='list-group-item shortAnswer-li flex'><div class='question-option-box'><div id='tf-Question' class='question-box-no'>"+examList[i].examinationPaperQuestion+"</div></div><div class='option-input-box'><div class='tc'>所填答案</div><textarea name='options"+i+"' class='form-control other-textarea' disabled>"+examList[i].examinationPaperAnswer+"</textarea><div class='tc'>得分</div><input type='text' name='options"+i+"' class='form-control sa-score'></div></li>")
+                  shortAnswerQuestionID.push(examList[i].id);
+                }
+              }
+            }else{
+                  alert(data.result);
+            }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      });
+    //计算总分
+    $(".cal-button").click(function(){
+      var total = 0;
+      if(singleChoiceQuestionID.length != 0){
+        for(var i=1;i<=singleChoiceQuestionID.length;i++){
+          var Score = parseInt($(".singleChoice-li:nth-child("+i+") .sc-score").val());
+          total += Score;
+        }
+      }
+      if(multipleChoiceQuestionID.length != 0){
+        for(var i=1;i<=multipleChoiceQuestionID.length;i++){
+          var Score = parseInt($(".multipleChoice-li:nth-child("+i+") .mc-score").val());
+          total += Score;
+        }
+      }
+      if(JudgeQuestionID.length != 0){
+        for(var i=1;i<=JudgeQuestionID.length;i++){
+          var Score = parseInt($(".Judge-li:nth-child("+i+") .tf-score").val());
+          total += Score;
+        }
+      }
+      if(fillVainQuestionID.length != 0){
+        for(var i=1;i<=fillVainQuestionID.length;i++){
+          var Score = parseInt($(".fillVain-li:nth-child("+i+") .fv-score").val());
+          total += Score;
+        }
+      }
+      if(shortAnswerQuestionID.length != 0){
+        for(var i=1;i<=shortAnswerQuestionID.length;i++){
+          var Score = parseInt($(".shortAnswer-li:nth-child("+i+") .sa-score").val());
+          total += Score;
+        }
+      }
+      console.log(total);
+      if(isNaN(total)){
+        alert("输入的对应得分不能为空或非数字！");
+        return
+      }
+      if(total < 0 || total > 100){
+        alert("总分应为0-100！");
+        return
+      }
+      $(".cal-box .score-title").remove();
+      $(".cal-box .total-score").remove();
+      $(".cal-box").append("<span class='score-title'>总得分为：</span><span class='total-score'>"+total+"</span>");
+    })
+    //保存总分
+    $(".save-button").click(function(){
+      var temp = {
+        "grade" : $(".total-score").html(),
+        "id" : answerSheetId
+      };
+      console.log(temp);
+      if(temp.grade == null){
+        alert("请先计算总分！");
+      }
+      var param = JSON.stringify(temp);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/teacher/answerSheet/updateByPrimaryKeySelective',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                alert('输入的'+data.result);
+            }else if(data.code == 200){
+                alert("评分成功！");
+                window.history.go(-1);
+            }else{
+              alert(data.result);
+            }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      });
+    })
+  })
+  </script>
+</body>
+</html>

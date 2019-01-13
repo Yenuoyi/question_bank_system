@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>提交疑问</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .create-box,.detail-box{
+      margin-top: 10px;
+      margin-bottom: 10px;
+      border: 5px dashed skyblue;
+      border-radius: 5px;
+      height: 150px;
+    }
+    .detail-box{
+      height: auto;
+    }
+    .input-box{
+      margin-top: 3px;
+      margin-left: 40px;
+      margin-right: 40px; 
+      width: 100%;
+    }
+    .show-tick{
+      width: 200px;
+    }
+    .teacher-id{
+      display: none;
+    }
+    .detail-li{
+      margin-top: 15px;
+    }
+    .detail-title{
+      font-size: 16px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 all-box-bg">
+			<div class="title-tc">疑问与回答</div>
+			<div class="create-box col-sm-10 col-sm-offset-1">
+        <div class="flex">
+          <div>
+            <select class="selectpicker show-tick form-control" data-live-search="true">
+              <option>---请选择教师---</option>
+            </select>
+          </div>
+          <div class="input-box">
+            <textarea name="options" rows="6" class="form-control get-question" placeholder="请输入你的疑问"></textarea>
+          </div>
+          <div class="submit-btn">
+            <button class="btn btn-primary submit-button" type="submit">提交</button>
+          </div>
+        </div>
+      </div>
+      <div class="detail-box col-sm-10 col-sm-offset-1">
+        <ul class="list-group" id="detail-ul">
+          <!-- <li class="list-group-item detail-li">
+            <div class="question-box">
+              <span class="detail-title">我的问题：</span><span></span>
+            </div>
+            <div class="answer-box">
+              <span class="detail-title">教师回答：</span><span></span>
+            </div>            
+          </li> -->
+        </ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+      var tempparam = {}
+      var param1 = JSON.stringify(tempparam);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/all/teacher/selectList',
+          data: param1,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  for(var i=0;i<data.result.result.list.length;i++){
+                    $(".show-tick").append("<option>"+data.result.result.list[i].teacherName+"</option>");
+                    $(".submit-btn").append("<span class='teacher-id'>"+data.result.result.list[i].id+"</span>");
+                  }
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      }) 
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/all/doubt/selectList',
+          data: param1,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  for(var i=0;i<data.result.result.list.length;i++){
+                    if(data.result.result.list[i].answer == null){
+                      var answer = '暂未回答';
+                    }else{
+                      var answer = data.result.result.list[i].answer;
+                    }
+                    $("#detail-ul").append("<li class='list-group-item detail-li'><div class='question-box'><span class='detail-title'>我的问题：</span><span>"+data.result.result.list[i].question+"</span></div><div class='answer-box'><span class='detail-title'>教师回答：</span><span>"+answer+"</span></div>            </li>")
+                  }
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      }) 
+
+      //提交疑问事件
+      $(".submit-button").click(function(){
+        var tempP = {
+          "respondentName" : $(".show-tick option:selected").text(),
+          "question" : $(".get-question").val(),
+          "respondentId" : $(".teacher-id").html()
+        }
+        if(tempP.respondentName == '---请选择教师---'){
+          alert('请选择教师');
+          return
+        }
+        var param2 = JSON.stringify(tempP);
+        console.log(param2);
+        $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/all/doubt/insertSelective',
+          data: param2,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  alert('提交成功！');
+                  window.location.reload();  
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      }) 
+      })
+		})
+	</script>
+</body>
+</html>
