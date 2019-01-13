@@ -27,6 +27,9 @@ public class StudentInfoDTO implements Serializable {
     /** 班级id */
     private Integer classId;
 
+    /** 班级名 */
+    private Integer className;
+
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -87,6 +90,14 @@ public class StudentInfoDTO implements Serializable {
         this.classId = classId;
     }
 
+    public Integer getClassName() {
+        return className;
+    }
+
+    public void setClassName(Integer className) {
+        this.className = className;
+    }
+
     public Pager getPager() {
         return pager;
     }
@@ -95,36 +106,4 @@ public class StudentInfoDTO implements Serializable {
         this.pager = pager;
     }
 
-    public static void main(String[] args){
-        Pager pager = new Pager();
-        pager.setPage(1);
-        pager.setRows(10);
-        StudentInfoDTO studentInfoDTO = new StudentInfoDTO();
-        studentInfoDTO.setId(1);
-        studentInfoDTO.setStudentPassword("123456");
-        studentInfoDTO.setStudentEmail("19689405@qq.com");
-        studentInfoDTO.setStudentIphone("15917934393");
-        studentInfoDTO.setStudentName("yebing");
-        studentInfoDTO.setClassId(1);
-//        studentInfoDTO.setPager(pager);
-        System.out.println(JSONObject.toJSONString(studentInfoDTO));
-
-        TeacherInfoDTO teacherInfoDTO = new TeacherInfoDTO();
-        teacherInfoDTO.setId(1);
-        teacherInfoDTO.setTeacherPassword("123456");
-        teacherInfoDTO.setTeacherEmail("19689405@qq.com");
-        teacherInfoDTO.setTeacherIphone("15917934393");
-        teacherInfoDTO.setTeacherName("yebing");
-//        teacherInfoDTO.setPager(pager);
-        System.out.println(JSONObject.toJSONString(teacherInfoDTO));
-
-        AdminInfoDTO adminInfoDTO = new AdminInfoDTO();
-        adminInfoDTO.setId(1);
-        adminInfoDTO.setAdminPassword("123456");
-        adminInfoDTO.setAdminEmail("19689405@qq.com");
-        adminInfoDTO.setAdminIphone("15917934393");
-        adminInfoDTO.setAdminName("yebing");
-//        adminInfoDTO.setPager(pager);
-        System.out.println(JSONObject.toJSONString(adminInfoDTO));
-    }
 }

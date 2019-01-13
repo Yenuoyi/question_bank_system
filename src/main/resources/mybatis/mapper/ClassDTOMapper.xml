@@ -8,7 +8,7 @@
     <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, class_name, teacher_name, teacher_id
+    id, class_name, teacher_id
   </sql>
 
   <sql id="where_fragement">
@@ -20,11 +20,23 @@
       <if test="record.className and record.className != ''">
         and class_name = #{record.className}
       </if>
-      <if test="record.teacherName and record.teacherName != ''">
-        and teacher_name = #{record.teacherName}
-      </if>
       <if test="record.teacherId and record.teacherId != ''">
         and teacher_id = #{record.teacherId}
+      </if>
+    </if>
+  </sql>
+
+  <sql id="class_teacher_where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.id and record.id != ''">
+        and class.id = #{record.id}
+      </if>
+      <if test="record.className and record.className != ''">
+        and class.class_name = #{record.className}
+      </if>
+      <if test="record.teacherId and record.teacherId != ''">
+        and class.teacher_id = #{record.teacherId}
       </if>
     </if>
   </sql>
@@ -35,17 +47,21 @@
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from class
+    SELECT
+	class.id,class.class_name,class.teacher_id,
+	teacher_info.teacher_name
+	FROM
+	class INNER JOIN teacher_info ON class.teacher_id = teacher_info.id
     where id = #{id,jdbcType=INTEGER}
   </select>
 
   <select id="selectList" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from class
-    <include refid="where_fragement"/>
+    class.id,class.class_name,class.teacher_id,
+    teacher_info.teacher_name
+    from
+    class LEFT JOIN teacher_info ON class.teacher_id = teacher_info.id
+    <include refid="class_teacher_where_fragement"/>
     ORDER BY id desc
     <if test="pager != null" >
       <include refid="pagination_tail" />
@@ -65,9 +81,9 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.ClassDTO" >
-    insert into class (class_name, teacher_name,
+    insert into class (class_name,
       teacher_id)
-    values (#{className,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR},
+    values (#{className,jdbcType=VARCHAR},
       #{teacherId,jdbcType=INTEGER})
   </insert>
 
@@ -77,9 +93,6 @@
       <if test="className != null" >
         class_name,
       </if>
-      <if test="teacherName != null" >
-        teacher_name,
-      </if>
       <if test="teacherId != null" >
         teacher_id,
       </if>
@@ -87,9 +100,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="className != null" >
         #{className,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherName != null" >
-        #{teacherName,jdbcType=VARCHAR},
       </if>
       <if test="teacherId != null" >
         #{teacherId,jdbcType=INTEGER},
@@ -103,9 +113,6 @@
       <if test="className != null" >
         class_name = #{className,jdbcType=VARCHAR},
       </if>
-      <if test="teacherName != null" >
-        teacher_name = #{teacherName,jdbcType=VARCHAR},
-      </if>
       <if test="teacherId != null" >
         teacher_id = #{teacherId,jdbcType=INTEGER},
       </if>
@@ -116,7 +123,6 @@
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.ClassDTO" >
     update class
     set class_name = #{className,jdbcType=VARCHAR},
-      teacher_name = #{teacherName,jdbcType=VARCHAR},
       teacher_id = #{teacherId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

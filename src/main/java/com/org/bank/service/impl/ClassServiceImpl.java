@@ -95,9 +95,6 @@ public class ClassServiceImpl implements ClassService {
     public ExecuteResult<DataUtil<ClassDTO>> selectList(ClassDTO record, Pager pager) {
         ExecuteResult<DataUtil<ClassDTO>> executeResult = new ExecuteResult<DataUtil<ClassDTO>>();
         try {
-            if(StringUtils.isEmpty(record.getId())){
-                throw new RuntimeException("参数错误：ID非空");
-            }
             List<ClassDTO> result = classDTOMapper.selectList(record,pager);
             Integer total = classDTOMapper.countTotal(record).intValue();
             DataUtil<ClassDTO> dtoDataUtil = new DataUtil<ClassDTO>();

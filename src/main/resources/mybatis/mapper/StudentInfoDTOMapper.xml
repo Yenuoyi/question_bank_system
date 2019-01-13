@@ -40,9 +40,15 @@
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from student_info
+    SELECT
+	student_info.id,
+	student_info.student_email,
+	student_info.student_iphone,
+	student_info.student_name,
+	class.class_name
+	FROM
+	student_info
+	LEFT JOIN class ON student_info.class_id = class.id
     where id = #{id,jdbcType=INTEGER}
   </select>
 
