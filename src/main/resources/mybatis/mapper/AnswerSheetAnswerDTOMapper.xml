@@ -23,7 +23,8 @@
 
   <sql id="paper_sheet_Column_List" >
     sheet.id id, sheet.answer_sheet_id answer_sheet_id, sheet.examination_paper_question_id examination_paper_question_id,
-    sheet.examination_paper_answer examination_paper_answer, paper.examination_paper_question examination_paper_question,
+    sheet.examination_paper_answer examination_paper_answer,
+    paper.examination_paper_question examination_paper_question,
     paper.examination_paper_option examination_paper_option,paper.examination_paper_question_type examination_paper_question_type
   </sql>
 

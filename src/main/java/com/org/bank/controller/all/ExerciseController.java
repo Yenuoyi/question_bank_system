@@ -50,18 +50,6 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    public static void main(String[] args){
-        List<TrueFalseQuestionDTO> list = new ArrayList<>();
-        TrueFalseQuestionDTO t1 = new TrueFalseQuestionDTO();
-        t1.setId(1);
-        t1.setTrueFalseAnswer("no");
-        TrueFalseQuestionDTO t2 = new TrueFalseQuestionDTO();
-        t2.setId(1);
-        t2.setTrueFalseAnswer("no");
-        list.add(t1);
-        list.add(t2);
-        System.out.println(JSONObject.toJSONString(list));
-    }
     @RequestMapping("/randomSelectSingleChoiceQuestionList")
     public Wrapper<?> randomSelectSingleChoiceQuestionList(@RequestBody SingleChoiceQuestionDTO record){
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(record.getPager());

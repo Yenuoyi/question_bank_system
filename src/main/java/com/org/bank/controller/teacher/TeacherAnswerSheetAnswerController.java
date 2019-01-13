@@ -1,5 +1,6 @@
 package com.org.bank.controller.teacher;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
@@ -9,6 +10,8 @@ import com.org.bank.domain.AnswerSheetAnswerDTO;
 import com.org.bank.domain.AnswerSheetDTO;
 import com.org.bank.service.AnswerSheetAnswerService;
 import com.org.bank.service.AnswerSheetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/teacher/answerSheetAnswer")
 public class TeacherAnswerSheetAnswerController {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private AnswerSheetService answerSheetService;
     @Resource
@@ -103,6 +107,7 @@ public class TeacherAnswerSheetAnswerController {
      */
     @RequestMapping("/selectPaperSheetList")
     public Wrapper<?> selectPaperSheetList(@RequestBody AnswerSheetAnswerDTO record){
+        logger.info("入参：{}", JSONObject.toJSON(record));
         ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> executeResult = answerSheetAnswerService.selectPaperSheetList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

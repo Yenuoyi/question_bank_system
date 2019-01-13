@@ -116,7 +116,7 @@
     values
     <foreach collection="records" item="item" index="index" separator="," >
       ( #{item.userId,jdbcType=INTEGER},
-      #{item.userType,jdbcType=INTEGER}, #{item.question,jdbcType=VARCHAR}, #{questionOption,jdbcType=VARCHAR}, #{item.answer,jdbcType=VARCHAR},
+      #{item.userType,jdbcType=INTEGER}, #{item.question,jdbcType=VARCHAR}, #{item.questionOption,jdbcType=VARCHAR}, #{item.answer,jdbcType=VARCHAR},
       #{item.questionType,jdbcType=INTEGER}, #{item.questionId,jdbcType=INTEGER})
     </foreach>
 

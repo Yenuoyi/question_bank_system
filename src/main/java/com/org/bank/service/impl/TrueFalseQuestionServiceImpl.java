@@ -194,6 +194,7 @@ public class TrueFalseQuestionServiceImpl implements TrueFalseQuestionService {
                     wrongBookDTO.setAnswer(realTrueFalseQuestion.getTrueFalseAnswer());
                     wrongBookDTO.setQuestionType(3);
                     wrongBookDTO.setUserId(id);
+                    wrongBookDTO.setQuestionOption("");
                     wrongBookDTO.setUserType(roleType);
                     wrongBookDTO.setQuestionId(realTrueFalseQuestion.getId());
                     wrongBookDTO.setQuestionType(3);
