@@ -35,7 +35,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .sessionManagement().maximumSessions(1).expiredUrl("/front/login.html");
+                .sessionManagement().maximumSessions(1).expiredUrl("/front/html/login.html");
         http
                 .cors().and()
                 .authorizeRequests()                         //授权配置
@@ -53,7 +53,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         http
                 .formLogin()
-                .loginPage("/front/login.html")
+                .loginPage("/front/html/login.html")
                 .loginProcessingUrl("/login")//处理登录post请求接口
                 .and()
                 .csrf().disable();
@@ -62,7 +62,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http
                 .logout()
                 .logoutUrl("/logout") //自定义登出api，无需自己实现
-                .logoutSuccessUrl("/front/login.html")
+                .logoutSuccessUrl("/front/html/login.html")
                 .permitAll()
                 .invalidateHttpSession(true)
                 .and()
