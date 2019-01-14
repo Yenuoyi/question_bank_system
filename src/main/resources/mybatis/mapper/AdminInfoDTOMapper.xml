@@ -138,7 +138,7 @@
 
   <update id="updatePasswordByPrimaryKey" parameterType="com.org.bank.domain.AdminInfoDTO" >
     update admin_info
-    set admin_password = #{newAdminPassword,jdbcType=VARCHAR},
+    set admin_password = #{newAdminPassword,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
