@@ -6,10 +6,14 @@ import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
 import com.org.bank.domain.ClassDTO;
 import com.org.bank.service.ClassService;
+import com.org.bank.service.StudentInfoService;
+import com.org.bank.service.TeacherInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * 班级控制器

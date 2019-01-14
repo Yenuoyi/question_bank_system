@@ -49,7 +49,7 @@
 	FROM
 	student_info
 	LEFT JOIN class ON student_info.class_id = class.id
-    where id = #{id,jdbcType=INTEGER}
+    where student_info.id = #{id,jdbcType=INTEGER}
   </select>
 
   <select id="selectPasswordByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

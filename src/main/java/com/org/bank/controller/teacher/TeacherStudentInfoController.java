@@ -4,7 +4,10 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
+import com.org.bank.config.spring.security.UserSecurityContextHolder;
+import com.org.bank.domain.ClassDTO;
 import com.org.bank.domain.StudentInfoDTO;
+import com.org.bank.service.ClassService;
 import com.org.bank.service.StudentInfoService;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 教师角色可访问的学生角色控制类
@@ -20,6 +24,8 @@ import javax.annotation.Resource;
 @RequestMapping("/teacher/student")
 public class TeacherStudentInfoController {
     private Logger logger = Logger.getLogger(this.getClass());
+    @Resource
+    private ClassService classService;
     @Resource
     private StudentInfoService studentInfoService;
     @RequestMapping("/deleteByPrimaryKey")

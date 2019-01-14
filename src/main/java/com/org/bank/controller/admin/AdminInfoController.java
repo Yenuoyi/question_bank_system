@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 管理员角色控制器
  */
@@ -91,9 +93,9 @@ public class AdminInfoController {
     }
 
     @RequestMapping("/updatePasswordByPrimaryKey")
-    public Wrapper<?> updatePasswordByPrimaryKey(@RequestBody AdminInfoDTO record){
-        String email = UserSecurityContextHolder.getUsername();
-        record.setAdminEmail(email);
+    public Wrapper<?> updatePasswordByPrimaryKey(@RequestBody AdminInfoDTO record, HttpServletRequest httpServletRequest){
+        int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
+        record.setId(userId);
         ExecuteResult<Integer> executeResult = adminInfoService.updatePasswordByPrimaryKey(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

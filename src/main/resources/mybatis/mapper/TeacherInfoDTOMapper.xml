@@ -138,8 +138,8 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updatePasswordByPrimaryKey" parameterType="com.org.bank.domain.AdminInfoDTO" >
-    update admin_info
+  <update id="updatePasswordByPrimaryKey" parameterType="com.org.bank.domain.TeacherInfoDTO" >
+    update teacher_info
     set teacher_password = #{newTeacherPassword,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
