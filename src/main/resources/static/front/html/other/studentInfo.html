@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人信息</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .form-control{
+      display: inline !important;
+      width: 200px;
+    }
+    .info-item{
+      margin: 10px 0;
+    }
+    .btn{
+      margin-bottom: 10px;
+    }
+    .info-item:first-child{
+      margin-left: 27px; 
+    }
+    .class-id,.person-id{
+      display: none;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 all-box-bg">
+			<div class="title-tc">个人信息</div>
+			<div class="tc">
+        <div class="info-item">班级：<input type="text" class="form-control classroom"><span class="class-id"></span></div>
+        <div class="info-item">个人姓名：<input type="text" class="form-control name"></div>
+        <div class="info-item">个人邮箱：<input type="text" class="form-control email"><span class="person-id"></span></div>
+        <div class="info-item">个人联系方式：<input type="text" class="form-control phone"></div>
+        <button class="btn btn-primary submit-button" type="submit">提交</button>
+      </div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+      var tempparam = {}
+      var param = JSON.stringify(tempparam);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/all/student/selectByPrimaryKey',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  $(".email").val(data.result.result.studentEmail);
+                  $(".name").val(data.result.result.studentName);
+                  $(".phone").val(data.result.result.studentIphone);
+                  $(".classroom").val(data.result.result.className);
+                  $(".phone").val(data.result.result.studentIphone);
+                  $(".class-id").html(data.result.result.classId);
+                  $(".person-id").html(data.result.result.id);
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      }) 
+      $(".submit-button").click(function(){
+        var temp ={
+          "id":$(this).siblings(".info-item").children(".person-id").html(),
+          "classId":$(this).siblings(".info-item").children(".class-id").html(),
+          "studentEmail":$(this).siblings(".info-item").children(".email").val(),
+          "studentName":$(this).siblings(".info-item").children(".name").val(),
+          "studentIphone":$(this).siblings(".info-item").children(".phone").val(),
+        }
+        var param = JSON.stringify(temp);
+        console.log(param);
+        $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/all/student/updateByPrimaryKeySelective',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  alert("保存成功！");
+                  window.location.reload();
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      }) 
+      })
+		})
+	</script>
+</body>
+</html>

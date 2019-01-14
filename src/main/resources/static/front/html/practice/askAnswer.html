@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>练习问答题</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .r-btn{
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .btn-choice{
+      margin-top: 10px;
+    }
+    .btn-choice .btn{
+        margin-bottom: 25px;
+    }
+    #Answer{
+        width: 50%
+    }
+    .green{
+        text-align: left;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 all-box-bg">
+			<div class="title-tc">问答题练习</div>
+			<ul class="list-group all-question-list" id="ul-list">
+  			   <!-- <li class="list-group-item">
+  			   		<div>Cras justo odio</div>
+			 		<div class="btn-choice">
+			 			<textarea name="options" rows="5" id="Answer"></textarea>
+                        <button class="btn btn-primary">确定</button>
+			 		</div>
+			 		<span class="glyphicon glyphicon--pushpin green" aria-hidden="true"> 参考答案：</span>
+  			   </li> -->
+			</ul>
+      <div class="r-btn">
+        <button class="refresh-btn btn btn-primary">重新出题</button>
+      </div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+            $(".refresh-btn").on("click",function(){
+            	window.location.reload();
+            })
+            var ShortAnswer = {
+            	"pager": {
+            		"rows" : "10",
+            		"page" : "1"
+            	}
+            } 
+            var Answer = [];
+            var questionArr = '';
+            console.log(ShortAnswer);
+            var param = JSON.stringify(ShortAnswer);
+            $.ajax({
+            	type: "post",
+            	headers: {
+            		"content-Type":"application/json",
+            	},
+            	contentType:"application/json",
+            	url: 'http://47.107.250.149:8081/all/exercise/randomSelectShortAnswerQuestionList',
+            	data: param,
+            	success: function (data) {
+            		console.log("这是请求成功的");
+            		if(data.code == 500){
+                    	alert('输入的'+data.result);
+                    }else if(data.code == 200){
+                    	questionArr = data.result.result.list;
+                    	console.log(questionArr);
+                    	// 遍历问题和选项
+                    	for(var i=0;i<questionArr.length;i++){
+                    		$("#ul-list").append("<li class='list-group-item item"+i+"'><div class='questionTitle'>"+questionArr[i].shortAnswerQuestion+"</div><div class='btn-choice'><textarea name='options"+i+"' rows='5' id='Answer'></textarea> <button class='btn btn-primary sub-btn"+i+"'>确定</button></div><span class='glyphicon glyphicon-paperclip green' aria-hidden='true'> 参考答案："+questionArr[i].shortAnswerAnswer+"</span></li>");
+                    		Answer[i] = questionArr[i].shortAnswerAnswer;
+                    	}
+                    	console.log(Answer);
+                    }else{
+                    	alert(data.result);
+                    }
+            	},
+            	error:function (err) {
+            		console.log("这是请求失败的");
+            	}
+            });
+            $("#ul-list").on("click",".sub-btn0",function(){
+              console.log($("textarea[name='options0']").val());
+              if($("textarea[name='options0']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item0 .green").css("display","block");
+            })
+            $("#ul-list").on("click",".sub-btn1",function(){
+              console.log($("textarea[name='options1']").val());
+              if($("textarea[name='options1']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item1 .green").css("display","block");
+            })
+            $("#ul-list").on("click",".sub-btn2",function(){
+              console.log($("textarea[name='options2']").val());
+              if($("textarea[name='options2']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item2 .green").css("display","block");
+            })
+            $("#ul-list").on("click",".sub-btn3",function(){
+              console.log($("textarea[name='options3']").val());
+              if($("textarea[name='options3']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item3 .green").css("display","block");
+            })
+            $("#ul-list").on("click",".sub-btn4",function(){
+              console.log($("textarea[name='options4']").val());
+              if($("textarea[name='options4']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item4 .green").css("display","block");
+            })
+            $("#ul-list").on("click",".sub-btn5",function(){
+              console.log($("textarea[name='options5']").val());
+              if($("textarea[name='options5']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item5 .green").css("display","block");
+            })
+            $("#ul-list").on("click",".sub-btn6",function(){
+              console.log($("textarea[name='options6']").val());
+              if($("textarea[name='options6']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item6 .green").css("display","block");
+            })
+            $("#ul-list").on("click",".sub-btn7",function(){
+              console.log($("textarea[name='options7']").val());
+              if($("textarea[name='options7']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item7 .green").css("display","block");
+            })
+            $("#ul-list").on("click",".sub-btn8",function(){
+              console.log($("textarea[name='options8']").val());
+              if($("textarea[name='options8']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item8 .green").css("display","block");
+            })
+            $("#ul-list").on("click",".sub-btn9",function(){
+              console.log($("textarea[name='options9']").val());
+              if($("textarea[name='options9']").val() == ''){
+                alert("请输入值");
+                return
+              }
+              $(".item9 .green").css("display","block");
+            })
+            
+		})
+
+	</script>
+</body>
+</html>

@@ -27,6 +27,7 @@
   				<a href="#" class="practice-item list-group-item">查看/修改判断题</a>
   				<a href="#" class="practice-item list-group-item">查看/修改填空题</a>
   				<a href="#" class="practice-item list-group-item">查看/修改简答题</a>
+          <a href="#" class="practice-item list-group-item">查看/修改问答题</a>
 			</div>
 		</div>
 	</div>
@@ -113,6 +114,13 @@
         })
         $(".practice-item:nth-child(5)").click(function(){
           window.location.href = "../edit/editShortAnswerAdmin.html"
+        })
+        $(".practice-item:nth-child(6)").click(function(){
+          window.location.href = "../edit/editAskAnswerAdmin.html"
+        })
+        //用户天地点击事件
+        $(".manage-item:nth-child(3)").click(function(){
+          window.location.href = "../other/newPassWordA.html"
         })
   			function select(){
   				$(this).addClass('active');

@@ -27,6 +27,7 @@
   				<a href="#" class="practice-item list-group-item">判断题</a>
   				<a href="#" class="practice-item list-group-item">填空题</a>
   				<a href="#" class="practice-item list-group-item">简答题</a>
+          <a href="#" class="practice-item list-group-item">问答题</a>
 			</div>
 		</div>
 	</div>
@@ -111,6 +112,9 @@
         $(".practice-item:nth-child(5)").click(function(){
           window.location.href = "../practice/shortAnswer.html"
         })
+        $(".practice-item:nth-child(6)").click(function(){
+          window.location.href = "../practice/askAnswer.html"
+        })
         //模拟实战点击事件
         $(".simulate-item:nth-child(1)").click(function(){
           window.location.href = "../exam/examList.html"
@@ -130,6 +134,13 @@
         })
         $(".question-item:nth-child(2)").click(function(){
           window.location.href = "../other/qANDa.html"
+        })
+        //用户中心点击事件
+        $(".manage-item:nth-child(1)").click(function(){
+          window.location.href = "../other/studentInfo.html"
+        })
+        $(".manage-item:nth-child(2)").click(function(){
+          window.location.href = "../other/newPassWordS.html"
         })
   			function select(){
   				$(this).addClass('active');

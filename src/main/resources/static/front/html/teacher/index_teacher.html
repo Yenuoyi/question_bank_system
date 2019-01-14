@@ -27,6 +27,7 @@
   				<a href="#" class="practice-item list-group-item">查看/修改判断题</a>
   				<a href="#" class="practice-item list-group-item">查看/修改填空题</a>
   				<a href="#" class="practice-item list-group-item">查看/修改简答题</a>
+          <a href="#" class="practice-item list-group-item">查看/修改问答题</a>
 			</div>
 		</div>
 	</div>
@@ -47,6 +48,7 @@
   				<a href="#" class="create-item list-group-item">上传判断题</a>
   				<a href="#" class="create-item list-group-item">上传填空题</a>
   				<a href="#" class="create-item list-group-item">上传简答题</a>
+          <a href="#" class="create-item list-group-item">上传问答题</a>
   				<a href="#" class="create-item list-group-item">上传试卷</a>
 			</div>
 		</div>
@@ -57,7 +59,6 @@
 			<div class="list-group manage-list">
   				<a href="#" class="manage-item list-group-item">查看/修改个人资料</a>
   				<a href="#" class="manage-item list-group-item">查看/修改学生信息</a>
-  				<a href="#" class="manage-item list-group-item">查看/修改学生成绩</a>
   				<a href="#" class="manage-item list-group-item">查看/解答疑问</a>
   				<a href="#" class="manage-item list-group-item">修改密码</a>
 			</div>
@@ -117,6 +118,9 @@
           window.location.href = "../create/createShortAnswer.html"
         })
         $(".create-item:nth-child(6)").click(function(){
+          window.location.href = "../create/createAskAnswer.html"
+        })
+        $(".create-item:nth-child(7)").click(function(){
           window.location.href = "../create/createExamination.html"
         })
         //模拟实战点击事件
@@ -139,9 +143,18 @@
         $(".practice-item:nth-child(5)").click(function(){
           window.location.href = "../edit/editShortAnswer.html"
         })
+        $(".practice-item:nth-child(6)").click(function(){
+          window.location.href = "../edit/editAskAnswer.html"
+        })
         //用户天地点击事件
-        $(".manage-item:nth-child(4)").click(function(){
+        $(".manage-item:nth-child(1)").click(function(){
+          window.location.href = "../other/teacherInfo.html"
+        })
+        $(".manage-item:nth-child(3)").click(function(){
           window.location.href = "../other/qANDaTeacher.html"
+        })
+        $(".manage-item:nth-child(4)").click(function(){
+          window.location.href = "../other/newPassWordT.html"
         })
   			function select(){
   				$(this).addClass('active');
