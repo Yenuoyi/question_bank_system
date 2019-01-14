@@ -8,11 +8,12 @@
     <result column="question" property="question" jdbcType="VARCHAR" />
     <result column="question_option" property="questionOption" jdbcType="VARCHAR" />
     <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="reply" property="reply" jdbcType="VARCHAR" />
     <result column="question_type" property="questionType" jdbcType="INTEGER" />
     <result column="question_id" property="questionId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, user_type, question, question_Option, answer, question_type, question_id
+    id, user_id, user_type, question, question_Option, answer, reply, question_type, question_id
   </sql>
 
   <sql id="where_fragement">
@@ -102,22 +103,23 @@
 
   <insert id="insert" parameterType="com.org.bank.domain.WrongBookDTO" >
     insert into wrong_book (user_id,
-      user_type, question, question_option, answer,
+      user_type, question, question_option, answer, reply,
       question_type, question_id)
     values (#{userId,jdbcType=INTEGER},
       #{userType,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{questionOption,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR},
+      #{reply,jdbcType=VARCHAR},
       #{questionType,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER})
   </insert>
 
   <insert id="insertList" >
     insert into wrong_book (user_id,
-      user_type, question, question_option, answer,
+      user_type, question, question_option, answer, reply,
       question_type, question_id)
     values
     <foreach collection="records" item="item" index="index" separator="," >
       ( #{item.userId,jdbcType=INTEGER},
       #{item.userType,jdbcType=INTEGER}, #{item.question,jdbcType=VARCHAR}, #{item.questionOption,jdbcType=VARCHAR}, #{item.answer,jdbcType=VARCHAR},
-      #{item.questionType,jdbcType=INTEGER}, #{item.questionId,jdbcType=INTEGER})
+      #{item.reply,jdbcType=VARCHAR},#{item.questionType,jdbcType=INTEGER}, #{item.questionId,jdbcType=INTEGER})
     </foreach>
 
   </insert>
@@ -139,6 +141,9 @@
       </if>
       <if test="answer != null" >
         answer,
+      </if>
+      <if test="reply != null" >
+        reply,
       </if>
       <if test="questionType != null" >
         question_type,
@@ -162,6 +167,9 @@
       </if>
       <if test="answer != null" >
         #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="reply != null" >
+        #{reply,jdbcType=VARCHAR},
       </if>
       <if test="questionType != null" >
         #{questionType,jdbcType=INTEGER},
@@ -188,6 +196,9 @@
       </if>
       <if test="answer != null" >
         answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="reply != null" >
+        reply = #{reply,jdbcType=VARCHAR},
       </if>
       <if test="questionType != null" >
         question_type = #{questionType,jdbcType=INTEGER},

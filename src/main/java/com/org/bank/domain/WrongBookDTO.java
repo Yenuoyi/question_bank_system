@@ -26,6 +26,9 @@ public class WrongBookDTO implements Serializable {
     /** 答案 */
     private String answer;
 
+    /** 回答 */
+    private String reply;
+
     /** 1：单选题，2：多选题，3：判断题，4：填空题，5：简单题，6：直接组卷 */
     private Integer questionType;
 
@@ -82,6 +85,14 @@ public class WrongBookDTO implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer == null ? null : answer.trim();
+    }
+
+    public String getReply() {
+        return reply;
+    }
+
+    public void setReply(String reply) {
+        this.reply = reply;
     }
 
     public Integer getQuestionType() {

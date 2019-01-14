@@ -185,13 +185,19 @@ public class TrueFalseQuestionServiceImpl implements TrueFalseQuestionService {
             for(int j=0;j < resultSize;j++){
                 TrueFalseQuestionDTO realTrueFalseQuestion = result.get(j);
                 TrueFalseQuestionDTO testTrueFalseQuestion = map.get(realTrueFalseQuestion.getId());
-                if(testTrueFalseQuestion.getTrueFalseAnswer().equals(realTrueFalseQuestion.getTrueFalseAnswer())){
+                /* 判断对错逻辑 */
+                if(testTrueFalseQuestion.getTrueFalseAnswer() != null && testTrueFalseQuestion.getTrueFalseAnswer().equals(realTrueFalseQuestion.getTrueFalseAnswer())){
                     testTrueFalseQuestion.setTrueOrFalse(1);
                 }else{
                     testTrueFalseQuestion.setTrueOrFalse(0);
                     WrongBookDTO wrongBookDTO = new WrongBookDTO();
                     wrongBookDTO.setQuestion(realTrueFalseQuestion.getTrueFalseQuestion());
                     wrongBookDTO.setAnswer(realTrueFalseQuestion.getTrueFalseAnswer());
+                    if(testTrueFalseQuestion.getTrueFalseAnswer() == null){
+                        wrongBookDTO.setReply("");
+                    }else{
+                        wrongBookDTO.setReply(testTrueFalseQuestion.getTrueFalseAnswer());
+                    }
                     wrongBookDTO.setQuestionType(3);
                     wrongBookDTO.setUserId(id);
                     wrongBookDTO.setQuestionOption("");

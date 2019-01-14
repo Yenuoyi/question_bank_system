@@ -185,13 +185,20 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
             for(int j=0;j < resultSize;j++){
                 MultipleChoiceQuestionDTO realMultipleChoiceQuestion = result.get(j);
                 MultipleChoiceQuestionDTO testMultipleChoiceQuestion = map.get(realMultipleChoiceQuestion.getId());
-                if(testMultipleChoiceQuestion.getMultipleChoiceAnswer().equals(realMultipleChoiceQuestion.getMultipleChoiceAnswer())){
+                /* 判断对错逻辑 */
+                if(testMultipleChoiceQuestion.getMultipleChoiceAnswer() != null && testMultipleChoiceQuestion.getMultipleChoiceAnswer().equals(realMultipleChoiceQuestion.getMultipleChoiceAnswer())){
                     testMultipleChoiceQuestion.setTrueOrFalse(1);
                 }else{
                     testMultipleChoiceQuestion.setTrueOrFalse(0);
                     WrongBookDTO wrongBookDTO = new WrongBookDTO();
                     wrongBookDTO.setQuestion(realMultipleChoiceQuestion.getMultipleChoiceQuestion());
+                    wrongBookDTO.setQuestionOption(realMultipleChoiceQuestion.getMultipleChoiceOption());
                     wrongBookDTO.setAnswer(realMultipleChoiceQuestion.getMultipleChoiceAnswer());
+                    if(testMultipleChoiceQuestion.getMultipleChoiceAnswer() == null){
+                        wrongBookDTO.setReply("");
+                    }else{
+                        wrongBookDTO.setReply(testMultipleChoiceQuestion.getMultipleChoiceAnswer());
+                    }
                     wrongBookDTO.setUserId(userId);
                     wrongBookDTO.setUserType(roleType);
                     wrongBookDTO.setQuestionId(realMultipleChoiceQuestion.getId());
