@@ -70,8 +70,6 @@ public class AdminTeacherInfoController {
 
     @RequestMapping("/updateByPrimaryKeySelective")
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody TeacherInfoDTO record){
-        int id = Integer.parseInt(UserSecurityContextHolder.getUsername());
-        record.setId(id);
         ExecuteResult<Integer> executeResult = teacherInfoService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
