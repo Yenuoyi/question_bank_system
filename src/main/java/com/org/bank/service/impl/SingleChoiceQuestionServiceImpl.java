@@ -182,13 +182,20 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
             for(int j=0;j < resultSize;j++){
                 SingleChoiceQuestionDTO realSingleChoiceQuestion = result.get(j);
                 SingleChoiceQuestionDTO testSingleChoiceQuestion = map.get(realSingleChoiceQuestion.getId());
-                if(testSingleChoiceQuestion.getSingleChoiceAnswer().equals(realSingleChoiceQuestion.getSingleChoiceAnswer())){
+                /* 判断正确逻辑 */
+                if(testSingleChoiceQuestion.getSingleChoiceAnswer() != null && testSingleChoiceQuestion.getSingleChoiceAnswer().equals(realSingleChoiceQuestion.getSingleChoiceAnswer())){
                     testSingleChoiceQuestion.setTrueOrFalse(1);
                 }else{
                     testSingleChoiceQuestion.setTrueOrFalse(0);
                     WrongBookDTO wrongBookDTO = new WrongBookDTO();
                     wrongBookDTO.setQuestion(realSingleChoiceQuestion.getSingleChoiceQuestion());
                     wrongBookDTO.setAnswer(realSingleChoiceQuestion.getSingleChoiceAnswer());
+                    if(testSingleChoiceQuestion.getSingleChoiceAnswer() == null){
+                        wrongBookDTO.setReply("");
+                    }else{
+                        wrongBookDTO.setReply(testSingleChoiceQuestion.getSingleChoiceAnswer());
+                    }
+                    wrongBookDTO.setQuestionOption(realSingleChoiceQuestion.getSingleChoiceOption());
                     wrongBookDTO.setUserId(userId);
                     wrongBookDTO.setUserType(roleType);
                     wrongBookDTO.setQuestionId(realSingleChoiceQuestion.getId());
