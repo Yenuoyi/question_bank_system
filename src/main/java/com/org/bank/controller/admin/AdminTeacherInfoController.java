@@ -4,6 +4,7 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
+import com.org.bank.common.encrypt.Md5Util;
 import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.TeacherInfoDTO;
 import com.org.bank.service.TeacherInfoService;
@@ -43,6 +44,7 @@ public class AdminTeacherInfoController {
 
     @RequestMapping("/insertSelective")
     public Wrapper<?> insertSelective(@RequestBody TeacherInfoDTO record){
+        record.setTeacherPassword(Md5Util.encode(record.getTeacherPassword()));
         ExecuteResult<Integer> executeResult = teacherInfoService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
