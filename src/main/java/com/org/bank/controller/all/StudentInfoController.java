@@ -29,6 +29,13 @@ public class StudentInfoController {
 
     @RequestMapping("insert")
     public Wrapper<?> insert(@RequestBody StudentInfoDTO record){
+        StudentInfoDTO studentInfoDTO = new StudentInfoDTO();
+        studentInfoDTO.setStudentEmail(record.getStudentEmail());
+        ExecuteResult<DataUtil<StudentInfoDTO>> dataUtilExecuteResult = studentInfoService.selectList(studentInfoDTO, null);
+        if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
+            return WrapMapper.error().result("请勿重复注册！");
+        }
+        record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
         ExecuteResult<Integer> executeResult = studentInfoService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -38,6 +45,12 @@ public class StudentInfoController {
 
     @RequestMapping("insertSelective")
     public Wrapper<?> insertSelective(@RequestBody StudentInfoDTO record){
+        StudentInfoDTO studentInfoDTO = new StudentInfoDTO();
+        studentInfoDTO.setStudentEmail(record.getStudentEmail());
+        ExecuteResult<DataUtil<StudentInfoDTO>> dataUtilExecuteResult = studentInfoService.selectList(studentInfoDTO, null);
+        if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
+            return WrapMapper.error().result("请勿重复注册！");
+        }
         record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
         ExecuteResult<Integer> executeResult = studentInfoService.insertSelective(record);
         if(executeResult.isSuccess()){

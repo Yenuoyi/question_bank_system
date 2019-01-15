@@ -35,6 +35,13 @@ public class AdminTeacherInfoController {
 
     @RequestMapping("/insert")
     public Wrapper<?> insert(@RequestBody TeacherInfoDTO record){
+        TeacherInfoDTO teacherInfoDTO = new TeacherInfoDTO();
+        teacherInfoDTO.setTeacherEmail(record.getTeacherEmail());
+        ExecuteResult<DataUtil<TeacherInfoDTO>> dataUtilExecuteResult = teacherInfoService.selectList(teacherInfoDTO, null);
+        if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
+            return WrapMapper.error().result("请勿重复注册！");
+        }
+        record.setTeacherPassword(Md5Util.encode(record.getTeacherPassword()));
         ExecuteResult<Integer> executeResult = teacherInfoService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -44,6 +51,12 @@ public class AdminTeacherInfoController {
 
     @RequestMapping("/insertSelective")
     public Wrapper<?> insertSelective(@RequestBody TeacherInfoDTO record){
+        TeacherInfoDTO teacherInfoDTO = new TeacherInfoDTO();
+        teacherInfoDTO.setTeacherEmail(record.getTeacherEmail());
+        ExecuteResult<DataUtil<TeacherInfoDTO>> dataUtilExecuteResult = teacherInfoService.selectList(teacherInfoDTO, null);
+        if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
+            return WrapMapper.error().result("请勿重复注册！");
+        }
         record.setTeacherPassword(Md5Util.encode(record.getTeacherPassword()));
         ExecuteResult<Integer> executeResult = teacherInfoService.insertSelective(record);
         if(executeResult.isSuccess()){
