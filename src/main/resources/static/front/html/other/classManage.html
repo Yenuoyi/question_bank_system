@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>班级管理</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .td-id,.teacher{
+      width: 400px;
+    }
+    .classID,.teacherID{
+      display: none;
+    }
+    .add-box{
+      text-align: center;
+    }
+    .add-teacher{
+      margin: 20px;
+    }
+    .addD{
+      float: right;
+      border:1px dashed #333;
+      padding: 5px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 all-box-bg">
+			<div class="title-tc">班级管理</div>
+      <div class="add-box">
+        <div class="flex addD">
+          <div class="add-classname">
+            <span>班级名称：</span><input class="form-control new-class-name" type="text">
+          </div>
+          <div class="add-teacher">
+            <span>管理教师：</span>
+            <select class="selectpicker show-tick1 form-control" data-live-search="true">
+              <option>---请选择教师---</option>
+            </select>
+          </div>
+          <div class="add-button">
+            <button class="btn btn-primary addNew-button" type="submit">增加</button>
+          </div>
+        </div>
+      </div>
+			<table class="table">
+        <thead>
+          <tr>
+            <th class="tr-id">班级</th>
+            <th>管理教师</th>
+            <th>修改管理教师</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="table-item">
+          <!-- <tr>
+            <td class="td-id">
+              <input class="form-control" type="text">
+            </td>
+            <td class="teacher">
+              <input class="form-control" type="text">
+            </td>
+            <td class="new-teacher">
+              <select class="selectpicker show-tick form-control" data-live-search="true">
+                <option>---请选择教师---</option>
+              </select>
+            </td>
+            <td class="bth">
+              <button class="btn btn-primary save-button" type="submit">修改</button>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+      var tempparam = {
+          "pager": {
+                "rows" : "",
+                "page" : ""
+          }
+        }
+      var param = JSON.stringify(tempparam);
+      $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.107.250.149:8081/admin/class/selectList',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  for(var i=0;i<data.result.result.list.length;i++){
+                    $("#table-item").append("<tr><td class='td-id'><input class='form-control classname-input' type='text' value='"+data.result.result.list[i].className+"'><span class='classID'>"+data.result.result.list[i].id+"</span></td><td class='teacher'><span class='teacherName'>"+data.result.result.list[i].teacherName+"</span></td><td class='new-teacher'><select class='selectpicker show-tick form-control' data-live-search='true'><option>---请选择教师---</option></select></td><td class='bth'><button class='btn btn-primary save-button' type='submit'>修改</button></td></tr>");
+                  }
+                  var tempP = {}
+                  var param1 = JSON.stringify(tempP);
+                  $.ajax({
+                      type: "post",
+                      headers: {
+                        "content-Type":"application/json",
+                      },
+                      contentType:"application/json",
+                      url: 'http://47.107.250.149:8081/all/teacher/selectList',
+                      data: param1,
+                      success: function (data) {
+                        console.log("这是请求成功的");
+                        console.log(data);
+                        if(data.code == 500){
+                              alert(data.result);
+                            }else if(data.code == 200){
+                              for(var i=0;i<data.result.result.list.length;i++){
+                                $(".show-tick").append("<option>"+data.result.result.list[i].id+"."+data.result.result.list[i].teacherName+"</option>");
+                                $(".show-tick1").append("<option>"+data.result.result.list[i].id+"."+data.result.result.list[i].teacherName+"</option>");
+                              }
+                            }else{
+                              alert(data.result);
+                            }
+                      },
+                      error:function (err) {
+                        console.log("这是请求失败的");
+                      }
+                  }) 
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+      }) 
+      
+      //修改按钮事件
+      $(document).on("click",".save-button",function(){
+        var teacherDeatil = $(this).parent().siblings(".new-teacher").find(".show-tick option:selected").text();
+        var detailArr = teacherDeatil.split('.');
+        if(detailArr[0] == '---请选择教师---'){
+          alert('请选择修改的管理教师');
+          return
+        }
+        var tempp = {
+          "className" : $(this).parent().siblings(".td-id").children(".classname-input").val(),
+          "id" : $(this).parent().siblings(".td-id").children(".classID").html(),
+          "teacherId" : detailArr[0],
+          "teacherName" : detailArr[1],
+        }
+        var param = JSON.stringify(tempp);
+        console.log(param);
+        $.ajax({
+              type: "post",
+              headers: {
+                "content-Type":"application/json",
+              },
+              contentType:"application/json",
+              url: 'http://47.107.250.149:8081/admin/class/updateByPrimaryKeySelective',
+              data: param,
+              success: function (data) {
+                console.log("这是请求成功的");
+                console.log(data);
+                if(data.code == 500){
+                      alert(data.result);
+                    }else if(data.code == 200){
+                      alert('修改成功！');
+                      window.location.reload();
+                    }else{
+                      alert(data.result);
+                    }
+              },
+              error:function (err) {
+                console.log("这是请求失败的");
+              }
+            });
+        })
+
+        //增加按钮事件
+      $(document).on("click",".addNew-button",function(){
+        var teacherDeatil1 = $(".show-tick1 option:selected").text();
+        var detailArr1 = teacherDeatil1.split('.');
+        if(detailArr1[0] == '---请选择教师---'){
+          alert('请选择新增班级的管理教师');
+          return
+        }
+        var tempp1 = {
+          "className" : $(".new-class-name").val(),
+          // "id" : $(this).parent().siblings(".td-id").children(".classID").html(),
+          "teacherId" : detailArr1[0],
+          "teacherName" : detailArr1[1],
+        }
+        var param = JSON.stringify(tempp1);
+        console.log(detailArr1);
+        $.ajax({
+              type: "post",
+              headers: {
+                "content-Type":"application/json",
+              },
+              contentType:"application/json",
+              url: 'http://47.107.250.149:8081/admin/class/insertSelective',
+              data: param,
+              success: function (data) {
+                console.log("这是请求成功的");
+                console.log(data);
+                if(data.code == 500){
+                      alert(data.result);
+                    }else if(data.code == 200){
+                      alert('增加成功！');
+                      window.location.reload();
+                    }else{
+                      alert(data.result);
+                    }
+              },
+              error:function (err) {
+                console.log("这是请求失败的");
+              }
+            });
+        })
+		})
+	</script>
+</body>
+</html>

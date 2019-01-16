@@ -99,3 +99,7 @@ ul,li{
 	color: red;
 	display: none;
 }
+.logout{
+      background-color: red;
+      color: white !important;
+}

@@ -28,7 +28,7 @@ public class StudentInfoDTO implements Serializable {
     private Integer classId;
 
     /** 班级名 */
-    private Integer className;
+    private String className;
 
     private Pager pager;
 
@@ -90,11 +90,11 @@ public class StudentInfoDTO implements Serializable {
         this.classId = classId;
     }
 
-    public Integer getClassName() {
+    public String getClassName() {
         return className;
     }
 
-    public void setClassName(Integer className) {
+    public void setClassName(String className) {
         this.className = className;
     }
 

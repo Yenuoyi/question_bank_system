@@ -1,26 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>错题本</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="UTF-8">
+  <title>学生列表</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/public.css">
-	<script src="../../js/jquery-3.3.1.min.js"></script>
-	<script src="../../js/bootstrap.min.js"></script>
-	<script src="../../js/public-js.js"></script>
+  <script src="../../js/jquery-3.3.1.min.js"></script>
+  <script src="../../js/bootstrap.min.js"></script>
+  <script src="../../js/public-js.js"></script>
   <style type="text/css" media="screen">
-    .td-id{
-      word-break:break-all;
-    }
-    .option{
-      word-break:break-all;
-      width: 650px;
-    }
-    .wrong,.right{
-      width: 150px;
-    }
     ul.pagination {
       display: inline-block;
       padding: 0;
@@ -44,82 +34,189 @@
     .studentID,.classID{
       display: none;
     }
+    .button-box{
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body class="container-fluid bg-index">
-	<div class="row content-row" id="practice">
-		<div class="col-sm-12 all-box-bg">
-			<div class="title-tc">错题本</div>
-			<table class="table">
+  <div class="row content-row" id="practice">
+    <div class="col-sm-12 all-box-bg">
+      <div class="title-tc">学生列表</div>
+      <div class="select-box">
+        <div class="flex addD">
+          <div class="add-teacherName">
+            <select class="selectpicker show-tick form-control" data-live-search="true">
+              <option>---请选择班级---</option>
+            </select>
+          </div>
+          <div class="button-box">
+            <button class="btn btn-primary submit-button" type="submit">确定</button>
+          </div>
+        </div>
+      </div>
+      <table class="table">
         <thead>
           <tr>
-            <th class="tr-id">题目</th>
-            <th>选项</th>
-            <th>所选答案</th>
-            <th>正确答案</th>
+            <th class="tr-id">姓名</th>
+            <th>班级</th>
+            <th>个人邮箱</th>
+            <th>联系方式</th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody id="table-item">
           <!-- <tr>
-            <td class="td-id"></td>
-            <td class="option"></td>
-            <td class="wrong">
+            <td class="name">
               <input class="form-control" type="text">
             </td>
-            <td class="right">
+            <td class="classroom">
               <input class="form-control" type="text">
+            </td>
+            <td class="email">
+              <input class="form-control" type="text">
+            </td>
+            <td class="phone">
+              <input class="form-control" type="text">
+            </td>
+            <td class="btn">
+              <button class="btn btn-primary save-button" type="submit">保存</button>
             </td>
           </tr> -->
         </tbody>
       </table>
-      <div class="tc">
+      <div class="tc p-tc">
         <ul class="pagination"></ul>
         <input type="hidden" id="currentPage" name="currentPage" value="1"></input>
         <input type="hidden" id="totalPage"></input>
       </div>
-		</div>
-	</div>
-	<script type="text/javascript">
+    </div>
+  </div>
+  <script type="text/javascript">
     var curPage =$("#currentPage").val();  //当前页面
     var last =$("#totalPage").val();    //总页数
     var page =Math.ceil(curPage/10);
-		$(function(){
-      var tempparam = {
-          "pager": {
-                "rows" : "10",
-                "page" : "1"
-          }
-        }
-      var param = JSON.stringify(tempparam);
-      $.ajax({
-          type: "post",
-          headers: {
-            "content-Type":"application/json",
-          },
-          contentType:"application/json",
-          url: 'http://47.107.250.149:8081/all/wrongBook/selectList',
-          data: param,
-          success: function (data) {
-            console.log("这是请求成功的");
-            console.log(data);
-            if(data.code == 500){
-                  alert(data.result);
-                }else if(data.code == 200){
-                  $("#totalPage").attr({value:data.result.result.pager.totalPage});
-                  draw(page,curPage);
-                  for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id'>"+data.result.result.list[i].question+"</td><td class='option'>"+data.result.result.list[i].questionOption+"</td><td class='wrong'><input class='form-control' type='text' value='"+data.result.result.list[i].reply+"' disabled></td><td class='right'><input class='form-control' type='text' value='"+data.result.result.list[i].answer+"' disabled></td></tr>");
-                  }
-                }else{
-                  alert(data.result);
+    $(function(){
+      //选择班级
+      var tempP = {
+                "pager": {
+                    "rows" : "",
+                    "page" : ""
                 }
-          },
-          error:function (err) {
-            console.log("这是请求失败的");
-          }
-      }) 
+            }
+            var param = JSON.stringify(tempP);
+            $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.107.250.149:8081/teacher/class/selectList',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        for(var i=0;i<data.result.result.list.length;i++){
+                          $(".show-tick").append("<option>"+data.result.result.list[i].id+"."+data.result.result.list[i].className+"</option>");
+                        }
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+            }) 
 
-      //绑定点击页码事件
+
+      $(".submit-button").click(function(){
+        var classDeatil = $(".show-tick option:selected").text();
+        var detailArr = classDeatil.split('.');
+        if(detailArr[0] == '---请选择班级---'){
+          alert('请选择班级');
+          return
+        }
+        //列表详细
+        var tempPP = {
+          "classId" : detailArr[0]
+        } 
+        var param = JSON.stringify(tempPP);
+        console.log(param);
+        $.ajax({
+              type: "post",
+              headers: {
+                "content-Type":"application/json",
+              },
+              contentType:"application/json",
+              url: 'http://47.107.250.149:8081/teacher/student/selectList',
+              data: param,
+              success: function (data) {
+                console.log("这是请求成功的");
+                console.log(data);
+                if(data.code == 500){
+                      alert(data.result);
+                    }else if(data.code == 200){
+                      $(".pagination").remove();
+                      $(".p-tc").append("<ul class='pagination'></ul>")
+                      $("#table-item").children("tr").remove();
+                      $("#totalPage").attr({value:data.result.result.pager.totalPage});
+                      draw(page,curPage);
+                      studentArr = data.result.result.list;
+                      for(var i=0;i<studentArr.length;i++){
+                        $("#table-item").append("<tr><td class='name'><input class='form-control name-input' type='text' value='"+studentArr[i].studentName+"'></td><td class='classroom'><input class='form-control class-input' type='text' value='"+studentArr[i].className+"' disabled><span class='classID'>"+studentArr[i].classId+"</span></td><td class='email'><input class='form-control email-input' type='text' value='"+studentArr[i].studentEmail+"'><span class='studentID'>"+studentArr[i].id+"</span></td><td class='phone'><input class='form-control phone-input' type='text' value='"+studentArr[i].studentIphone+"'></td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存</button></td></tr>");
+                      }
+                    }else{
+                      alert(data.result);
+                    }
+              },
+              error:function (err) {
+                console.log("这是请求失败的");
+              }
+            });
+      })
+      
+
+            //保存信息事件
+            $(document).on("click",".save-button",function(){
+              var temp ={
+                "id":$(this).parent().siblings(".email").children(".studentID").html(),
+                "classId":$(this).parent().siblings(".classroom").children(".classID").html(),
+                "studentEmail":$(this).parent().siblings(".email").children(".email-input").val(),
+                "studentName":$(this).parent().siblings(".name").children(".name-input").val(),
+                "studentIphone":$(this).parent().siblings(".phone").children(".phone-input").val(),
+              }
+              var param = JSON.stringify(temp);
+              console.log(param);
+              $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.107.250.149:8081/admin/student/updateByPrimaryKeySelective',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        alert("保存成功！");
+                        window.location.reload();
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+              }) 
+            })
+
+            //绑定点击页码事件
             $(document).on("click",".pagination li a",function(){
               var str =$(this).html();
               console.log(str);
@@ -142,7 +239,7 @@
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://47.107.250.149:8081/all/wrongBook/selectList',
+              url: 'http://47.107.250.149:8081/admin/teacher/selectList',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");
@@ -151,9 +248,10 @@
                       alert(data.result);
                     }else if(data.code == 200){
                       $("#table-item").children("tr").remove();
-                      for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id'>"+data.result.result.list[i].question+"</td><td class='option'>"+data.result.result.list[i].questionOption+"</td><td class='wrong'><input class='form-control' type='text' value='"+data.result.result.list[i].reply+"' disabled></td><td class='right'><input class='form-control' type='text' value='"+data.result.result.list[i].answer+"' disabled></td></tr>");
-                  }
+                      teacherArr = data.result.result.list;
+                      for(var i=0;i<teacherArr.length;i++){
+                        $("#table-item").append("<tr><td class='name'><input class='form-control' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存</button></td></tr>");
+                      }
                     }else{
                       alert(data.result);
                     }
@@ -197,7 +295,7 @@
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://47.107.250.149:8081/all/wrongBook/selectList',
+              url: 'http://47.107.250.149:8081/admin/teacher/selectList',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");
@@ -206,9 +304,10 @@
                       alert(data.result);
                     }else if(data.code == 200){
                       $("#table-item").children("tr").remove();
-                      for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id'>"+data.result.result.list[i].question+"</td><td class='option'>"+data.result.result.list[i].questionOption+"</td><td class='wrong'><input class='form-control' type='text' value='"+data.result.result.list[i].reply+"' disabled></td><td class='right'><input class='form-control' type='text' value='"+data.result.result.list[i].answer+"' disabled></td></tr>");
-                  }
+                      teacherArr = data.result.result.list;
+                      for(var i=0;i<teacherArr.length;i++){
+                        $("#table-item").append("<tr><td class='name'><input class='form-control' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存</button></td></tr>");
+                      }
                     }else{
                       alert(data.result);
                     }
@@ -257,7 +356,7 @@
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://47.107.250.149:8081/all/wrongBook/selectList',
+              url: 'http://47.107.250.149:8081/admin/teacher/selectList',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");
@@ -266,9 +365,10 @@
                       alert(data.result);
                     }else if(data.code == 200){
                       $("#table-item").children("tr").remove();
-                      for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id'>"+data.result.result.list[i].question+"</td><td class='option'>"+data.result.result.list[i].questionOption+"</td><td class='wrong'><input class='form-control' type='text' value='"+data.result.result.list[i].reply+"' disabled></td><td class='right'><input class='form-control' type='text' value='"+data.result.result.list[i].answer+"' disabled></td></tr>");
-                  }
+                      teacherArr = data.result.result.list;
+                      for(var i=0;i<teacherArr.length;i++){
+                        $("#table-item").append("<tr><td class='name'><input class='form-control' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存</button></td></tr>");
+                      }
                     }else{
                       alert(data.result);
                     }
@@ -341,7 +441,9 @@
               liStr +="<li><a id='nextPage' href='#'>»</a></li>";
               $(".pagination").append(liStr);
             }
-		})
-	</script>
+
+    })
+
+  </script>
 </body>
 </html>

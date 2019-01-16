@@ -61,6 +61,7 @@
   				<a href="#" class="manage-item list-group-item">查看/修改学生信息</a>
   				<a href="#" class="manage-item list-group-item">查看/解答疑问</a>
   				<a href="#" class="manage-item list-group-item">修改密码</a>
+          <a href="#" class="manage-item list-group-item logout">注销</a>
 			</div>
 		</div>
 	</div>
@@ -150,11 +151,33 @@
         $(".manage-item:nth-child(1)").click(function(){
           window.location.href = "../other/teacherInfo.html"
         })
+        $(".manage-item:nth-child(2)").click(function(){
+          window.location.href = "../other/myStudentInfo.html"
+        })
         $(".manage-item:nth-child(3)").click(function(){
           window.location.href = "../other/qANDaTeacher.html"
         })
         $(".manage-item:nth-child(4)").click(function(){
           window.location.href = "../other/newPassWordT.html"
+        })
+        $(".manage-item:nth-child(5)").click(function(){
+          $.ajax({
+            type: "post",
+            headers: {
+              "content-Type":"application/json",
+            },
+            contentType:"application/json",
+            url: 'http://47.107.250.149:8081/logout',
+            data: '',
+            success: function (data) {
+              console.log("这是请求成功的");
+              alert('注销成功');
+              window.location.href = "../login.html"
+            },
+            error:function (err) {
+              console.log("这是请求失败的");
+            }
+          });
         })
   			function select(){
   				$(this).addClass('active');

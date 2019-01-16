@@ -40,7 +40,6 @@ public class AdminStudentInfoController {
         if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
             return WrapMapper.error().result("请勿重复注册！");
         }
-        record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
         ExecuteResult<Integer> executeResult = studentInfoService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -56,7 +55,6 @@ public class AdminStudentInfoController {
         if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
             return WrapMapper.error().result("请勿重复注册！");
         }
-        record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
         ExecuteResult<Integer> executeResult = studentInfoService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>错题本</title>
+	<title>教师列表</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
@@ -11,16 +11,6 @@
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/public-js.js"></script>
   <style type="text/css" media="screen">
-    .td-id{
-      word-break:break-all;
-    }
-    .option{
-      word-break:break-all;
-      width: 650px;
-    }
-    .wrong,.right{
-      width: 150px;
-    }
     ul.pagination {
       display: inline-block;
       padding: 0;
@@ -41,33 +31,68 @@
     .active{
       background-color: #337ab7 !important;
     }
-    .studentID,.classID{
+    .teacherID{
       display: none;
+    }
+    .add-box{
+      text-align: center;
+    }
+    .add-teacherName,.add-teacherEmail,.add-teacherPhone,.add-passWord{
+      margin: 10px;
+    }
+    .addD{
+      float: right;
+      border:1px dashed #333;
+      padding: 5px;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body class="container-fluid bg-index">
 	<div class="row content-row" id="practice">
 		<div class="col-sm-12 all-box-bg">
-			<div class="title-tc">错题本</div>
-			<table class="table">
+			<div class="title-tc">教师列表</div>
+      <div class="add-box">
+        <div class="flex addD">
+          <div class="add-teacherName">
+            <span>教师姓名：</span><input class="form-control new-teacher-name" type="text">
+          </div>
+          <div class="add-teacherEmail">
+            <span>教师邮箱：</span><input class="form-control new-teacher-email" type="text">
+          </div>
+          <div class="add-teacherPhone">
+            <span>教师电话：</span><input class="form-control new-teacher-phone" type="text">
+          </div>
+          <div class="add-passWord">
+            <span>登录密码：</span><input class="form-control new-teacher-password" type="password">
+          </div>
+          <div class="add-button">
+            <button class="btn btn-primary register-button" type="submit">注册</button>
+          </div>
+        </div>
+      </div>
+      <table class="table">
         <thead>
           <tr>
-            <th class="tr-id">题目</th>
-            <th>选项</th>
-            <th>所选答案</th>
-            <th>正确答案</th>
+            <th class="tr-id">姓名</th>
+            <th>个人邮箱</th>
+            <th>联系方式</th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody id="table-item">
           <!-- <tr>
-            <td class="td-id"></td>
-            <td class="option"></td>
-            <td class="wrong">
+            <td class="name">
               <input class="form-control" type="text">
             </td>
-            <td class="right">
+            <td class="email">
               <input class="form-control" type="text">
+            </td>
+            <td class="phone">
+              <input class="form-control" type="text">
+            </td>
+            <td class="btn">
+              <button class="btn btn-primary save-button" type="submit">保存</button>
             </td>
           </tr> -->
         </tbody>
@@ -83,43 +108,118 @@
     var curPage =$("#currentPage").val();  //当前页面
     var last =$("#totalPage").val();    //总页数
     var page =Math.ceil(curPage/10);
-		$(function(){
-      var tempparam = {
-          "pager": {
+    $(function(){
+      //注册按钮事件
+      $(".register-button").click(function(){
+        var registerInfo = {
+          "teacherName": $(".new-teacher-name").val(),
+          "teacherPassword": $(".new-teacher-password").val(),
+          "teacherIphone": $(".new-teacher-phone").val(),
+          "teacherEmail": $(".new-teacher-email").val()
+        }  
+        var param = JSON.stringify(registerInfo);
+        console.log(param);
+        $.ajax({
+              type: "post",
+              headers: {
+                "content-Type":"application/json",
+              },
+              contentType:"application/json",
+              url: 'http://47.107.250.149:8081/admin/teacher/insertSelective',
+              data: param,
+              success: function (data) {
+                console.log("这是请求成功的");
+                console.log(data);
+                if(data.code == 500){
+                      alert(data.result);
+                    }else if(data.code == 200){
+                      alert('注册成功');
+                      window.location.reload();
+                    }else{
+                      alert(data.result);
+                    }
+              },
+              error:function (err) {
+                console.log("这是请求失败的");
+              }
+            });
+      })
+
+      var editSingleChoice = {
+              "pager": {
                 "rows" : "10",
                 "page" : "1"
-          }
-        }
-      var param = JSON.stringify(tempparam);
-      $.ajax({
-          type: "post",
-          headers: {
-            "content-Type":"application/json",
-          },
-          contentType:"application/json",
-          url: 'http://47.107.250.149:8081/all/wrongBook/selectList',
-          data: param,
-          success: function (data) {
-            console.log("这是请求成功的");
-            console.log(data);
-            if(data.code == 500){
-                  alert(data.result);
-                }else if(data.code == 200){
-                  $("#totalPage").attr({value:data.result.result.pager.totalPage});
-                  draw(page,curPage);
-                  for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id'>"+data.result.result.list[i].question+"</td><td class='option'>"+data.result.result.list[i].questionOption+"</td><td class='wrong'><input class='form-control' type='text' value='"+data.result.result.list[i].reply+"' disabled></td><td class='right'><input class='form-control' type='text' value='"+data.result.result.list[i].answer+"' disabled></td></tr>");
-                  }
-                }else{
-                  alert(data.result);
-                }
-          },
-          error:function (err) {
-            console.log("这是请求失败的");
-          }
-      }) 
+              }
+            } 
+            var teacherArr = '';
+            console.log(editSingleChoice);
+            var param = JSON.stringify(editSingleChoice);
+            $.ajax({
+              type: "post",
+              headers: {
+                "content-Type":"application/json",
+              },
+              contentType:"application/json",
+              url: 'http://47.107.250.149:8081/admin/teacher/selectList',
+              data: param,
+              success: function (data) {
+                console.log("这是请求成功的");
+                console.log(data);
+                if(data.code == 500){
+                      alert(data.result);
+                    }else if(data.code == 200){
+                      $("#totalPage").attr({value:data.result.result.pager.totalPage});
+                      draw(page,curPage);
+                      teacherArr = data.result.result.list;
+                      for(var i=0;i<teacherArr.length;i++){
+                        $("#table-item").append("<tr><td class='name'><input class='form-control name-input' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control email-input' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control phone-input' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存</button></td></tr>");
+                      }
+                    }else{
+                      alert(data.result);
+                    }
+              },
+              error:function (err) {
+                console.log("这是请求失败的");
+              }
+            });
 
-      //绑定点击页码事件
+            //保存信息事件
+            $(document).on("click",".save-button",function(){
+              var temp ={
+                "id":$(this).parent().siblings(".email").children(".teacherID").html(),
+                "teacherEmail":$(this).parent().siblings(".email").children(".email-input").val(),
+                "teacherName":$(this).parent().siblings(".name").children(".name-input").val(),
+                "teacherIphone":$(this).parent().siblings(".phone").children(".phone-input").val(),
+              }
+              var param = JSON.stringify(temp);
+              console.log(param);
+              $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.107.250.149:8081/admin/teacher/updateByPrimaryKeySelective',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        alert("保存成功！");
+                        window.location.reload();
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+              }) 
+            })
+
+            //绑定点击页码事件
             $(document).on("click",".pagination li a",function(){
               var str =$(this).html();
               console.log(str);
@@ -142,7 +242,7 @@
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://47.107.250.149:8081/all/wrongBook/selectList',
+              url: 'http://47.107.250.149:8081/admin/teacher/selectList',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");
@@ -151,9 +251,10 @@
                       alert(data.result);
                     }else if(data.code == 200){
                       $("#table-item").children("tr").remove();
-                      for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id'>"+data.result.result.list[i].question+"</td><td class='option'>"+data.result.result.list[i].questionOption+"</td><td class='wrong'><input class='form-control' type='text' value='"+data.result.result.list[i].reply+"' disabled></td><td class='right'><input class='form-control' type='text' value='"+data.result.result.list[i].answer+"' disabled></td></tr>");
-                  }
+                      teacherArr = data.result.result.list;
+                      for(var i=0;i<teacherArr.length;i++){
+                        $("#table-item").append("<tr><td class='name'><input class='form-control' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存</button></td></tr>");
+                      }
                     }else{
                       alert(data.result);
                     }
@@ -197,7 +298,7 @@
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://47.107.250.149:8081/all/wrongBook/selectList',
+              url: 'http://47.107.250.149:8081/admin/teacher/selectList',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");
@@ -206,9 +307,10 @@
                       alert(data.result);
                     }else if(data.code == 200){
                       $("#table-item").children("tr").remove();
-                      for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id'>"+data.result.result.list[i].question+"</td><td class='option'>"+data.result.result.list[i].questionOption+"</td><td class='wrong'><input class='form-control' type='text' value='"+data.result.result.list[i].reply+"' disabled></td><td class='right'><input class='form-control' type='text' value='"+data.result.result.list[i].answer+"' disabled></td></tr>");
-                  }
+                      teacherArr = data.result.result.list;
+                      for(var i=0;i<teacherArr.length;i++){
+                        $("#table-item").append("<tr><td class='name'><input class='form-control' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存</button></td></tr>");
+                      }
                     }else{
                       alert(data.result);
                     }
@@ -257,7 +359,7 @@
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://47.107.250.149:8081/all/wrongBook/selectList',
+              url: 'http://47.107.250.149:8081/admin/teacher/selectList',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");
@@ -266,9 +368,10 @@
                       alert(data.result);
                     }else if(data.code == 200){
                       $("#table-item").children("tr").remove();
-                      for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id'>"+data.result.result.list[i].question+"</td><td class='option'>"+data.result.result.list[i].questionOption+"</td><td class='wrong'><input class='form-control' type='text' value='"+data.result.result.list[i].reply+"' disabled></td><td class='right'><input class='form-control' type='text' value='"+data.result.result.list[i].answer+"' disabled></td></tr>");
-                  }
+                      teacherArr = data.result.result.list;
+                      for(var i=0;i<teacherArr.length;i++){
+                        $("#table-item").append("<tr><td class='name'><input class='form-control' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存</button></td></tr>");
+                      }
                     }else{
                       alert(data.result);
                     }
@@ -341,7 +444,9 @@
               liStr +="<li><a id='nextPage' href='#'>»</a></li>";
               $(".pagination").append(liStr);
             }
-		})
+
+    })
+
 	</script>
 </body>
 </html>

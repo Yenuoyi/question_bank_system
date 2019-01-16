@@ -19,6 +19,7 @@ public class MessageDigestPasswordEncoderImpl implements PasswordEncoder {
 
     @Override
     public String encode(CharSequence charSequence) {
+        logger.info(charSequence.toString());
         return Md5Util.encode(charSequence.toString());
     }
 

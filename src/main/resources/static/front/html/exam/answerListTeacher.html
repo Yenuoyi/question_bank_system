@@ -14,7 +14,7 @@
     .td-id{
       font-size: 20px;
     }
-    .btn{
+    .btn-primary{
       float: right;
     }
     .answer-id,.exam-id{
@@ -36,6 +36,9 @@
     .answer-title{
       width: 500px;
     }
+    .return{
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body class="container-fluid bg-index">
@@ -54,6 +57,9 @@
           </tr> -->
         </tbody>
       </table>
+      <div class="create-btn col-sm-10 col-sm-offset-1 tc">
+          <button class="btn btn-warning return">返回</button>
+      </div>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -104,6 +110,10 @@
       $("#table-item").on("click",".btn",function(){
         var id = $(this).siblings(".answer-id").html();
         window.location.href = "answerDetailTeacher.html?answerSheetId="+id+""
+      })
+      //返回按钮点击事件
+      $(".return").click(function(){
+        window.history.go(-1);
       })
 		})
 	</script>

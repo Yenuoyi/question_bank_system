@@ -158,6 +158,7 @@
           </ul>
         </div>
         <div class="create-btn col-sm-10 col-sm-offset-1">
+          <button class="btn btn-warning return">返回</button>
           <button class="btn btn-primary create-button" type="submit">提交</button>
         </div>
       </div>
@@ -231,6 +232,10 @@
             console.log("这是请求失败的");
           }
       });
+      //返回按钮点击事件
+      $(".return").click(function(){
+        window.history.go(-1);
+      })
       //提交事件
       $(".create-button").click(function(){
         //获取题目数量
@@ -285,7 +290,8 @@
             var choiceAnswer = '';
             var temp = {};
             var j = i-1;
-            temp.examinationPaperAnswer = $(".fillVain-li:nth-child("+i+") input[class='options-fv']").val();
+            // temp.examinationPaperAnswer = $(".fillVain-li:nth-child("+i+") input[class='options-fv']").val();
+            temp.examinationPaperAnswer = $(".fillVain-li:nth-child("+i+")").find(".options-fv").val();
             temp.examinationPaperQuestionId = fillVainQuestionID[j];
             tempParam.answerSheetAnswerDTOS.push(temp);
           }
@@ -296,7 +302,8 @@
             var choiceAnswer = '';
             var temp = {};
             var j = i-1;
-            temp.examinationPaperAnswer = $(".shortAnswer-li:nth-child("+i+") textarea[class='options-sa']").val();
+            // temp.examinationPaperAnswer = $(".shortAnswer-li:nth-child("+i+") textarea[class='options-sa']").val();
+            temp.examinationPaperAnswer = $(".shortAnswer-li:nth-child("+i+")").find(".options-sa").val();
             temp.examinationPaperQuestionId = shortAnswerQuestionID[j];
             tempParam.answerSheetAnswerDTOS.push(temp);
           }

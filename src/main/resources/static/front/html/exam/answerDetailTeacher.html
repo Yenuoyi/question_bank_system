@@ -180,6 +180,7 @@
             <button class="btn btn-info cal-button" type="submit">计算总分</button>
           </div>
           <button class="btn btn-primary save-button" type="submit">保存</button>
+          <button class="btn btn-warning return">返回</button>
         </div>
       </div>
     </div>
@@ -252,6 +253,10 @@
             console.log("这是请求失败的");
           }
       });
+    //返回按钮点击事件
+    $(".return").click(function(){
+      window.history.go(-1);
+    })
     //计算总分
     $(".cal-button").click(function(){
       var total = 0;

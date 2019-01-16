@@ -10,6 +10,11 @@
 	<script src="../js/jquery-3.3.1.min.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/public-js.js"></script>
+    <style type="text/css" media="screen">
+        .login-box{
+            margin-top: 200px;
+        }
+    </style>
 </head>
 <body class="container-fluid bg">
 	<div class="row">
@@ -17,9 +22,9 @@
 			<form class="form-horizontal">
 				<p class="text-center program-title">账号注册</p>
 				<div class="form-group">
-					<label for="userName" class="col-sm-3 control-label">用户名</label>
+					<label for="userName" class="col-sm-3 control-label">姓名</label>
 					<div class="col-sm-7">
-						<input type="text" class="form-control" id="studentName" placeholder="请输入用户名">
+						<input type="text" class="form-control" id="studentName" placeholder="请输入姓名">
 						<span class=""></span>
 					</div>
 				</div>
@@ -44,6 +49,14 @@
 						<span class=""></span>
 					</div>
 				</div>
+                <div class="form-group">
+                    <label for="passWord" class="col-sm-3 control-label">班级</label>
+                    <div class="col-sm-7">
+                        <select class="selectpicker show-tick form-control" data-live-search="true">
+                            <option>---请选择班级---</option>
+                        </select>
+                    </div>
+                </div>
 				<!-- <p class="text-center">
 					<label class="radio-inline">
 						<input type="radio" name="userType" id="student" value="option1"> 学生
@@ -65,8 +78,40 @@
 	</div>
 	<script>
 		$(function(){
+            var tempP = {
+                "pager": {
+                    "rows" : "",
+                    "page" : ""
+                }
+            }
+            var param = JSON.stringify(tempP);
+            $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.107.250.149:8081/all/class/selectList',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        for(var i=0;i<data.result.result.list.length;i++){
+                          $(".show-tick").append("<option>"+data.result.result.list[i].id+"."+data.result.result.list[i].className+"</option>");
+                        }
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+            }) 
 			$("#studentName").change(function () {
-                checkInput("#studentName","用户名");
+                checkInput("#studentName","姓名");
             });
             $("#studentPassword").change(function () {
                 checkInput("#studentPassword","密码");
@@ -78,7 +123,14 @@
                 checkInput("#studentEmail","邮箱");
             });
 			$("#submitR").click(function() {
-				var temp = checkInput("#studentName","用户名");
+                var classDeatil = $(".show-tick option:selected").text();
+                var detailArr = classDeatil.split('.');
+                if(detailArr[0] == '---请选择班级---'){
+                  alert('请选择班级');
+                  return
+                }
+                console.log(detailArr);
+				var temp = checkInput("#studentName","姓名");
 				var temp1 = checkInput("#studentPassword","密码");
 				var temp2 = checkInput("#studentIphone","联系电话");
 				var temp3 = checkInput("#studentEmail","邮箱");
@@ -87,56 +139,37 @@
                     	"studentName": $("#studentName").val(),
                     	"studentPassword": $("#studentPassword").val(),
                     	"studentIphone": $("#studentIphone").val(),
-                    	"studentEmail": $("#studentEmail").val()
+                    	"studentEmail": $("#studentEmail").val(),
+                        "classId": detailArr[0] 
                     } 
                     console.log(registerInfo);
                     var param = JSON.stringify(registerInfo);
-                    // $.ajax({
-                    // 	type: "post",
-                    // 	headers: {
-                    // 		"content-Type":"application/json",
-                    // 	},
-                    // 	contentType:"application/json",
-                    // 	url: 'http://localhost:8081/all/student/insertSelective',
-                    // 	data: param,
-                    // 	success: function (data) {
-                    // 		console.log("这是请求成功的");
-                    // 		if(data.code == 500){
-                    // 			alert('输入的'+data.result);
-                    // 		}
-                    // 	},
-                    // 	error:function (err) {
-                    // 		console.log("这是请求失败的");
-                    // 	}
-                    // });
+                    $.ajax({
+                    	type: "post",
+                    	headers: {
+                    		"content-Type":"application/json",
+                    	},
+                    	contentType:"application/json",
+                    	url: 'http://47.107.250.149:8081/all/student/insertSelective',
+                    	data: param,
+                    	success: function (data) {
+                    		console.log("这是请求成功的");
+                    		if(data.code == 500){
+                                alert(data.result);
+                            }else if(data.code == 200){
+                                alert('注册成功');
+                                window.history.go(-1);
+                            }else{
+                                alert(data.result);
+                            }
+                    	},
+                    	error:function (err) {
+                    		console.log("这是请求失败的");
+                    	}
+                    });
                 }else{
                 	return false;
                 }
-    // var temp = {
-    // 	"pager":{
-    // 		"rows":40
-    // 	}
-    // }
-    // var param = JSON.stringify(temp);
-    // $.ajax({
-    // 	type: "post",
-    // 	headers: {
-    // 		"content-Type":"application/json",
-    // 	},
-    // 	contentType:"application/json",
-    // 	url: 'http://47.107.250.149:8081/all/exercise/randomSelectSingleChoiceQuestionList',
-    // 	data: param,
-    // 	success: function (data) {
-    // 		console.log("这是请求成功的");
-    // 		console.log(data);
-    // 		// if(data.code == 500){
-    // 		// 	alert('输入的'+data.result);
-    // 		// }
-    // 	},
-    // 	error:function (err) {
-    // 		console.log("这是请求失败的");
-    // 	}
-    // });
 			});
 		})
 	</script>

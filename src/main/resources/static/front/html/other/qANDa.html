@@ -93,8 +93,7 @@
                   alert(data.result);
                 }else if(data.code == 200){
                   for(var i=0;i<data.result.result.list.length;i++){
-                    $(".show-tick").append("<option>"+data.result.result.list[i].teacherName+"</option>");
-                    $(".submit-btn").append("<span class='teacher-id'>"+data.result.result.list[i].id+"</span>");
+                    $(".show-tick").append("<option>"+data.result.result.list[i].id+"."+data.result.result.list[i].teacherName+"</option>");
                   }
                 }else{
                   alert(data.result);
@@ -137,10 +136,12 @@
 
       //提交疑问事件
       $(".submit-button").click(function(){
+        var teacherDeatil = $(".show-tick option:selected").text();
+        var detailArr = teacherDeatil.split('.');
         var tempP = {
-          "respondentName" : $(".show-tick option:selected").text(),
+          "respondentName" : detailArr[1],
           "question" : $(".get-question").val(),
-          "respondentId" : $(".teacher-id").html()
+          "respondentId" : detailArr[0]
         }
         if(tempP.respondentName == '---请选择教师---'){
           alert('请选择教师');

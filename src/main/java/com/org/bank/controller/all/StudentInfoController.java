@@ -4,10 +4,8 @@ import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
-import com.org.bank.common.encrypt.Md5Util;
 import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.StudentInfoDTO;
-import com.org.bank.domain.TeacherInfoDTO;
 import com.org.bank.service.StudentInfoService;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +33,6 @@ public class StudentInfoController {
         if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
             return WrapMapper.error().result("请勿重复注册！");
         }
-        record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
         ExecuteResult<Integer> executeResult = studentInfoService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -51,7 +48,6 @@ public class StudentInfoController {
         if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
             return WrapMapper.error().result("请勿重复注册！");
         }
-        record.setStudentPassword(Md5Util.encode(record.getStudentPassword()));
         ExecuteResult<Integer> executeResult = studentInfoService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

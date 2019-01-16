@@ -41,6 +41,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()                         //授权配置
                 .antMatchers("/login").permitAll()
                 .antMatchers("/all/student/insert*").permitAll()
+                .antMatchers("/all/class/selectList*").permitAll()
                 .antMatchers("/front/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/css/**").permitAll()

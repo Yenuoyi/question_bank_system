@@ -62,6 +62,7 @@ public class TeacherInfoServiceImpl implements TeacherInfoService {
             if(StringUtils.isEmpty(record)){
                 throw new RuntimeException("参数错误：对象非空");
             }
+            record.setTeacherPassword(Md5Util.encode(record.getTeacherPassword()));
             Integer result = teacherInfoDTOMapper.insertSelective(record);
             executeResult.setResult(result);
             executeResult.setResultMessage("成功！");
