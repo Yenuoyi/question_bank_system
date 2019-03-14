@@ -10,6 +10,7 @@ import com.org.bank.domain.AnswerSheetAnswerDTO;
 import com.org.bank.domain.AnswerSheetDTO;
 import com.org.bank.service.AnswerSheetAnswerService;
 import com.org.bank.service.AnswerSheetService;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,7 @@ public class TeacherAnswerSheetAnswerController {
     }
 
     @RequestMapping("/insert")
+    @ApiOperation(value = "根据用户名获取用户对象", httpMethod = "GET", response = Wrapper.class, notes = "根据用户名获取用户对象")
     public Wrapper<?> insert(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<Integer> executeResult = answerSheetAnswerService.insert(record);
         if(executeResult.isSuccess()){

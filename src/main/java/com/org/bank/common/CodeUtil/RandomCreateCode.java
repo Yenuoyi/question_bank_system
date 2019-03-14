@@ -13,7 +13,7 @@ public class RandomCreateCode {
      */
     public static String getCode(int num){
         String chars = "abcdefghijklmmopqrstuvwxyz1234567890";
-        char[] rands = new char[4];
+        char[] rands = new char[num];
         for (int i = 0; i < num; i++)
         {
             int rand = (int) (Math.random() * 36);
