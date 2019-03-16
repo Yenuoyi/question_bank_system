@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.bank.dao.LanguageClassificationDTOMapper" >
+  <resultMap id="BaseResultMap" type="com.org.bank.domain.LanguageClassificationDTO" >
+    <id column="language_classification_id" property="languageClassificationId" jdbcType="INTEGER" />
+    <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    language_classification_id, language_classification_name
+  </sql>
+
+  <sql id="where_fragement">
+    where 1 = 1
+    <if test="record != null">
+      <if test="record.languageClassificationId and record.languageClassificationId != ''">
+        and language_classification_id = #{record.languageClassificationId}
+      </if>
+      <if test="record.languageClassificationName and record.languageClassificationName != ''">
+        and language_classification_name = #{record.languageClassificationName}
+      </if>
+    </if>
+  </sql>
+
+  <!-- 分页专用 -->
+  <sql id="pagination_tail" >
+    limit #{pager.pageOffset} , #{pager.rows}
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from language_classification
+    where language_classification_id = #{languageClassificationId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from language_classification
+    <include refid="where_fragement"/>
+    ORDER BY language_classification_id desc
+    <if test="pager != null" >
+      <include refid="pagination_tail" />
+    </if>
+  </select>
+
+  <select id="countTotal" resultType="Long">
+    select
+    count(1)
+    from language_classification
+    <include refid="where_fragement"/>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from language_classification
+    where language_classification_id = #{languageClassificationId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.org.bank.domain.LanguageClassificationDTO" >
+    insert into language_classification (language_classification_id, language_classification_name
+      )
+    values (#{languageClassificationId,jdbcType=INTEGER}, #{languageClassificationName,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.org.bank.domain.LanguageClassificationDTO" >
+    insert into language_classification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="languageClassificationId != null" >
+        language_classification_id,
+      </if>
+      <if test="languageClassificationName != null" >
+        language_classification_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="languageClassificationId != null" >
+        #{languageClassificationId,jdbcType=INTEGER},
+      </if>
+      <if test="languageClassificationName != null" >
+        #{languageClassificationName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.LanguageClassificationDTO" >
+    update language_classification
+    <set >
+      <if test="languageClassificationName != null" >
+        language_classification_name = #{languageClassificationName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where language_classification_id = #{languageClassificationId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.LanguageClassificationDTO" >
+    update language_classification
+    set language_classification_name = #{languageClassificationName,jdbcType=VARCHAR}
+    where language_classification_id = #{languageClassificationId,jdbcType=INTEGER}
+  </update>
+</mapper>

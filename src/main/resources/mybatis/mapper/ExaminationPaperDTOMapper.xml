@@ -6,9 +6,11 @@
     <result column="examiner_id" property="examinerId" jdbcType="INTEGER" />
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
     <result column="examination_paper_name" property="examinationPaperName" jdbcType="VARCHAR" />
+    <result column="language_classification_id" property="languageClassificationId" jdbcType="INTEGER" />
+    <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, examiner_id, examiner_type, examination_paper_name
+    id, examiner_id, examiner_type, examination_paper_name,language_classification_id, language_classification_name
   </sql>
 
   <sql id="where_fragement">
@@ -25,6 +27,12 @@
       </if>
       <if test="record.examinationPaperName and record.examinationPaperName != ''">
         and examination_paper_name like  CONCAT('%', #{record.examinationPaperName}, '%')
+      </if>
+      <if test="record.languageClassificationId and record.languageClassificationId != ''">
+        and language_classification_id = #{record.languageClassificationId}
+      </if>
+      <if test="record.languageClassificationName and record.languageClassificationName != ''">
+        and language_classification_name = #{record.languageClassificationName}
       </if>
     </if>
   </sql>

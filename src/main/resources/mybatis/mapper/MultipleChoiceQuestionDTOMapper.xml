@@ -8,9 +8,12 @@
     <result column="multiple_choice_answer" property="multipleChoiceAnswer" jdbcType="VARCHAR" />
     <result column="examiner_id" property="examinerId" jdbcType="INTEGER" />
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
+    <result column="language_classification_id" property="languageClassificationId" jdbcType="INTEGER" />
+    <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, multiple_choice_question, multiple_choice_option, multiple_choice_answer, examiner_id, examiner_type
+    id, multiple_choice_question, multiple_choice_option, multiple_choice_answer, examiner_id, examiner_type,
+    language_classification_id, language_classification_name
   </sql>
 
   <sql id="where_fragement">
@@ -33,6 +36,12 @@
       </if>
       <if test="record.examinerType and record.examinerType != ''">
         and examiner_type = #{record.examinerType}
+      </if>
+      <if test="record.languageClassificationId and record.languageClassificationId != ''">
+        and language_classification_id = #{record.languageClassificationId}
+      </if>
+      <if test="record.languageClassificationName and record.languageClassificationName != ''">
+        and language_classification_name = #{record.languageClassificationName}
       </if>
     </if>
   </sql>

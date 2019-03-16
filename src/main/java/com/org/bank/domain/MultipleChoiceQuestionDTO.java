@@ -26,6 +26,11 @@ public class MultipleChoiceQuestionDTO implements Serializable {
     /** 习题练习是否正确，0：错误，1：正确 */
     private Integer trueOrFalse;
 
+    /** 程序语言分类id */
+    private Integer languageClassificationId;
+
+    /** 程序语言分类名 */
+    private Integer languageClassificationName;
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -84,6 +89,22 @@ public class MultipleChoiceQuestionDTO implements Serializable {
 
     public void setTrueOrFalse(Integer trueOrFalse) {
         this.trueOrFalse = trueOrFalse;
+    }
+
+    public Integer getLanguageClassificationId() {
+        return languageClassificationId;
+    }
+
+    public void setLanguageClassificationId(Integer languageClassificationId) {
+        this.languageClassificationId = languageClassificationId;
+    }
+
+    public Integer getLanguageClassificationName() {
+        return languageClassificationName;
+    }
+
+    public void setLanguageClassificationName(Integer languageClassificationName) {
+        this.languageClassificationName = languageClassificationName;
     }
 
     public Pager getPager() {

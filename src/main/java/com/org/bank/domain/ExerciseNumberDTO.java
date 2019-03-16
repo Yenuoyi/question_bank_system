@@ -36,6 +36,12 @@ public class ExerciseNumberDTO {
     /** 判断题比例 */
     private double trueFalseProportion;
 
+    /** 程序语言分类id */
+    private Integer languageClassificationId;
+
+    /** 程序语言分类名 */
+    private Integer languageClassificationName;
+
     List<FillVainQuestionDTO> fillVainQuestionDTOS;
     List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS;
     List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS;
@@ -160,5 +166,21 @@ public class ExerciseNumberDTO {
 
     public void setTrueFalseQuestionDTOS(List<TrueFalseQuestionDTO> trueFalseQuestionDTOS) {
         this.trueFalseQuestionDTOS = trueFalseQuestionDTOS;
+    }
+
+    public Integer getLanguageClassificationId() {
+        return languageClassificationId;
+    }
+
+    public void setLanguageClassificationId(Integer languageClassificationId) {
+        this.languageClassificationId = languageClassificationId;
+    }
+
+    public Integer getLanguageClassificationName() {
+        return languageClassificationName;
+    }
+
+    public void setLanguageClassificationName(Integer languageClassificationName) {
+        this.languageClassificationName = languageClassificationName;
     }
 }

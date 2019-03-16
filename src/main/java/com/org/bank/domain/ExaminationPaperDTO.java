@@ -23,6 +23,12 @@ public class ExaminationPaperDTO implements Serializable {
     /** 试卷内容 */
     private List<ExaminationPaperQuestionDTO> examinationPaperQuestionDTOList;
 
+    /** 程序语言分类id */
+    private Integer languageClassificationId;
+
+    /** 程序语言分类名 */
+    private Integer languageClassificationName;
+
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -75,7 +81,23 @@ public class ExaminationPaperDTO implements Serializable {
         this.pager = pager;
     }
 
-     public static void main(String[] args){
+    public Integer getLanguageClassificationId() {
+        return languageClassificationId;
+    }
+
+    public void setLanguageClassificationId(Integer languageClassificationId) {
+        this.languageClassificationId = languageClassificationId;
+    }
+
+    public Integer getLanguageClassificationName() {
+        return languageClassificationName;
+    }
+
+    public void setLanguageClassificationName(Integer languageClassificationName) {
+        this.languageClassificationName = languageClassificationName;
+    }
+
+    public static void main(String[] args){
         ExaminationPaperDTO examinationPaperDTO = new ExaminationPaperDTO();
         examinationPaperDTO.setExaminationPaperName("计算机期末试卷");
         List<ExaminationPaperQuestionDTO> list = new ArrayList<>();

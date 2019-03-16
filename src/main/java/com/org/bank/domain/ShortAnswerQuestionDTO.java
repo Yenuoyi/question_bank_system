@@ -21,6 +21,11 @@ public class ShortAnswerQuestionDTO implements Serializable {
     /** 出题人类型 */
     private Integer examinerType;
 
+    /** 程序语言分类id */
+    private Integer languageClassificationId;
+
+    /** 程序语言分类名 */
+    private Integer languageClassificationName;
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -63,6 +68,22 @@ public class ShortAnswerQuestionDTO implements Serializable {
 
     public void setExaminerType(Integer examinerType) {
         this.examinerType = examinerType;
+    }
+
+    public Integer getLanguageClassificationId() {
+        return languageClassificationId;
+    }
+
+    public void setLanguageClassificationId(Integer languageClassificationId) {
+        this.languageClassificationId = languageClassificationId;
+    }
+
+    public Integer getLanguageClassificationName() {
+        return languageClassificationName;
+    }
+
+    public void setLanguageClassificationName(Integer languageClassificationName) {
+        this.languageClassificationName = languageClassificationName;
     }
 
     public Pager getPager() {
