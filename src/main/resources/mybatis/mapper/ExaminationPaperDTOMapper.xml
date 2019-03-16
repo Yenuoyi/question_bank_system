@@ -10,29 +10,29 @@
     <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, examiner_id, examiner_type, examination_paper_name,language_classification_id, language_classification_name
+    a.id, a.examiner_id, a.examiner_type, a.examination_paper_name,a.language_classification_id, b.language_classification_name
   </sql>
 
   <sql id="where_fragement">
     where 1 = 1
     <if test="record != null">
       <if test="record.id and record.id != ''">
-        and id = #{record.id}
+        and a.id = #{record.id}
       </if>
       <if test="record.examinerId and record.examinerId != ''">
-        and examiner_id = #{record.examinerId}
+        and a.examiner_id = #{record.examinerId}
       </if>
       <if test="record.examinerType and record.examinerType != ''">
-        and examiner_type = #{record.examinerType}
+        and a.examiner_type = #{record.examinerType}
       </if>
       <if test="record.examinationPaperName and record.examinationPaperName != ''">
-        and examination_paper_name like  CONCAT('%', #{record.examinationPaperName}, '%')
+        and a.examination_paper_name like  CONCAT('%', #{record.examinationPaperName}, '%')
       </if>
       <if test="record.languageClassificationId and record.languageClassificationId != ''">
-        and language_classification_id = #{record.languageClassificationId}
+        and a.language_classification_id = #{record.languageClassificationId}
       </if>
       <if test="record.languageClassificationName and record.languageClassificationName != ''">
-        and language_classification_name = #{record.languageClassificationName}
+        and a.language_classification_name = #{record.languageClassificationName}
       </if>
     </if>
   </sql>
@@ -45,16 +45,16 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from examination_paper
-    where id = #{id,jdbcType=INTEGER}
+    from FROM examination_paper a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
+    where a.id = #{id,jdbcType=INTEGER}
   </select>
 
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from examination_paper
+    FROM examination_paper a INNER JOIN language_classification b ON a.language_classification_id = b.language_classification_id
     <include refid="where_fragement"/>
-    ORDER BY id desc
+    ORDER BY a.id desc
     <if test="pager != null" >
       <include refid="pagination_tail" />
     </if>
@@ -63,7 +63,7 @@
   <select id="countTotal" resultType="Long">
     select
     count(1)
-    from examination_paper
+    FROM examination_paper a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
     <include refid="where_fragement"/>
   </select>
 
@@ -73,14 +73,15 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
-    insert into examination_paper (examiner_id, examiner_type, examination_paper_name
+    insert into examination_paper (examiner_id, examiner_type, examination_paper_name,language_classification_id
       )
-    values (#{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}, #{examinationPaperName,jdbcType=VARCHAR}
+    values (#{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}, #{examinationPaperName,jdbcType=VARCHAR},#{languageClassificationId,jdbcType=INTEGER}
       )
     <selectKey resultType="integer" keyColumn="id" keyProperty="id" order="AFTER">
       SELECT LAST_INSERT_ID()
     </selectKey>
   </insert>
+
   <insert id="insertSelective" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
     insert into examination_paper
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -93,6 +94,9 @@
       <if test="examinationPaperName != null" >
         examination_paper_name,
       </if>
+      <if test="languageClassificationId != null" >
+        language_classification_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="examinerId != null" >
@@ -104,11 +108,15 @@
       <if test="examinationPaperName != null" >
         #{examinationPaperName,jdbcType=INTEGER},
       </if>
+      <if test="languageClassificationId != null" >
+        #{languageClassificationId,jdbcType=INTEGER},
+      </if>
     </trim>
     <selectKey resultType="integer" keyColumn="id" keyProperty="id" order="AFTER">
       SELECT LAST_INSERT_ID()
     </selectKey>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
     update examination_paper
     <set >
@@ -119,16 +127,21 @@
         examiner_type = #{examinerType,jdbcType=INTEGER},
       </if>
       <if test="examinationPaperName != null" >
-        examination_paper_name = #{examinationPaperName,jdbcType=INTEGER},
+        examination_paper_name = #{examinationPaperName,jdbcType=VARCHAR},
+      </if>
+      <if test="languageClassificationId != null" >
+        language_classification_id = #{languageClassificationId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
     update examination_paper
     set examiner_id = #{examinerId,jdbcType=INTEGER},
       examiner_type = #{examinerType,jdbcType=INTEGER}
-      examination_paper_name = #{examinationPaperName,jdbcType=VARCHAR}
+      examination_paper_name = #{examinationPaperName,jdbcType=VARCHAR},
+      language_classification_id = #{languageClassificationId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

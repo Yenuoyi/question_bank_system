@@ -12,36 +12,33 @@
     <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, multiple_choice_question, multiple_choice_option, multiple_choice_answer, examiner_id, examiner_type,
-    language_classification_id, language_classification_name
+    a.id,a. multiple_choice_question, a.multiple_choice_option, a.multiple_choice_answer, a.examiner_id, examiner_type,
+    a.language_classification_id, b.language_classification_name
   </sql>
 
   <sql id="where_fragement">
     where 1 = 1
     <if test="record != null">
       <if test="record.id and record.id != ''">
-        and id = #{record.id}
+        and a.id = #{record.id}
       </if>
       <if test="record.multipleChoiceQuestion and record.multipleChoiceQuestion != ''">
-        and multiple_choice_question = #{record.multipleChoiceQuestion}
+        and a.multiple_choice_question = #{record.multipleChoiceQuestion}
       </if>
       <if test="record.multipleChoiceOption and record.multipleChoiceOption != ''">
-        and multiple_choice_option = #{record.multipleChoiceOption}
+        and a.multiple_choice_option = #{record.multipleChoiceOption}
       </if>
       <if test="record.multipleChoiceAnswer and record.multipleChoiceAnswer != ''">
-        and multiple_choice_answer = #{record.multipleChoiceAnswer}
+        and a.multiple_choice_answer = #{record.multipleChoiceAnswer}
       </if>
       <if test="record.examinerId and record.examinerId != ''">
-        and examiner_id = #{record.examinerId}
+        and a.examiner_id = #{record.examinerId}
       </if>
       <if test="record.examinerType and record.examinerType != ''">
-        and examiner_type = #{record.examinerType}
+        and a.examiner_type = #{record.examinerType}
       </if>
       <if test="record.languageClassificationId and record.languageClassificationId != ''">
-        and language_classification_id = #{record.languageClassificationId}
-      </if>
-      <if test="record.languageClassificationName and record.languageClassificationName != ''">
-        and language_classification_name = #{record.languageClassificationName}
+        and a.language_classification_id = #{record.languageClassificationId}
       </if>
     </if>
   </sql>
@@ -54,16 +51,16 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from multiple_choice_question
-    where id = #{id,jdbcType=INTEGER}
+    from multiple_choice_question a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
+    where a.id = #{id,jdbcType=INTEGER}
   </select>
 
   <select id="selectList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from multiple_choice_question
+    from multiple_choice_question a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
     <include refid="where_fragement"/>
-    ORDER BY id desc
+    ORDER BY a.id desc
     <if test="pager != null" >
       <include refid="pagination_tail" />
     </if>
@@ -72,7 +69,7 @@
   <select id="randomSelectMultipleChoiceQuestionList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from multiple_choice_question
+    from multiple_choice_question a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
     ORDER BY rand()
     <if test="pager != null" >
       <include refid="pagination_tail" />
@@ -82,8 +79,8 @@
   <select id="selectByPrimaryKeyList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from multiple_choice_question
-    where id in
+    from multiple_choice_question a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
+    where a.id in
     <foreach collection="keys" item="item" index="index" open="(" separator="," close=")">
       #{item}
     </foreach>
@@ -92,7 +89,7 @@
   <select id="countTotal" resultType="Long">
     select
     count(1)
-    from multiple_choice_question
+    from multiple_choice_question a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
     <include refid="where_fragement"/>
   </select>
 
@@ -100,12 +97,15 @@
     delete from multiple_choice_question
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.org.bank.domain.MultipleChoiceQuestionDTO" >
     insert into multiple_choice_question (multiple_choice_question, multiple_choice_option, multiple_choice_answer,
-      examiner_id, examiner_type)
+      examiner_id, examiner_type,language_classification_id)
     values ( #{multipleChoiceQuestion,jdbcType=VARCHAR}, #{multipleChoiceOption,jdbcType=VARCHAR},
-    #{multipleChoiceAnswer,jdbcType=VARCHAR},#{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER})
+    #{multipleChoiceAnswer,jdbcType=VARCHAR},#{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER},
+    #{languageClassificationId,jdbcType=INTEGER})
   </insert>
+
   <insert id="insertSelective" parameterType="com.org.bank.domain.MultipleChoiceQuestionDTO" >
     insert into multiple_choice_question
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -124,6 +124,9 @@
       <if test="examinerType != null" >
         examiner_type,
       </if>
+      <if test="languageClassificationId != null" >
+        language_classification_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="multipleChoiceQuestion != null" >
@@ -141,8 +144,12 @@
       <if test="examinerType != null" >
         #{examinerType,jdbcType=INTEGER},
       </if>
+      <if test="languageClassificationId != null" >
+        #{languageClassificationId,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.MultipleChoiceQuestionDTO" >
     update multiple_choice_question
     <set >
@@ -161,16 +168,21 @@
       <if test="examinerType != null" >
         examiner_type = #{examinerType,jdbcType=INTEGER},
       </if>
+      <if test="languageClassificationId != null" >
+        language_classification_id = #{languageClassificationId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.MultipleChoiceQuestionDTO" >
     update multiple_choice_question
     set multiple_choice_question = #{multipleChoiceQuestion,jdbcType=VARCHAR},
       multiple_choice_option = #{multipleChoiceOption,jdbcType=VARCHAR},
       multiple_choice_answer = #{multipleChoiceAnswer,jdbcType=VARCHAR},
       examiner_id = #{examinerId,jdbcType=INTEGER},
-      examiner_type = #{examinerType,jdbcType=INTEGER}
+      examiner_type = #{examinerType,jdbcType=INTEGER},
+      language_classification_id = #{languageClassificationId,jdbcType=INTEGER},
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
