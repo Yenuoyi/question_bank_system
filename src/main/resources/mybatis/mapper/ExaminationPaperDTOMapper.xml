@@ -7,10 +7,9 @@
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
     <result column="examination_paper_name" property="examinationPaperName" jdbcType="VARCHAR" />
     <result column="language_classification_id" property="languageClassificationId" jdbcType="INTEGER" />
-    <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    a.id, a.examiner_id, a.examiner_type, a.examination_paper_name,a.language_classification_id, b.language_classification_name
+    a.id, a.examiner_id, a.examiner_type, a.examination_paper_name,a.language_classification_id, b.language_classification_id
   </sql>
 
   <sql id="where_fragement">
@@ -30,9 +29,6 @@
       </if>
       <if test="record.languageClassificationId and record.languageClassificationId != ''">
         and a.language_classification_id = #{record.languageClassificationId}
-      </if>
-      <if test="record.languageClassificationName and record.languageClassificationName != ''">
-        and a.language_classification_name = #{record.languageClassificationName}
       </if>
     </if>
   </sql>

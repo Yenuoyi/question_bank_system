@@ -48,7 +48,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/teacher/**").hasRole("ADMIN")
                 .antMatchers("/teacher/**").hasRole("TEACHER")
-                .antMatchers("/admin/languageClassificationController/**").hasRole("TEACHER")
+                .antMatchers("/admin/languageClassificationController/**").hasAnyRole("STUDENT","TEACHER","ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()     // 所有请求
                 .authenticated(); // 所有请求都进行权限
