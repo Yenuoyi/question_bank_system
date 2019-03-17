@@ -27,7 +27,7 @@ public class ExaminationPaperDTO implements Serializable {
     private Integer languageClassificationId;
 
     /** 程序语言分类名 */
-    private Integer languageClassificationName;
+    private String languageClassificationName;
 
     private Pager pager;
 
@@ -89,11 +89,11 @@ public class ExaminationPaperDTO implements Serializable {
         this.languageClassificationId = languageClassificationId;
     }
 
-    public Integer getLanguageClassificationName() {
+    public String getLanguageClassificationName() {
         return languageClassificationName;
     }
 
-    public void setLanguageClassificationName(Integer languageClassificationName) {
+    public void setLanguageClassificationName(String languageClassificationName) {
         this.languageClassificationName = languageClassificationName;
     }
 

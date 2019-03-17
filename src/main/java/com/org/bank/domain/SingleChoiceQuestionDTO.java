@@ -32,7 +32,7 @@ public class SingleChoiceQuestionDTO implements Serializable {
     private Integer languageClassificationId;
 
     /** 程序语言分类名 */
-    private Integer languageClassificationName;
+    private String languageClassificationName;
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -101,11 +101,11 @@ public class SingleChoiceQuestionDTO implements Serializable {
         this.languageClassificationId = languageClassificationId;
     }
 
-    public Integer getLanguageClassificationName() {
+    public String getLanguageClassificationName() {
         return languageClassificationName;
     }
 
-    public void setLanguageClassificationName(Integer languageClassificationName) {
+    public void setLanguageClassificationName(String languageClassificationName) {
         this.languageClassificationName = languageClassificationName;
     }
 

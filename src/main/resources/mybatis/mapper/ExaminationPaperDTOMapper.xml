@@ -7,9 +7,10 @@
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
     <result column="examination_paper_name" property="examinationPaperName" jdbcType="VARCHAR" />
     <result column="language_classification_id" property="languageClassificationId" jdbcType="INTEGER" />
+    <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    a.id, a.examiner_id, a.examiner_type, a.examination_paper_name,a.language_classification_id, b.language_classification_id
+    a.id, a.examiner_id, a.examiner_type, a.examination_paper_name,a.language_classification_id, b.language_classification_name
   </sql>
 
   <sql id="where_fragement">
@@ -30,6 +31,9 @@
       <if test="record.languageClassificationId and record.languageClassificationId != ''">
         and a.language_classification_id = #{record.languageClassificationId}
       </if>
+      <if test="record.languageClassificationName and record.languageClassificationName != ''">
+        and a.language_classification_name = #{record.languageClassificationName}
+      </if>
     </if>
   </sql>
 
@@ -39,7 +43,7 @@
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from FROM examination_paper a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
     where a.id = #{id,jdbcType=INTEGER}
@@ -70,9 +74,9 @@
 
   <insert id="insert" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
     insert into examination_paper (examiner_id, examiner_type, examination_paper_name,language_classification_id
-      )
+    )
     values (#{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}, #{examinationPaperName,jdbcType=VARCHAR},#{languageClassificationId,jdbcType=INTEGER}
-      )
+    )
     <selectKey resultType="integer" keyColumn="id" keyProperty="id" order="AFTER">
       SELECT LAST_INSERT_ID()
     </selectKey>
