@@ -23,6 +23,9 @@ public class TeacherInfoDTO implements Serializable {
     /** 新密码 */
     private String newTeacherPassword;
 
+    /** 账号状态 1：启用 2：禁用 */
+    private Integer status;
+
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -73,6 +76,14 @@ public class TeacherInfoDTO implements Serializable {
 
     public void setNewTeacherPassword(String newTeacherPassword) {
         this.newTeacherPassword = newTeacherPassword;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Pager getPager() {

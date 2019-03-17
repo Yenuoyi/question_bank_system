@@ -7,10 +7,11 @@
     <result column="teacher_email" property="teacherEmail" jdbcType="VARCHAR" />
     <result column="teacher_iphone" property="teacherIphone" jdbcType="VARCHAR" />
     <result column="teacher_password" property="teacherPassword" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    id, teacher_name, teacher_email, teacher_iphone, teacher_password
+    id, teacher_name, teacher_email, teacher_iphone, teacher_password, status
   </sql>
 
   <sql id="where_fragement">
@@ -27,6 +28,9 @@
       </if>
       <if test="record.teacherIphone and record.teacherIphone != ''">
         and teacher_iphone = #{record.teacherIphone}
+      </if>
+      <if test="record.status != null">
+        and status = #{record.status}
       </if>
     </if>
   </sql>
@@ -72,12 +76,14 @@
     delete from teacher_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.org.bank.domain.TeacherInfoDTO" >
     insert into teacher_info (id, teacher_name, teacher_email, 
-      teacher_iphone, teacher_password)
+      teacher_iphone, teacher_password, status)
     values (#{id,jdbcType=INTEGER}, #{teacherName,jdbcType=VARCHAR}, #{teacherEmail,jdbcType=VARCHAR}, 
-      #{teacherIphone,jdbcType=VARCHAR}, #{teacherPassword,jdbcType=VARCHAR})
+      #{teacherIphone,jdbcType=VARCHAR}, #{teacherPassword,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
   </insert>
+
   <insert id="insertSelective" parameterType="com.org.bank.domain.TeacherInfoDTO" >
     insert into teacher_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -96,6 +102,9 @@
       <if test="teacherPassword != null" >
         teacher_password,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -113,8 +122,12 @@
       <if test="teacherPassword != null" >
         #{teacherPassword,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.org.bank.domain.TeacherInfoDTO" >
     update teacher_info
     <set >
@@ -127,14 +140,19 @@
       <if test="teacherIphone != null" >
         teacher_iphone = #{teacherIphone,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.TeacherInfoDTO" >
     update teacher_info
     set teacher_name = #{teacherName,jdbcType=VARCHAR},
       teacher_email = #{teacherEmail,jdbcType=VARCHAR},
       teacher_iphone = #{teacherIphone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

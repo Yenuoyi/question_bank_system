@@ -29,6 +29,9 @@ public class ExaminationPaperDTO implements Serializable {
     /** 程序语言分类名 */
     private String languageClassificationName;
 
+    /** 试卷状态 1：启用 2：禁用 */
+    private Integer status;
+
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -95,6 +98,14 @@ public class ExaminationPaperDTO implements Serializable {
 
     public void setLanguageClassificationName(String languageClassificationName) {
         this.languageClassificationName = languageClassificationName;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public static void main(String[] args){

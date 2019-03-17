@@ -7,10 +7,12 @@
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
     <result column="examination_paper_name" property="examinationPaperName" jdbcType="VARCHAR" />
     <result column="language_classification_id" property="languageClassificationId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    a.id, a.examiner_id, a.examiner_type, a.examination_paper_name,a.language_classification_id, b.language_classification_name
+    a.id, a.examiner_id, a.examiner_type, a.examination_paper_name,a.language_classification_id,
+    a.status,b.language_classification_name
   </sql>
 
   <sql id="where_fragement">
@@ -31,8 +33,11 @@
       <if test="record.languageClassificationId and record.languageClassificationId != ''">
         and a.language_classification_id = #{record.languageClassificationId}
       </if>
+      <if test="record.status">
+        and a.status = #{record.status}
+      </if>
       <if test="record.languageClassificationName and record.languageClassificationName != ''">
-        and a.language_classification_name = #{record.languageClassificationName}
+        and b.language_classification_name = #{record.languageClassificationName}
       </if>
     </if>
   </sql>
@@ -73,9 +78,10 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.ExaminationPaperDTO" >
-    insert into examination_paper (examiner_id, examiner_type, examination_paper_name,language_classification_id
+    insert into examination_paper (examiner_id, examiner_type, examination_paper_name,language_classification_id,status
     )
-    values (#{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}, #{examinationPaperName,jdbcType=VARCHAR},#{languageClassificationId,jdbcType=INTEGER}
+    values (#{examinerId,jdbcType=INTEGER}, #{examinerType,jdbcType=INTEGER}, #{examinationPaperName,jdbcType=VARCHAR}
+    ,#{languageClassificationId,jdbcType=INTEGER},#{status,jdbcType=INTEGER}
     )
     <selectKey resultType="integer" keyColumn="id" keyProperty="id" order="AFTER">
       SELECT LAST_INSERT_ID()
@@ -97,6 +103,9 @@
       <if test="languageClassificationId != null" >
         language_classification_id,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="examinerId != null" >
@@ -110,6 +119,9 @@
       </if>
       <if test="languageClassificationId != null" >
         #{languageClassificationId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
     </trim>
     <selectKey resultType="integer" keyColumn="id" keyProperty="id" order="AFTER">
@@ -132,6 +144,9 @@
       <if test="languageClassificationId != null" >
         language_classification_id = #{languageClassificationId,jdbcType=INTEGER},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -141,7 +156,8 @@
     set examiner_id = #{examinerId,jdbcType=INTEGER},
       examiner_type = #{examinerType,jdbcType=INTEGER}
       examination_paper_name = #{examinationPaperName,jdbcType=VARCHAR},
-      language_classification_id = #{languageClassificationId,jdbcType=INTEGER}
+      language_classification_id = #{languageClassificationId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
