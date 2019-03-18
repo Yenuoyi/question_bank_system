@@ -68,6 +68,8 @@ public class TeacherMultipleChoiceQuestionController {
     public Wrapper<?> selectList(@RequestBody MultipleChoiceQuestionDTO record,HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
+        record.setLanguageClassificationStatus(1);
+
         ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = multipleChoiceQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

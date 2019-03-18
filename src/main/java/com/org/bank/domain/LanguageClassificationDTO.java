@@ -11,6 +11,10 @@ public class LanguageClassificationDTO implements Serializable {
     /**  */
     private String languageClassificationName;
 
+    private Integer languageClassificationStatus;
+
+    private Integer status;
+
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +33,22 @@ public class LanguageClassificationDTO implements Serializable {
 
     public void setLanguageClassificationName(String languageClassificationName) {
         this.languageClassificationName = languageClassificationName == null ? null : languageClassificationName.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getLanguageClassificationStatus() {
+        return languageClassificationStatus;
+    }
+
+    public void setLanguageClassificationStatus(Integer languageClassificationStatus) {
+        this.languageClassificationStatus = languageClassificationStatus;
     }
 
     public Pager getPager() {

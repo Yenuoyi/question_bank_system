@@ -42,6 +42,9 @@ public class ExerciseNumberDTO {
     /** 程序语言分类名 */
     private String languageClassificationName;
 
+    /** 程序语言分类状态 1：启用 2：禁用 */
+    private String languageClassificationStatus;
+
     List<FillVainQuestionDTO> fillVainQuestionDTOS;
     List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS;
     List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS;
@@ -126,6 +129,14 @@ public class ExerciseNumberDTO {
 
     public void setTrueFalseProportion(double trueFalseProportion) {
         this.trueFalseProportion = trueFalseProportion;
+    }
+
+    public String getLanguageClassificationStatus() {
+        return languageClassificationStatus;
+    }
+
+    public void setLanguageClassificationStatus(String languageClassificationStatus) {
+        this.languageClassificationStatus = languageClassificationStatus;
     }
 
     public List<FillVainQuestionDTO> getFillVainQuestionDTOS() {

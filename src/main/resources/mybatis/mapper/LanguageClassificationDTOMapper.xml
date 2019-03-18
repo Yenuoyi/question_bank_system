@@ -4,9 +4,10 @@
   <resultMap id="BaseResultMap" type="com.org.bank.domain.LanguageClassificationDTO" >
     <id column="language_classification_id" property="languageClassificationId" jdbcType="INTEGER" />
     <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
+    <result column="language_classification_status" property="languageClassificationStatus" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    language_classification_id, language_classification_name
+    language_classification_id, language_classification_name, language_classification_status
   </sql>
 
   <sql id="where_fragement">
@@ -17,6 +18,9 @@
       </if>
       <if test="record.languageClassificationName and record.languageClassificationName != ''">
         and language_classification_name = #{record.languageClassificationName}
+      </if>
+      <if test="record.languageClassificationStatus != null">
+        and language_classification_status = #{record.languageClassificationStatus}
       </if>
     </if>
   </sql>
@@ -57,9 +61,9 @@
   </delete>
 
   <insert id="insert" parameterType="com.org.bank.domain.LanguageClassificationDTO" >
-    insert into language_classification (language_classification_id, language_classification_name
+    insert into language_classification (language_classification_id, language_classification_name, language_classification_status
       )
-    values (#{languageClassificationId,jdbcType=INTEGER}, #{languageClassificationName,jdbcType=VARCHAR}
+    values (#{languageClassificationId,jdbcType=INTEGER}, #{languageClassificationName,jdbcType=VARCHAR}, #{languageClassificationStatus,jdbcType=INTEGER}}
       )
   </insert>
 
@@ -72,6 +76,9 @@
       <if test="languageClassificationName != null" >
         language_classification_name,
       </if>
+      <if test="languageClassificationStatus != null" >
+        language_classification_status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="languageClassificationId != null" >
@@ -79,6 +86,9 @@
       </if>
       <if test="languageClassificationName != null" >
         #{languageClassificationName,jdbcType=VARCHAR},
+      </if>
+      <if test="languageClassificationStatus != null" >
+        #{language_classification_status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -89,13 +99,17 @@
       <if test="languageClassificationName != null" >
         language_classification_name = #{languageClassificationName,jdbcType=VARCHAR},
       </if>
+      <if test="languageClassificationStatus != null" >
+        language_classification_status = #{languageClassificationStatus,jdbcType=INTEGER},
+      </if>
     </set>
     where language_classification_id = #{languageClassificationId,jdbcType=INTEGER}
   </update>
 
   <update id="updateByPrimaryKey" parameterType="com.org.bank.domain.LanguageClassificationDTO" >
     update language_classification
-    set language_classification_name = #{languageClassificationName,jdbcType=VARCHAR}
+    set language_classification_name = #{languageClassificationName,jdbcType=VARCHAR},
+    set language_classification_status = #{languageClassificationStatus,jdbcType=INTEGER}
     where language_classification_id = #{languageClassificationId,jdbcType=INTEGER}
   </update>
 </mapper>

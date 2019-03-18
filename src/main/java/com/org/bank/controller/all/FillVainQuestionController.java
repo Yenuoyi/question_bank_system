@@ -31,6 +31,7 @@ public class FillVainQuestionController {
 
     @RequestMapping("/selectList")
     public Wrapper<?> selectList(@RequestBody FillVainQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = fillVainQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

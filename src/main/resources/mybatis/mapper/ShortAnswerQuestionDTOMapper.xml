@@ -9,10 +9,11 @@
     <result column="examiner_type" property="examinerType" jdbcType="INTEGER" />
     <result column="language_classification_id" property="languageClassificationId" jdbcType="INTEGER" />
     <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
+    <result column="language_classification_status" property="languageClassificationStatus" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     a.id, a.short_answer_question, a.short_answer_answer, a.examiner_id, a.examiner_type,
-    a.language_classification_id, b.language_classification_name
+    a.language_classification_id, b.language_classification_name,b.language_classification_status
   </sql>
 
   <sql id="where_fragement">
@@ -35,6 +36,9 @@
       </if>
       <if test="record.languageClassificationId and record.languageClassificationId != ''">
         and a.language_classification_id = #{record.languageClassificationId}
+      </if>
+      <if test="record.languageClassificationStatus != null">
+        and b.language_classification_status = #{record.languageClassificationStatus}
       </if>
     </if>
   </sql>
@@ -66,6 +70,7 @@
     select
     <include refid="Base_Column_List" />
     from short_answer_question a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
+    where b.language_classification_status = 1
     ORDER BY rand()
     <if test="pager != null" >
       <include refid="pagination_tail" />

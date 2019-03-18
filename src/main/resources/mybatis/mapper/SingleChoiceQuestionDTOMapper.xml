@@ -13,7 +13,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     a.id, a.single_choice_question, a.single_choice_option, a.single_choice_answer, a.examiner_id, a.examiner_type,
-    a.language_classification_id, b.language_classification_name
+    a.language_classification_id, b.language_classification_name,b.language_classification_status
   </sql>
 
   <sql id="where_fragement">
@@ -39,6 +39,9 @@
       </if>
       <if test="record.languageClassificationId and record.languageClassificationId != ''">
         and a.language_classification_id = #{record.languageClassificationId}
+      </if>
+      <if test="record.languageClassificationStatus != null">
+        and b.language_classification_status = #{record.languageClassificationStatus}
       </if>
     </if>
   </sql>
@@ -70,6 +73,7 @@
     select
     <include refid="Base_Column_List" />
     from single_choice_question a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
+    where b.language_classification_status = 1
     ORDER BY rand()
     <if test="pager != null" >
       <include refid="pagination_tail" />

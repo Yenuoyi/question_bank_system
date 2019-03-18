@@ -30,6 +30,7 @@ public class ShortAnswerQuestionController {
 
     @RequestMapping("/selectList")
     public Wrapper<?> selectList(@RequestBody ShortAnswerQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

@@ -68,6 +68,8 @@ public class TeacherShortAnswerQuestionController {
     public Wrapper<?> selectList(@RequestBody ShortAnswerQuestionDTO record,HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
+        record.setLanguageClassificationStatus(1);
+
         ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

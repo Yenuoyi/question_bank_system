@@ -41,7 +41,7 @@
 
   <sql id="student_class_Column_List" >
     student_info.id id, student_info.student_name student_name, student_info.student_email student_email, student_info.student_iphone student_iphone,
-    student_info.class_id class_id, student_info.student_password student_password,student_info.status status
+    student_info.class_id class_id, student_info.student_password student_password,student_info.status status,
     class.class_name class_name
   </sql>
 

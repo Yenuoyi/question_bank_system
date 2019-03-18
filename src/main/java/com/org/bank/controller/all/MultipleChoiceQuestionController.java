@@ -31,6 +31,7 @@ public class MultipleChoiceQuestionController {
 
     @RequestMapping("/selectList")
     public Wrapper<?> selectList(@RequestBody MultipleChoiceQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = multipleChoiceQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

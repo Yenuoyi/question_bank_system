@@ -9,10 +9,11 @@
     <result column="language_classification_id" property="languageClassificationId" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="language_classification_name" property="languageClassificationName" jdbcType="VARCHAR" />
+    <result column="language_classification_status" property="languageClassificationStatus" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     a.id, a.examiner_id, a.examiner_type, a.examination_paper_name,a.language_classification_id,
-    a.status,b.language_classification_name
+    a.status,b.language_classification_name,b.language_classification_status
   </sql>
 
   <sql id="where_fragement">
@@ -38,6 +39,9 @@
       </if>
       <if test="record.languageClassificationName and record.languageClassificationName != ''">
         and b.language_classification_name = #{record.languageClassificationName}
+      </if>
+      <if test="record.languageClassificationStatus != null">
+        and b.language_classification_status = #{record.languageClassificationStatus}
       </if>
     </if>
   </sql>

@@ -68,6 +68,8 @@ public class TeacherSingleChoiceQuestionController {
     public Wrapper<?> selectList(@RequestBody SingleChoiceQuestionDTO record,HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
+        record.setLanguageClassificationStatus(1);
+
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

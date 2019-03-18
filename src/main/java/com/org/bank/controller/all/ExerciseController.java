@@ -34,6 +34,7 @@ public class ExerciseController {
 
     @RequestMapping("/randomSelectTrueFalseQuestionList")
     public Wrapper<?> randomSelectTrueFalseQuestionList(@RequestBody TrueFalseQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.randomSelectTrueFalseQuestionList(record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -52,6 +53,7 @@ public class ExerciseController {
 
     @RequestMapping("/randomSelectSingleChoiceQuestionList")
     public Wrapper<?> randomSelectSingleChoiceQuestionList(@RequestBody SingleChoiceQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -70,6 +72,7 @@ public class ExerciseController {
 
     @RequestMapping("/randomSelectShortAnswerQuestionList")
     public Wrapper<?> randomSelectShortAnswerQuestionList(@RequestBody ShortAnswerQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.randomSelectShortAnswerQuestionList(record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -93,6 +96,7 @@ public class ExerciseController {
 
     @RequestMapping("/randomSelectMultipleChoiceQuestionList")
     public Wrapper<?> randomSelectMultipleChoiceQuestionList(@RequestBody MultipleChoiceQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -111,6 +115,7 @@ public class ExerciseController {
 
     @RequestMapping("/randomSelectFillVainQuestionList")
     public Wrapper<?> randomSelectFillVainQuestionList(@RequestBody FillVainQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = fillVainQuestionService.randomSelectFillVainQuestionList(record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

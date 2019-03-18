@@ -31,6 +31,7 @@ public class ExaminationPaperController {
 
     @RequestMapping("/selectList")
     public Wrapper<?> selectList(@RequestBody ExaminationPaperDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<ExaminationPaperDTO>> executeResult = examinationPaperService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

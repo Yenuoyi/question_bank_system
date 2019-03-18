@@ -69,6 +69,8 @@ public class TeacherFillVainQuestionController {
     public Wrapper<?> selectList(@RequestBody FillVainQuestionDTO record,HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
+        record.setLanguageClassificationStatus(1);
+
         ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = fillVainQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

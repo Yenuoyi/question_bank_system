@@ -30,6 +30,7 @@ public class TrueFalseQuestionController {
 
     @RequestMapping("/selectList")
     public Wrapper<?> selectList(@RequestBody TrueFalseQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

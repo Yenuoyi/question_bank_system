@@ -28,6 +28,9 @@ public class TrueFalseQuestionDTO implements Serializable {
 
     /** 程序语言分类名 */
     private String languageClassificationName;
+
+    /** 程序语言分类状态 1：启用 2：禁用 */
+    private Integer languageClassificationStatus;
     private Pager pager;
 
     private static final long serialVersionUID = 1L;
@@ -94,6 +97,14 @@ public class TrueFalseQuestionDTO implements Serializable {
 
     public void setLanguageClassificationName(String languageClassificationName) {
         this.languageClassificationName = languageClassificationName;
+    }
+
+    public Integer getLanguageClassificationStatus() {
+        return languageClassificationStatus;
+    }
+
+    public void setLanguageClassificationStatus(Integer languageClassificationStatus) {
+        this.languageClassificationStatus = languageClassificationStatus;
     }
 
     public Pager getPager() {

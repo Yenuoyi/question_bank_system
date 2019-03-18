@@ -30,6 +30,7 @@ public class SingleChoiceQuestionController {
 
     @RequestMapping("/selectList")
     public Wrapper<?> selectList(@RequestBody SingleChoiceQuestionDTO record){
+        record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

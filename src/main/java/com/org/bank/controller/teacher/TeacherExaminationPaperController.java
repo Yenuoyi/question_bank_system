@@ -91,6 +91,8 @@ public class TeacherExaminationPaperController {
     public Wrapper<?> selectList(@RequestBody ExaminationPaperDTO record,HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
+        record.setLanguageClassificationStatus(1);
+
         ExecuteResult<DataUtil<ExaminationPaperDTO>> executeResult = examinationPaperService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
