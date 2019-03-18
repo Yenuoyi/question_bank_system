@@ -7,9 +7,11 @@ import com.org.bank.common.Wrapper;
 import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.AdminInfoDTO;
 import com.org.bank.service.AdminInfoService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +21,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/admin")
+@Api(description = "管理员角色控制器")
 public class AdminInfoController {
     @Autowired
     private AdminInfoService adminInfoService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> deleteByPrimaryKey(@RequestBody AdminInfoDTO record){
         ExecuteResult<Integer> executeResult = adminInfoService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -31,7 +34,7 @@ public class AdminInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insert")
+    @RequestMapping(value = "/insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody AdminInfoDTO record){
         ExecuteResult<Integer> executeResult = adminInfoService.insert(record);
         if(executeResult.isSuccess()){
@@ -40,7 +43,7 @@ public class AdminInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insertSelective")
+    @RequestMapping(value = "/insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody AdminInfoDTO record){
         ExecuteResult<Integer> executeResult = adminInfoService.insertSelective(record);
         if(executeResult.isSuccess()){
@@ -49,7 +52,7 @@ public class AdminInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(){
         String email = UserSecurityContextHolder.getUsername();
         AdminInfoDTO record = new AdminInfoDTO();
@@ -61,7 +64,7 @@ public class AdminInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody AdminInfoDTO record){
         ExecuteResult<DataUtil<AdminInfoDTO>> executeResult = adminInfoService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
@@ -70,7 +73,7 @@ public class AdminInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody AdminInfoDTO record){
         String email = UserSecurityContextHolder.getUsername();
         record.setAdminEmail(email);
@@ -81,7 +84,7 @@ public class AdminInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody AdminInfoDTO record){
         String email = UserSecurityContextHolder.getUsername();
         record.setAdminEmail(email);
@@ -92,7 +95,7 @@ public class AdminInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updatePasswordByPrimaryKey")
+    @RequestMapping(value = "/updatePasswordByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updatePasswordByPrimaryKey(@RequestBody AdminInfoDTO record, HttpServletRequest httpServletRequest){
         int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
         record.setId(userId);

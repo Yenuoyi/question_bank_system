@@ -6,8 +6,10 @@ import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
 import com.org.bank.domain.LanguageClassificationDTO;
 import com.org.bank.service.LanguageClassificationService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +19,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/admin/languageClassificationController")
+@Api(description = "程序语言分类控制器")
 public class LanguageClassificationController {
     @Resource
     private LanguageClassificationService languageClassificationService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> deleteByPrimaryKey(@RequestBody LanguageClassificationDTO record){
         ExecuteResult<Integer> executeResult = languageClassificationService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -29,7 +32,7 @@ public class LanguageClassificationController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insert")
+    @RequestMapping(value = "/insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody LanguageClassificationDTO record){
         ExecuteResult<Integer> executeResult = languageClassificationService.insert(record);
         if(executeResult.isSuccess()){
@@ -42,7 +45,7 @@ public class LanguageClassificationController {
      * @param httpServletRequest
      * @return
      */
-    @RequestMapping("/insertSelective")
+    @RequestMapping(value = "/insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody LanguageClassificationDTO record,HttpServletRequest httpServletRequest){
         ExecuteResult<Integer> executeResult = languageClassificationService.insertSelective(record);
         if(executeResult.isSuccess()){
@@ -51,7 +54,7 @@ public class LanguageClassificationController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody LanguageClassificationDTO record){
         ExecuteResult<LanguageClassificationDTO> executeResult = languageClassificationService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -60,7 +63,7 @@ public class LanguageClassificationController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody LanguageClassificationDTO record){
         ExecuteResult<DataUtil<LanguageClassificationDTO>> executeResult = languageClassificationService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
@@ -70,7 +73,7 @@ public class LanguageClassificationController {
     }
 
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody LanguageClassificationDTO record){
         ExecuteResult<Integer> executeResult = languageClassificationService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -79,7 +82,7 @@ public class LanguageClassificationController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody LanguageClassificationDTO record){
         ExecuteResult<Integer> executeResult = languageClassificationService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){

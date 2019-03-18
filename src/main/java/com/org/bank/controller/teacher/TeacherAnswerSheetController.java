@@ -9,8 +9,10 @@ import com.org.bank.domain.AnswerSheetAnswerDTO;
 import com.org.bank.domain.AnswerSheetDTO;
 import com.org.bank.service.AnswerSheetAnswerService;
 import com.org.bank.service.AnswerSheetService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -22,12 +24,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/teacher/answerSheet")
+@Api(description = "教师角色拥有的答题卡控制器")
 public class TeacherAnswerSheetController {
     @Resource
     private AnswerSheetService answerSheetService;
     @Resource
     private AnswerSheetAnswerService answerSheetAnswerService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> deleteByPrimaryKey(@RequestBody AnswerSheetDTO record){
         ExecuteResult<Integer> executeResult = answerSheetService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -36,7 +39,7 @@ public class TeacherAnswerSheetController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insert")
+    @RequestMapping(value = "/insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody AnswerSheetDTO record){
         ExecuteResult<Integer> executeResult = answerSheetService.insert(record);
         if(executeResult.isSuccess()){
@@ -45,7 +48,7 @@ public class TeacherAnswerSheetController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insertSelective")
+    @RequestMapping(value = "/insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody AnswerSheetDTO record, HttpServletRequest httpServletRequest){
         /* 设置答题卡生成入参,生成答题卡 */
         record.setAnswererType(UserSecurityContextHolder.getUserRoleType());
@@ -64,7 +67,7 @@ public class TeacherAnswerSheetController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody AnswerSheetDTO record){
         ExecuteResult<AnswerSheetDTO> executeResult = answerSheetService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -73,7 +76,7 @@ public class TeacherAnswerSheetController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody AnswerSheetDTO record){
         ExecuteResult<DataUtil<AnswerSheetDTO>> executeResult = answerSheetService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
@@ -82,7 +85,7 @@ public class TeacherAnswerSheetController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody AnswerSheetDTO record){
         ExecuteResult<Integer> executeResult = answerSheetService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -91,7 +94,7 @@ public class TeacherAnswerSheetController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody AnswerSheetDTO record){
         ExecuteResult<Integer> executeResult = answerSheetService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){

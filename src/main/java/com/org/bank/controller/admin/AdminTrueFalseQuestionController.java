@@ -6,9 +6,11 @@ import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
 import com.org.bank.domain.TrueFalseQuestionDTO;
 import com.org.bank.service.TrueFalseQuestionService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,10 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/admin/trueFalseQuestion")
+@Api(description = "管理员角色拥有的判断题控制类")
 public class AdminTrueFalseQuestionController {
     @Autowired
     private TrueFalseQuestionService trueFalseQuestionService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> deleteByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
         ExecuteResult<Integer> executeResult = trueFalseQuestionService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -28,7 +31,7 @@ public class AdminTrueFalseQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insert")
+    @RequestMapping(value = "/insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody TrueFalseQuestionDTO record){
         ExecuteResult<Integer> executeResult = trueFalseQuestionService.insert(record);
         if(executeResult.isSuccess()){
@@ -37,7 +40,7 @@ public class AdminTrueFalseQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insertSelective")
+    @RequestMapping(value = "/insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody TrueFalseQuestionDTO record){
         ExecuteResult<Integer> executeResult = trueFalseQuestionService.insertSelective(record);
         if(executeResult.isSuccess()){
@@ -46,7 +49,7 @@ public class AdminTrueFalseQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
         ExecuteResult<TrueFalseQuestionDTO> executeResult = trueFalseQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -55,7 +58,7 @@ public class AdminTrueFalseQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody TrueFalseQuestionDTO record){
         ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
@@ -64,7 +67,7 @@ public class AdminTrueFalseQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody TrueFalseQuestionDTO record){
         ExecuteResult<Integer> executeResult = trueFalseQuestionService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -73,7 +76,7 @@ public class AdminTrueFalseQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody TrueFalseQuestionDTO record){
         ExecuteResult<Integer> executeResult = trueFalseQuestionService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){

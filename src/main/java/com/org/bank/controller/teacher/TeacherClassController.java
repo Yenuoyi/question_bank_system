@@ -7,9 +7,11 @@ import com.org.bank.common.Wrapper;
 import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.ClassDTO;
 import com.org.bank.service.ClassService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +21,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/teacher/class")
+@Api(description = "教师角色拥有的班级控制类")
 public class TeacherClassController {
     @Autowired
     private ClassService classService;
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody ClassDTO record){
         ExecuteResult<ClassDTO> executeResult = classService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -37,7 +40,7 @@ public class TeacherClassController {
      * @param httpServletRequest
      * @return
      */
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody ClassDTO record, HttpServletRequest httpServletRequest){
         int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
         record.setTeacherId(userId);
@@ -48,7 +51,7 @@ public class TeacherClassController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody ClassDTO record){
         ExecuteResult<Integer> executeResult = classService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -57,7 +60,7 @@ public class TeacherClassController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody ClassDTO record){
         ExecuteResult<Integer> executeResult = classService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){

@@ -9,8 +9,11 @@ import com.org.bank.domain.AnswerSheetAnswerDTO;
 import com.org.bank.domain.AnswerSheetDTO;
 import com.org.bank.service.AnswerSheetAnswerService;
 import com.org.bank.service.AnswerSheetService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +24,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/answerSheetAnswer")
+@Api(description = "管理员角色拥有的答卷控制器")
 public class AdminAnswerSheetAnswerController {
     @Resource
     private AnswerSheetService answerSheetService;
     @Resource
     private AnswerSheetAnswerService answerSheetAnswerService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
+    @ApiOperation(value = "根据答题卡id删除答题卡", httpMethod = "POST", response = Wrapper.class, notes = "根据答题卡id删除答题卡")
     public Wrapper<?> deleteByPrimaryKey(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<Integer> executeResult = answerSheetAnswerService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -35,7 +40,7 @@ public class AdminAnswerSheetAnswerController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insert")
+    @RequestMapping(value = "/insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<Integer> executeResult = answerSheetAnswerService.insert(record);
         if(executeResult.isSuccess()){
@@ -50,7 +55,7 @@ public class AdminAnswerSheetAnswerController {
      * @param httpServletRequest
      * @return
      */
-    @RequestMapping("/insertSelective")
+    @RequestMapping(value = "/insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody List<AnswerSheetAnswerDTO> records, HttpServletRequest httpServletRequest){
         /* 设置答题卡生成入参,生成答题卡 */
         AnswerSheetDTO answerSheetDTO = new AnswerSheetDTO();
@@ -65,7 +70,7 @@ public class AdminAnswerSheetAnswerController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<AnswerSheetAnswerDTO> executeResult = answerSheetAnswerService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -74,7 +79,7 @@ public class AdminAnswerSheetAnswerController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> executeResult = answerSheetAnswerService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
@@ -84,7 +89,7 @@ public class AdminAnswerSheetAnswerController {
     }
 
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<Integer> executeResult = answerSheetAnswerService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -93,7 +98,7 @@ public class AdminAnswerSheetAnswerController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<Integer> executeResult = answerSheetAnswerService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){

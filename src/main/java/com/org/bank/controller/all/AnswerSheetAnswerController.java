@@ -9,8 +9,10 @@ import com.org.bank.domain.AnswerSheetAnswerDTO;
 import com.org.bank.domain.AnswerSheetDTO;
 import com.org.bank.service.AnswerSheetAnswerService;
 import com.org.bank.service.AnswerSheetService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -22,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/all/answerSheetAnswer")
+@Api(description = "学生角色拥有的答题卡控制器")
 public class AnswerSheetAnswerController {
     @Resource
     private AnswerSheetService answerSheetService;
@@ -33,7 +36,7 @@ public class AnswerSheetAnswerController {
      * @param httpServletRequest
      * @return
      */
-    @RequestMapping("/insertSelective")
+    @RequestMapping(value = "/insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody AnswerSheetAnswerDTO answerSheetAnswerDTO, HttpServletRequest httpServletRequest){
         /* 批量插入答题卡内容 */
         ExecuteResult<Integer> executeResult = answerSheetAnswerService.insertSelective(answerSheetAnswerDTO);
@@ -43,7 +46,7 @@ public class AnswerSheetAnswerController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<AnswerSheetAnswerDTO> executeResult = answerSheetAnswerService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -52,7 +55,7 @@ public class AnswerSheetAnswerController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> executeResult = answerSheetAnswerService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
@@ -66,7 +69,7 @@ public class AnswerSheetAnswerController {
      * @param record
      * @return
      */
-    @RequestMapping("/selectPaperSheetList")
+    @RequestMapping(value = "/selectPaperSheetList",method={RequestMethod.POST})
     public Wrapper<?> selectPaperSheetList(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> executeResult = answerSheetAnswerService.selectPaperSheetList(record,record.getPager());
         if(executeResult.isSuccess()){

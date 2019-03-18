@@ -13,7 +13,6 @@ public class LanguageClassificationDTO implements Serializable {
 
     private Integer languageClassificationStatus;
 
-    private Integer status;
 
     private Pager pager;
 
@@ -35,13 +34,6 @@ public class LanguageClassificationDTO implements Serializable {
         this.languageClassificationName = languageClassificationName == null ? null : languageClassificationName.trim();
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 
     public Integer getLanguageClassificationStatus() {
         return languageClassificationStatus;

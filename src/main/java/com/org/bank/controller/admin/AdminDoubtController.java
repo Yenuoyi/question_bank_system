@@ -6,9 +6,11 @@ import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
 import com.org.bank.domain.DoubtDTO;
 import com.org.bank.service.DoubtService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,10 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/admin/doubt")
+@Api(description = "管理员角色拥有的答疑控制器")
 public class AdminDoubtController {
     @Autowired
     private DoubtService doubtService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> deleteByPrimaryKey(@RequestBody DoubtDTO record){
         ExecuteResult<Integer> executeResult = doubtService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -28,7 +31,7 @@ public class AdminDoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insert")
+    @RequestMapping(value = "insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody DoubtDTO record){
         ExecuteResult<Integer> executeResult = doubtService.insert(record);
         if(executeResult.isSuccess()){
@@ -37,7 +40,7 @@ public class AdminDoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insertSelective")
+    @RequestMapping(value = "insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody DoubtDTO record){
         ExecuteResult<Integer> executeResult = doubtService.insertSelective(record);
         if(executeResult.isSuccess()){
@@ -46,7 +49,7 @@ public class AdminDoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody DoubtDTO record){
         ExecuteResult<DoubtDTO> executeResult = doubtService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -55,7 +58,7 @@ public class AdminDoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody DoubtDTO record){
         ExecuteResult<DataUtil<DoubtDTO>> executeResult = doubtService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
@@ -64,7 +67,7 @@ public class AdminDoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody DoubtDTO record){
         ExecuteResult<Integer> executeResult = doubtService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -73,7 +76,7 @@ public class AdminDoubtController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody DoubtDTO record){
         ExecuteResult<Integer> executeResult = doubtService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){

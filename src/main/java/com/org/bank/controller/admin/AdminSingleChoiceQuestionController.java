@@ -6,9 +6,11 @@ import com.org.bank.common.WrapMapper;
 import com.org.bank.common.Wrapper;
 import com.org.bank.domain.SingleChoiceQuestionDTO;
 import com.org.bank.service.SingleChoiceQuestionService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,10 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/admin/singleChoiceQuestion")
+@Api(description = "管理员角色拥有的单选题控制器")
 public class AdminSingleChoiceQuestionController {
     @Autowired
     private SingleChoiceQuestionService singleChoiceQuestionService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> deleteByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
         ExecuteResult<Integer> executeResult = singleChoiceQuestionService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -28,7 +31,7 @@ public class AdminSingleChoiceQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insert")
+    @RequestMapping(value = "/insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody SingleChoiceQuestionDTO record){
         ExecuteResult<Integer> executeResult = singleChoiceQuestionService.insert(record);
         if(executeResult.isSuccess()){
@@ -37,7 +40,7 @@ public class AdminSingleChoiceQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insertSelective")
+    @RequestMapping(value = "/insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody SingleChoiceQuestionDTO record){
         ExecuteResult<Integer> executeResult = singleChoiceQuestionService.insertSelective(record);
         if(executeResult.isSuccess()){
@@ -46,7 +49,7 @@ public class AdminSingleChoiceQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
         ExecuteResult<SingleChoiceQuestionDTO> executeResult = singleChoiceQuestionService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -55,7 +58,7 @@ public class AdminSingleChoiceQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody SingleChoiceQuestionDTO record){
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
@@ -64,7 +67,7 @@ public class AdminSingleChoiceQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody SingleChoiceQuestionDTO record){
         ExecuteResult<Integer> executeResult = singleChoiceQuestionService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -73,7 +76,7 @@ public class AdminSingleChoiceQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody SingleChoiceQuestionDTO record){
         ExecuteResult<Integer> executeResult = singleChoiceQuestionService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){

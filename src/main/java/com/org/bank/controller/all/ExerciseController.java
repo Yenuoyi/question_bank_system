@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.org.bank.common.*;
 import com.org.bank.domain.*;
 import com.org.bank.service.*;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/all/exercise")
+@Api(description = "学生角色拥有的随机出习题控制器")
+
 public class ExerciseController {
     @Autowired
     private FillVainQuestionService fillVainQuestionService;
@@ -32,7 +36,7 @@ public class ExerciseController {
     @Autowired
     private TrueFalseQuestionService trueFalseQuestionService;
 
-    @RequestMapping("/randomSelectTrueFalseQuestionList")
+    @RequestMapping(value = "/randomSelectTrueFalseQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectTrueFalseQuestionList(@RequestBody TrueFalseQuestionDTO record){
         record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.randomSelectTrueFalseQuestionList(record.getPager());
@@ -42,7 +46,7 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/trueFalseQuestionCheck")
+    @RequestMapping(value = "/trueFalseQuestionCheck",method={RequestMethod.POST})
     public Wrapper<?> trueFalseQuestionCheck(@RequestBody List<TrueFalseQuestionDTO> record, HttpServletRequest httpServletRequest){
         ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.checkExercise(record,httpServletRequest);
         if(executeResult.isSuccess()){
@@ -51,7 +55,7 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/randomSelectSingleChoiceQuestionList")
+    @RequestMapping(value = "/randomSelectSingleChoiceQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectSingleChoiceQuestionList(@RequestBody SingleChoiceQuestionDTO record){
         record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(record.getPager());
@@ -61,7 +65,7 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/singleChoiceQuestionCheck")
+    @RequestMapping(value = "/singleChoiceQuestionCheck",method={RequestMethod.POST})
     public Wrapper<?> singleChoiceQuestionCheck(@RequestBody List<SingleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest){
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.checkExercise(record,httpServletRequest);
         if(executeResult.isSuccess()){
@@ -70,7 +74,7 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/randomSelectShortAnswerQuestionList")
+    @RequestMapping(value = "/randomSelectShortAnswerQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectShortAnswerQuestionList(@RequestBody ShortAnswerQuestionDTO record){
         record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.randomSelectShortAnswerQuestionList(record.getPager());
@@ -80,7 +84,7 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectShortAnswerQuestionList")
+    @RequestMapping(value = "/selectShortAnswerQuestionList",method={RequestMethod.POST})
     public Wrapper<?> selectShortAnswerQuestionList(@RequestBody List<ShortAnswerQuestionDTO> record){
         int recordSize = record.size();
         List<Integer> keys = new ArrayList<>();
@@ -94,7 +98,7 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/randomSelectMultipleChoiceQuestionList")
+    @RequestMapping(value = "/randomSelectMultipleChoiceQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectMultipleChoiceQuestionList(@RequestBody MultipleChoiceQuestionDTO record){
         record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(record.getPager());
@@ -104,7 +108,7 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/multipleChoiceQuestionCheck")
+    @RequestMapping(value = "/multipleChoiceQuestionCheck",method={RequestMethod.POST})
     public Wrapper<?> multipleChoiceQuestionCheck(@RequestBody List<MultipleChoiceQuestionDTO> record, HttpServletRequest httpServletRequest){
         ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = multipleChoiceQuestionService.checkExercise(record,httpServletRequest);
         if(executeResult.isSuccess()){
@@ -113,7 +117,7 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/randomSelectFillVainQuestionList")
+    @RequestMapping(value = "/randomSelectFillVainQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectFillVainQuestionList(@RequestBody FillVainQuestionDTO record){
         record.setLanguageClassificationStatus(1);
         ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = fillVainQuestionService.randomSelectFillVainQuestionList(record.getPager());
@@ -123,7 +127,7 @@ public class ExerciseController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectFillVainQuestionList")
+    @RequestMapping(value = "/selectFillVainQuestionList",method={RequestMethod.POST})
     public Wrapper<?> selectFillVainQuestionList(@RequestBody List<FillVainQuestionDTO> record){
         int recordSize = record.size();
         List<Integer> keys = new ArrayList<>();
@@ -142,7 +146,7 @@ public class ExerciseController {
      * @param record
      * @return
      */
-    @RequestMapping("/proportionExercise")
+    @RequestMapping(value = "/proportionExercise",method={RequestMethod.POST})
     public Wrapper<?> proportionExercise(@RequestBody ExerciseNumberDTO record){
         /* 计算预计出题数量 */
         int total = 40;
@@ -234,7 +238,7 @@ public class ExerciseController {
      * @param record
      * @return
      */
-    @RequestMapping("/numberExercise")
+    @RequestMapping(value = "/numberExercise",method={RequestMethod.POST})
     public Wrapper<?> numberExercise(@RequestBody ExerciseNumberDTO record){
         Pager pager = new Pager();
         if(record.getFillVainNumber() > 0){
@@ -290,7 +294,7 @@ public class ExerciseController {
      * @param httpServletRequest
      * @return
      */
-    @RequestMapping("/exerciseCheck")
+    @RequestMapping(value = "/exerciseCheck",method={RequestMethod.POST})
     public Wrapper<?> numberExerciseCheck(@RequestBody ExerciseNumberDTO record, HttpServletRequest httpServletRequest){
         List<Integer> fillVainQuestionKeys = new ArrayList<>();
         for(int i=0;i<record.getFillVainQuestionDTOS().size();i++){

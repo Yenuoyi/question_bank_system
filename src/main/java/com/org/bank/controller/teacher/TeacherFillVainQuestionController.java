@@ -7,9 +7,11 @@ import com.org.bank.common.Wrapper;
 import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.FillVainQuestionDTO;
 import com.org.bank.service.FillVainQuestionService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +22,11 @@ import java.math.BigDecimal;
  */
 @RestController
 @RequestMapping("/teacher/fillVainQuestion")
+@Api(description = "教师角色拥有的填空题控制类")
 public class TeacherFillVainQuestionController {
     @Autowired
     private FillVainQuestionService fillVainQuestionService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> deleteByPrimaryKey(@RequestBody FillVainQuestionDTO record){
         ExecuteResult<Integer> executeResult = fillVainQuestionService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -32,7 +35,7 @@ public class TeacherFillVainQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insert")
+    @RequestMapping(value = "/insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody FillVainQuestionDTO record, HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
@@ -43,7 +46,7 @@ public class TeacherFillVainQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/insertSelective")
+    @RequestMapping(value = "/insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody FillVainQuestionDTO record, HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
@@ -54,7 +57,7 @@ public class TeacherFillVainQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody FillVainQuestionDTO record,HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
@@ -65,7 +68,7 @@ public class TeacherFillVainQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody FillVainQuestionDTO record,HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
@@ -78,7 +81,7 @@ public class TeacherFillVainQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody FillVainQuestionDTO record){
         ExecuteResult<Integer> executeResult = fillVainQuestionService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -87,7 +90,7 @@ public class TeacherFillVainQuestionController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody FillVainQuestionDTO record){
         ExecuteResult<Integer> executeResult = fillVainQuestionService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){

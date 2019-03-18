@@ -10,9 +10,11 @@ import com.org.bank.domain.ClassDTO;
 import com.org.bank.domain.StudentInfoDTO;
 import com.org.bank.service.ClassService;
 import com.org.bank.service.StudentInfoService;
+import io.swagger.annotations.Api;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -23,13 +25,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/teacher/student")
+@Api(description = "教师角色拥有的学生角色控制类")
 public class TeacherStudentInfoController {
     private Logger logger = Logger.getLogger(this.getClass());
     @Resource
     private ClassService classService;
     @Resource
     private StudentInfoService studentInfoService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> deleteByPrimaryKey(@RequestBody StudentInfoDTO record){
         ExecuteResult<Integer> executeResult = studentInfoService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -38,7 +41,7 @@ public class TeacherStudentInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insert")
+    @RequestMapping(value = "insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody StudentInfoDTO record){
         StudentInfoDTO studentInfoDTO = new StudentInfoDTO();
         studentInfoDTO.setStudentEmail(record.getStudentEmail());
@@ -54,7 +57,7 @@ public class TeacherStudentInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insertSelective")
+    @RequestMapping(value = "insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody StudentInfoDTO record){
         StudentInfoDTO studentInfoDTO = new StudentInfoDTO();
         studentInfoDTO.setStudentEmail(record.getStudentEmail());
@@ -70,7 +73,7 @@ public class TeacherStudentInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody StudentInfoDTO record){
         ExecuteResult<StudentInfoDTO> executeResult = studentInfoService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -79,7 +82,7 @@ public class TeacherStudentInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody StudentInfoDTO record){
         ExecuteResult<DataUtil<StudentInfoDTO>> executeResult = studentInfoService.selectList(record,record.getPager());
         if(executeResult.isSuccess()){
@@ -88,7 +91,7 @@ public class TeacherStudentInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody StudentInfoDTO record){
         ExecuteResult<Integer> executeResult = studentInfoService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -97,7 +100,7 @@ public class TeacherStudentInfoController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody StudentInfoDTO record){
         ExecuteResult<Integer> executeResult = studentInfoService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){

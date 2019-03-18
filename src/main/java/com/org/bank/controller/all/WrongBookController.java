@@ -7,9 +7,11 @@ import com.org.bank.common.Wrapper;
 import com.org.bank.config.spring.security.UserSecurityContextHolder;
 import com.org.bank.domain.WrongBookDTO;
 import com.org.bank.service.WrongBookService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +21,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/all/wrongBook")
+@Api(description = "学生角色拥有的错题本控制类")
 public class WrongBookController {
     @Autowired
     private WrongBookService wrongBookService;
-    @RequestMapping("/deleteByPrimaryKey")
+    @RequestMapping(value = "/deleteByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> deleteByPrimaryKey(@RequestBody WrongBookDTO record){
         ExecuteResult<Integer> executeResult = wrongBookService.deleteByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -31,7 +34,7 @@ public class WrongBookController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insert")
+    @RequestMapping(value = "insert",method={RequestMethod.POST})
     public Wrapper<?> insert(@RequestBody WrongBookDTO record){
         ExecuteResult<Integer> executeResult = wrongBookService.insert(record);
         if(executeResult.isSuccess()){
@@ -40,7 +43,7 @@ public class WrongBookController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("insertSelective")
+    @RequestMapping(value = "insertSelective",method={RequestMethod.POST})
     public Wrapper<?> insertSelective(@RequestBody WrongBookDTO record){
         ExecuteResult<Integer> executeResult = wrongBookService.insertSelective(record);
         if(executeResult.isSuccess()){
@@ -49,7 +52,7 @@ public class WrongBookController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectByPrimaryKey")
+    @RequestMapping(value = "/selectByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> selectByPrimaryKey(@RequestBody WrongBookDTO record){
         ExecuteResult<WrongBookDTO> executeResult = wrongBookService.selectByPrimaryKey(record);
         if(executeResult.isSuccess()){
@@ -58,7 +61,7 @@ public class WrongBookController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/selectList")
+    @RequestMapping(value = "/selectList",method={RequestMethod.POST})
     public Wrapper<?> selectList(@RequestBody WrongBookDTO record, HttpServletRequest httpServletRequest){
         int userId = UserSecurityContextHolder.getUserId(httpServletRequest);
         int userType = UserSecurityContextHolder.getUserRoleType();
@@ -71,7 +74,7 @@ public class WrongBookController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKeySelective")
+    @RequestMapping(value = "/updateByPrimaryKeySelective",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKeySelective(@RequestBody WrongBookDTO record){
         ExecuteResult<Integer> executeResult = wrongBookService.updateByPrimaryKeySelective(record);
         if(executeResult.isSuccess()){
@@ -80,7 +83,7 @@ public class WrongBookController {
         return WrapMapper.error().result(executeResult);
     }
 
-    @RequestMapping("/updateByPrimaryKey")
+    @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody WrongBookDTO record){
         ExecuteResult<Integer> executeResult = wrongBookService.updateByPrimaryKey(record);
         if(executeResult.isSuccess()){
