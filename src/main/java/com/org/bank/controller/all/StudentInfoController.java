@@ -44,6 +44,7 @@ public class StudentInfoController {
     public Wrapper<?> insertSelective(@RequestBody StudentInfoDTO record){
         StudentInfoDTO studentInfoDTO = new StudentInfoDTO();
         studentInfoDTO.setStudentEmail(record.getStudentEmail());
+        studentInfoDTO.setStatus(1);
         ExecuteResult<DataUtil<StudentInfoDTO>> dataUtilExecuteResult = studentInfoService.selectList(studentInfoDTO, null);
         if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
             return WrapMapper.error().result("请勿重复注册！");

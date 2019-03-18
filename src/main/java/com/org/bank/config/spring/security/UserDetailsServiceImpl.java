@@ -62,7 +62,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             TeacherInfoDTO record = new TeacherInfoDTO();
             record.setTeacherEmail(email);
             List<TeacherInfoDTO> teacherInfoDTOS = teacherInfoDTOMapper.selectList(record, null);
-            if(teacherInfoDTOS.size()!=0){
+            /* 数据库有账号且账号状态是启用，status：1*/
+            if(teacherInfoDTOS.size()!=0 && teacherInfoDTOS.get(0).getStatus() == 1){
                 record = teacherInfoDTOS.get(0);
                 this.getTeacherRoles(record,auths);
                 password = record.getTeacherPassword();
@@ -74,7 +75,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             StudentInfoDTO record = new StudentInfoDTO();
             record.setStudentEmail(email);
             List<StudentInfoDTO> studentInfoDTOS = studentInfoDTOMapper.selectList(record, null);
-            if(studentInfoDTOS.size()!=0){
+            /* 数据库有账号且账号状态是启用，status：1*/
+            if(studentInfoDTOS.size()!=0 && studentInfoDTOS.get(0).getStatus() == 1){
                 record = studentInfoDTOS.get(0);
                 this.getStudentRoles(record,auths);
                 password = record.getStudentPassword();

@@ -37,6 +37,9 @@ public class AdminTeacherInfoController {
     public Wrapper<?> insert(@RequestBody TeacherInfoDTO record){
         TeacherInfoDTO teacherInfoDTO = new TeacherInfoDTO();
         teacherInfoDTO.setTeacherEmail(record.getTeacherEmail());
+        /* 添加教师账号默认启用状态 */
+        teacherInfoDTO.setStatus(1);
+
         ExecuteResult<DataUtil<TeacherInfoDTO>> dataUtilExecuteResult = teacherInfoService.selectList(teacherInfoDTO, null);
         if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
             return WrapMapper.error().result("请勿重复注册！");
@@ -52,6 +55,9 @@ public class AdminTeacherInfoController {
     public Wrapper<?> insertSelective(@RequestBody TeacherInfoDTO record){
         TeacherInfoDTO teacherInfoDTO = new TeacherInfoDTO();
         teacherInfoDTO.setTeacherEmail(record.getTeacherEmail());
+        /* 添加教师账号默认启用状态 */
+        teacherInfoDTO.setStatus(1);
+
         ExecuteResult<DataUtil<TeacherInfoDTO>> dataUtilExecuteResult = teacherInfoService.selectList(teacherInfoDTO, null);
         if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
             return WrapMapper.error().result("请勿重复注册！");

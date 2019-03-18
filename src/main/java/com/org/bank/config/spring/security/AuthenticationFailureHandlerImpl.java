@@ -24,7 +24,7 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
         httpServletResponse.setContentType("application/json;charset=utf-8");
         logger.info("登录失败！");
         PrintWriter out = httpServletResponse.getWriter();
-        String jsonString = JSONObject.toJSONString(WrapMapper.error().result("账号或密码错误！"));
+        String jsonString = JSONObject.toJSONString(WrapMapper.error().result("账号或密码错误或账号已被禁用！"));
         out.write(jsonString);
         out.flush();
         out.close();

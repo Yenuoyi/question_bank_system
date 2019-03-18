@@ -46,6 +46,8 @@ public class TeacherExaminationPaperController {
     public Wrapper<?> insert(@RequestBody ExaminationPaperDTO record, HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
+        /* 默认生成试卷禁用状态 */
+        record.setLanguageClassificationStatus(2);
         ExecuteResult<Integer> executeResult = examinationPaperService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -63,6 +65,8 @@ public class TeacherExaminationPaperController {
     public Wrapper<?> insertSelective(@RequestBody ExaminationPaperDTO record, HttpServletRequest httpServletRequest){
         record.setExaminerId(UserSecurityContextHolder.getUserId(httpServletRequest));
         record.setExaminerType(UserSecurityContextHolder.getUserRoleType());
+        /* 默认生成试卷禁用状态 */
+        record.setLanguageClassificationStatus(2);
         examinationPaperService.insertSelective(record);
 
         /* 开始插入试卷内容 */
