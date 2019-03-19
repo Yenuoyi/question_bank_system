@@ -114,13 +114,13 @@ public class FillVainQuestionServiceImpl implements FillVainQuestionService {
     }
 
     @Override
-    public ExecuteResult<DataUtil<FillVainQuestionDTO>> randomSelectFillVainQuestionList(Pager pager) {
+    public ExecuteResult<DataUtil<FillVainQuestionDTO>> randomSelectFillVainQuestionList(FillVainQuestionDTO record, Pager pager) {
         ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = new ExecuteResult<DataUtil<FillVainQuestionDTO>>();
         try {
             if(StringUtils.isEmpty(pager)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            List<FillVainQuestionDTO> result = fillVainQuestionDTOMapper.randomSelectFillVainQuestionList(pager);
+            List<FillVainQuestionDTO> result = fillVainQuestionDTOMapper.randomSelectFillVainQuestionList(record,pager);
             DataUtil<FillVainQuestionDTO> dtoDataUtil = new DataUtil<FillVainQuestionDTO>();
             dtoDataUtil.setList(result);
             executeResult.setResult(dtoDataUtil);

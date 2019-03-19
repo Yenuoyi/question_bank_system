@@ -19,7 +19,7 @@ public interface ShortAnswerQuestionDTOMapper {
 
     List<ShortAnswerQuestionDTO> selectList(@Param("record") ShortAnswerQuestionDTO record, @Param("pager") Pager pager);
 
-    List<ShortAnswerQuestionDTO> randomSelectShortAnswerQuestionList(@Param("pager") Pager pager);
+    List<ShortAnswerQuestionDTO> randomSelectShortAnswerQuestionList(@Param("record") ShortAnswerQuestionDTO record, @Param("pager") Pager pager);
 
     List<ShortAnswerQuestionDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 

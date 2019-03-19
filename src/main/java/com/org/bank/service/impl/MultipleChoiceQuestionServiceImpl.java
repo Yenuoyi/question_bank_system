@@ -124,13 +124,13 @@ public class MultipleChoiceQuestionServiceImpl implements MultipleChoiceQuestion
     }
 
     @Override
-    public ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> randomSelectMultipleChoiceQuestionList(Pager pager) {
+    public ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> randomSelectMultipleChoiceQuestionList(MultipleChoiceQuestionDTO record, Pager pager) {
         ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>>();
         try {
             if(StringUtils.isEmpty(pager)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            List<MultipleChoiceQuestionDTO> result = multipleChoiceQuestionDTOMapper.randomSelectMultipleChoiceQuestionList(pager);
+            List<MultipleChoiceQuestionDTO> result = multipleChoiceQuestionDTOMapper.randomSelectMultipleChoiceQuestionList(record,pager);
             DataUtil<MultipleChoiceQuestionDTO> dtoDataUtil = new DataUtil<MultipleChoiceQuestionDTO>();
             dtoDataUtil.setList(result);
             executeResult.setResult(dtoDataUtil);

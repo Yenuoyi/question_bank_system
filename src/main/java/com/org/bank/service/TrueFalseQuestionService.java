@@ -20,7 +20,7 @@ public interface TrueFalseQuestionService {
 
     ExecuteResult<DataUtil<TrueFalseQuestionDTO>> selectList(TrueFalseQuestionDTO record, Pager pager);
 
-    ExecuteResult<DataUtil<TrueFalseQuestionDTO>> randomSelectTrueFalseQuestionList(Pager pager);
+    ExecuteResult<DataUtil<TrueFalseQuestionDTO>> randomSelectTrueFalseQuestionList(TrueFalseQuestionDTO record, Pager pager);
 
     ExecuteResult<DataUtil<TrueFalseQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
 

@@ -69,7 +69,7 @@
     select
     <include refid="Base_Column_List" />
     from true_false_question a LEFT JOIN language_classification b ON a.language_classification_id = b.language_classification_id
-    where b.language_classification_status = 1
+    <include refid="where_fragement"/>
     ORDER BY rand()
     <if test="pager != null" >
       <include refid="pagination_tail" />

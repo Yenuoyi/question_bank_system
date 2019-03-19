@@ -19,7 +19,7 @@ public interface FillVainQuestionDTOMapper {
 
     List<FillVainQuestionDTO> selectList(@Param("record") FillVainQuestionDTO record, @Param("pager") Pager pager);
 
-    List<FillVainQuestionDTO> randomSelectFillVainQuestionList(@Param("pager") Pager pager);
+    List<FillVainQuestionDTO> randomSelectFillVainQuestionList(@Param("record") FillVainQuestionDTO record, @Param("pager") Pager pager);
 
     List<FillVainQuestionDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 

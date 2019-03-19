@@ -19,7 +19,7 @@ public interface ShortAnswerQuestionService {
 
     ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> selectList(ShortAnswerQuestionDTO record, Pager pager);
 
-    ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> randomSelectShortAnswerQuestionList(Pager pager);
+    ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> randomSelectShortAnswerQuestionList(ShortAnswerQuestionDTO record,Pager pager);
 
     ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
 

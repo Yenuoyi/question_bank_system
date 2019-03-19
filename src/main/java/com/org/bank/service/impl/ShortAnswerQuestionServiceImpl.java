@@ -112,13 +112,13 @@ public class ShortAnswerQuestionServiceImpl implements ShortAnswerQuestionServic
     }
 
     @Override
-    public ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> randomSelectShortAnswerQuestionList(Pager pager) {
+    public ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> randomSelectShortAnswerQuestionList(ShortAnswerQuestionDTO record, Pager pager) {
         ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = new ExecuteResult<DataUtil<ShortAnswerQuestionDTO>>();
         try {
             if(StringUtils.isEmpty(pager)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            List<ShortAnswerQuestionDTO> result = shortAnswerQuestionDTOMapper.randomSelectShortAnswerQuestionList(pager);
+            List<ShortAnswerQuestionDTO> result = shortAnswerQuestionDTOMapper.randomSelectShortAnswerQuestionList(record,pager);
             DataUtil<ShortAnswerQuestionDTO> dtoDataUtil = new DataUtil<ShortAnswerQuestionDTO>();
             dtoDataUtil.setList(result);
             executeResult.setResult(dtoDataUtil);

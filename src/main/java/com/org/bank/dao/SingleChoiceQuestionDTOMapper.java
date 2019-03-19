@@ -19,7 +19,7 @@ public interface SingleChoiceQuestionDTOMapper {
 
     List<SingleChoiceQuestionDTO> selectList(@Param("record") SingleChoiceQuestionDTO record, @Param("pager") Pager pager);
 
-    List<SingleChoiceQuestionDTO> randomSelectSingleChoiceQuestionList(@Param("pager") Pager pager);
+    List<SingleChoiceQuestionDTO> randomSelectSingleChoiceQuestionList(@Param("record") SingleChoiceQuestionDTO record, @Param("pager") Pager pager);
 
     List<SingleChoiceQuestionDTO> selectByPrimaryKeyList(@Param("keys") List<Integer> keys);
 

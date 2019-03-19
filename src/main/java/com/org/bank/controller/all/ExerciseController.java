@@ -39,7 +39,7 @@ public class ExerciseController {
     @RequestMapping(value = "/randomSelectTrueFalseQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectTrueFalseQuestionList(@RequestBody TrueFalseQuestionDTO record){
         record.setLanguageClassificationStatus(1);
-        ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.randomSelectTrueFalseQuestionList(record.getPager());
+        ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = trueFalseQuestionService.randomSelectTrueFalseQuestionList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -58,7 +58,7 @@ public class ExerciseController {
     @RequestMapping(value = "/randomSelectSingleChoiceQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectSingleChoiceQuestionList(@RequestBody SingleChoiceQuestionDTO record){
         record.setLanguageClassificationStatus(1);
-        ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(record.getPager());
+        ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -77,7 +77,7 @@ public class ExerciseController {
     @RequestMapping(value = "/randomSelectShortAnswerQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectShortAnswerQuestionList(@RequestBody ShortAnswerQuestionDTO record){
         record.setLanguageClassificationStatus(1);
-        ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.randomSelectShortAnswerQuestionList(record.getPager());
+        ExecuteResult<DataUtil<ShortAnswerQuestionDTO>> executeResult = shortAnswerQuestionService.randomSelectShortAnswerQuestionList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -101,7 +101,7 @@ public class ExerciseController {
     @RequestMapping(value = "/randomSelectMultipleChoiceQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectMultipleChoiceQuestionList(@RequestBody MultipleChoiceQuestionDTO record){
         record.setLanguageClassificationStatus(1);
-        ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(record.getPager());
+        ExecuteResult<DataUtil<MultipleChoiceQuestionDTO>> executeResult = multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -120,7 +120,7 @@ public class ExerciseController {
     @RequestMapping(value = "/randomSelectFillVainQuestionList",method={RequestMethod.POST})
     public Wrapper<?> randomSelectFillVainQuestionList(@RequestBody FillVainQuestionDTO record){
         record.setLanguageClassificationStatus(1);
-        ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = fillVainQuestionService.randomSelectFillVainQuestionList(record.getPager());
+        ExecuteResult<DataUtil<FillVainQuestionDTO>> executeResult = fillVainQuestionService.randomSelectFillVainQuestionList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
@@ -188,7 +188,10 @@ public class ExerciseController {
         Pager pager = new Pager();
         if(record.getFillVainNumber() > 0){
             pager.setRows(record.getFillVainNumber());
-            List<FillVainQuestionDTO> fillVainQuestionDTOS = (List<FillVainQuestionDTO>) fillVainQuestionService.randomSelectFillVainQuestionList(pager).getResult().getList();
+            FillVainQuestionDTO fillVainQuestionDTO = new FillVainQuestionDTO();
+            fillVainQuestionDTO.setLanguageClassificationStatus(1);
+            fillVainQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<FillVainQuestionDTO> fillVainQuestionDTOS = (List<FillVainQuestionDTO>) fillVainQuestionService.randomSelectFillVainQuestionList(fillVainQuestionDTO,pager).getResult().getList();
             record.setFillVainQuestionDTOS(fillVainQuestionDTOS);
         }else{
             List<FillVainQuestionDTO> fillVainQuestionDTOS = new ArrayList<>();
@@ -197,7 +200,10 @@ public class ExerciseController {
 
         if(record.getMultipleChoiceNumber() > 0){
             pager.setRows(record.getMultipleChoiceNumber());
-            List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = (List<MultipleChoiceQuestionDTO>) multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(pager).getResult().getList();
+            MultipleChoiceQuestionDTO multipleChoiceQuestionDTO = new MultipleChoiceQuestionDTO();
+            multipleChoiceQuestionDTO.setLanguageClassificationStatus(1);
+            multipleChoiceQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = (List<MultipleChoiceQuestionDTO>) multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(multipleChoiceQuestionDTO,pager).getResult().getList();
             record.setMultipleChoiceQuestionDTOS(multipleChoiceQuestionDTOS);
         }else{
             List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = new ArrayList<>();
@@ -206,7 +212,10 @@ public class ExerciseController {
 
         if(record.getShortAnswerNumber() > 0){
             pager.setRows(record.getShortAnswerNumber());
-            List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS= (List<ShortAnswerQuestionDTO>) shortAnswerQuestionService.randomSelectShortAnswerQuestionList(pager).getResult().getList();
+            ShortAnswerQuestionDTO shortAnswerQuestionDTO = new ShortAnswerQuestionDTO();
+            shortAnswerQuestionDTO.setLanguageClassificationStatus(1);
+            shortAnswerQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS= (List<ShortAnswerQuestionDTO>) shortAnswerQuestionService.randomSelectShortAnswerQuestionList(shortAnswerQuestionDTO,pager).getResult().getList();
             record.setShortAnswerQuestionDTOS(shortAnswerQuestionDTOS);
         }else{
             List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS = new ArrayList<>();
@@ -215,7 +224,10 @@ public class ExerciseController {
 
         if(record.getSingleChoiceNumber() > 0){
             pager.setRows(record.getSingleChoiceNumber());
-            List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(pager).getResult().getList();
+            SingleChoiceQuestionDTO singleChoiceQuestionDTO = new SingleChoiceQuestionDTO();
+            singleChoiceQuestionDTO.setLanguageClassificationStatus(1);
+            singleChoiceQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(singleChoiceQuestionDTO,pager).getResult().getList();
             record.setSingleChoiceQuestionDTOS(singleChoiceQuestionDTOS);
         }else{
             List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = new ArrayList<>();
@@ -224,7 +236,10 @@ public class ExerciseController {
 
         if(record.getTrueFalseNumber() > 0){
             pager.setRows(record.getTrueFalseNumber());
-            List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = (List<TrueFalseQuestionDTO>) trueFalseQuestionService.randomSelectTrueFalseQuestionList(pager).getResult().getList();
+            TrueFalseQuestionDTO trueFalseQuestionDTO = new TrueFalseQuestionDTO();
+            trueFalseQuestionDTO.setLanguageClassificationStatus(1);
+            trueFalseQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = (List<TrueFalseQuestionDTO>) trueFalseQuestionService.randomSelectTrueFalseQuestionList(trueFalseQuestionDTO,pager).getResult().getList();
             record.setTrueFalseQuestionDTOS(trueFalseQuestionDTOS);
         }else{
             List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = new ArrayList<>();
@@ -243,7 +258,10 @@ public class ExerciseController {
         Pager pager = new Pager();
         if(record.getFillVainNumber() > 0){
             pager.setRows(record.getFillVainNumber());
-            List<FillVainQuestionDTO> fillVainQuestionDTOS = (List<FillVainQuestionDTO>) fillVainQuestionService.randomSelectFillVainQuestionList(pager).getResult().getList();
+            FillVainQuestionDTO fillVainQuestionDTO = new FillVainQuestionDTO();
+            fillVainQuestionDTO.setLanguageClassificationStatus(1);
+            fillVainQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<FillVainQuestionDTO> fillVainQuestionDTOS = (List<FillVainQuestionDTO>) fillVainQuestionService.randomSelectFillVainQuestionList(fillVainQuestionDTO,pager).getResult().getList();
             record.setFillVainQuestionDTOS(fillVainQuestionDTOS);
         }else{
             List<FillVainQuestionDTO> fillVainQuestionDTOS = new ArrayList<>();
@@ -252,7 +270,10 @@ public class ExerciseController {
 
         if(record.getMultipleChoiceNumber() > 0){
             pager.setRows(record.getMultipleChoiceNumber());
-            List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = (List<MultipleChoiceQuestionDTO>) multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(pager).getResult().getList();
+            MultipleChoiceQuestionDTO multipleChoiceQuestionDTO = new MultipleChoiceQuestionDTO();
+            multipleChoiceQuestionDTO.setLanguageClassificationStatus(1);
+            multipleChoiceQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = (List<MultipleChoiceQuestionDTO>) multipleChoiceQuestionService.randomSelectMultipleChoiceQuestionList(multipleChoiceQuestionDTO,pager).getResult().getList();
             record.setMultipleChoiceQuestionDTOS(multipleChoiceQuestionDTOS);
         }else{
             List<MultipleChoiceQuestionDTO> multipleChoiceQuestionDTOS = new ArrayList<>();
@@ -261,7 +282,10 @@ public class ExerciseController {
 
         if(record.getShortAnswerNumber() > 0){
             pager.setRows(record.getShortAnswerNumber());
-            List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS= (List<ShortAnswerQuestionDTO>) shortAnswerQuestionService.randomSelectShortAnswerQuestionList(pager).getResult().getList();
+            ShortAnswerQuestionDTO shortAnswerQuestionDTO = new ShortAnswerQuestionDTO();
+            shortAnswerQuestionDTO.setLanguageClassificationStatus(1);
+            shortAnswerQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS= (List<ShortAnswerQuestionDTO>) shortAnswerQuestionService.randomSelectShortAnswerQuestionList(shortAnswerQuestionDTO,pager).getResult().getList();
             record.setShortAnswerQuestionDTOS(shortAnswerQuestionDTOS);
         }else{
             List<ShortAnswerQuestionDTO> shortAnswerQuestionDTOS = new ArrayList<>();
@@ -270,7 +294,10 @@ public class ExerciseController {
 
         if(record.getSingleChoiceNumber() > 0){
             pager.setRows(record.getSingleChoiceNumber());
-            List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(pager).getResult().getList();
+            SingleChoiceQuestionDTO singleChoiceQuestionDTO = new SingleChoiceQuestionDTO();
+            singleChoiceQuestionDTO.setLanguageClassificationStatus(1);
+            singleChoiceQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = (List<SingleChoiceQuestionDTO>) singleChoiceQuestionService.randomSelectSingleChoiceQuestionList(singleChoiceQuestionDTO,pager).getResult().getList();
             record.setSingleChoiceQuestionDTOS(singleChoiceQuestionDTOS);
         }else{
             List<SingleChoiceQuestionDTO> singleChoiceQuestionDTOS = new ArrayList<>();
@@ -279,7 +306,10 @@ public class ExerciseController {
 
         if(record.getTrueFalseNumber() > 0){
             pager.setRows(record.getTrueFalseNumber());
-            List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = (List<TrueFalseQuestionDTO>) trueFalseQuestionService.randomSelectTrueFalseQuestionList(pager).getResult().getList();
+            TrueFalseQuestionDTO trueFalseQuestionDTO = new TrueFalseQuestionDTO();
+            trueFalseQuestionDTO.setLanguageClassificationStatus(1);
+            trueFalseQuestionDTO.setLanguageClassificationId(record.getLanguageClassificationId());
+            List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = (List<TrueFalseQuestionDTO>) trueFalseQuestionService.randomSelectTrueFalseQuestionList(trueFalseQuestionDTO,pager).getResult().getList();
             record.setTrueFalseQuestionDTOS(trueFalseQuestionDTOS);
         }else{
             List<TrueFalseQuestionDTO> trueFalseQuestionDTOS = new ArrayList<>();

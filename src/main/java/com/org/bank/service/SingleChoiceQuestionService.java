@@ -20,7 +20,7 @@ public interface SingleChoiceQuestionService {
 
     ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> selectList(SingleChoiceQuestionDTO record, Pager pager);
 
-    ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> randomSelectSingleChoiceQuestionList(Pager pager);
+    ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> randomSelectSingleChoiceQuestionList(SingleChoiceQuestionDTO record, Pager pager);
 
     ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
 

@@ -121,13 +121,13 @@ public class SingleChoiceQuestionServiceImpl implements SingleChoiceQuestionServ
     }
 
     @Override
-    public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> randomSelectSingleChoiceQuestionList(Pager pager) {
+    public ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> randomSelectSingleChoiceQuestionList(SingleChoiceQuestionDTO record, Pager pager) {
         ExecuteResult<DataUtil<SingleChoiceQuestionDTO>> executeResult = new ExecuteResult<DataUtil<SingleChoiceQuestionDTO>>();
         try {
             if(StringUtils.isEmpty(pager)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            List<SingleChoiceQuestionDTO> result = singleChoiceQuestionDTOMapper.randomSelectSingleChoiceQuestionList(pager);
+            List<SingleChoiceQuestionDTO> result = singleChoiceQuestionDTOMapper.randomSelectSingleChoiceQuestionList(record,pager);
             DataUtil<SingleChoiceQuestionDTO> dtoDataUtil = new DataUtil<SingleChoiceQuestionDTO>();
             dtoDataUtil.setList(result);
             executeResult.setResult(dtoDataUtil);

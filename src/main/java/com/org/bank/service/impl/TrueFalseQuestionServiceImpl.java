@@ -124,13 +124,13 @@ public class TrueFalseQuestionServiceImpl implements TrueFalseQuestionService {
     }
 
     @Override
-    public ExecuteResult<DataUtil<TrueFalseQuestionDTO>> randomSelectTrueFalseQuestionList(Pager pager) {
+    public ExecuteResult<DataUtil<TrueFalseQuestionDTO>> randomSelectTrueFalseQuestionList(TrueFalseQuestionDTO record, Pager pager) {
         ExecuteResult<DataUtil<TrueFalseQuestionDTO>> executeResult = new ExecuteResult<DataUtil<TrueFalseQuestionDTO>>();
         try {
             if(StringUtils.isEmpty(pager)){
                 throw new RuntimeException("参数错误：对象非空");
             }
-            List<TrueFalseQuestionDTO> result = trueFalseQuestionDTOMapper.randomSelectTrueFalseQuestionList(pager);
+            List<TrueFalseQuestionDTO> result = trueFalseQuestionDTOMapper.randomSelectTrueFalseQuestionList(record,pager);
             DataUtil<TrueFalseQuestionDTO> dtoDataUtil = new DataUtil<TrueFalseQuestionDTO>();
             dtoDataUtil.setList(result);
             executeResult.setResult(dtoDataUtil);

@@ -36,6 +36,8 @@ public class StudentInfoController {
         if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
             return WrapMapper.error().result("请勿重复注册！");
         }
+        /* 设置默认状态1启用*/
+        record.setStatus(1);
         ExecuteResult<Integer> executeResult = studentInfoService.insert(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
@@ -47,11 +49,13 @@ public class StudentInfoController {
     public Wrapper<?> insertSelective(@RequestBody StudentInfoDTO record){
         StudentInfoDTO studentInfoDTO = new StudentInfoDTO();
         studentInfoDTO.setStudentEmail(record.getStudentEmail());
-        studentInfoDTO.setStatus(1);
+
         ExecuteResult<DataUtil<StudentInfoDTO>> dataUtilExecuteResult = studentInfoService.selectList(studentInfoDTO, null);
         if(dataUtilExecuteResult.getResult().getList() != null && dataUtilExecuteResult.getResult().getList().size() > 0){
             return WrapMapper.error().result("请勿重复注册！");
         }
+        /* 设置默认状态1启用*/
+        record.setStatus(1);
         ExecuteResult<Integer> executeResult = studentInfoService.insertSelective(record);
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);

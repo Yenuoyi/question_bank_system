@@ -19,7 +19,7 @@ public interface FillVainQuestionService {
 
     ExecuteResult<DataUtil<FillVainQuestionDTO>> selectList(FillVainQuestionDTO record, Pager pager);
 
-    ExecuteResult<DataUtil<FillVainQuestionDTO>> randomSelectFillVainQuestionList(Pager pager);
+    ExecuteResult<DataUtil<FillVainQuestionDTO>> randomSelectFillVainQuestionList(FillVainQuestionDTO record, Pager pager);
 
     ExecuteResult<DataUtil<FillVainQuestionDTO>> selectByPrimaryKeyList(List<Integer> keys);
 
