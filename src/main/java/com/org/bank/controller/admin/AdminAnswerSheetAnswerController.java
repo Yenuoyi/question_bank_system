@@ -1,5 +1,6 @@
 package com.org.bank.controller.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.bank.common.DataUtil;
 import com.org.bank.common.ExecuteResult;
 import com.org.bank.common.WrapMapper;
@@ -11,6 +12,8 @@ import com.org.bank.service.AnswerSheetAnswerService;
 import com.org.bank.service.AnswerSheetService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +29,7 @@ import java.util.List;
 @RequestMapping("/admin/answerSheetAnswer")
 @Api(description = "管理员角色拥有的答卷控制器")
 public class AdminAnswerSheetAnswerController {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     private AnswerSheetService answerSheetService;
     @Resource
@@ -101,6 +105,21 @@ public class AdminAnswerSheetAnswerController {
     @RequestMapping(value = "/updateByPrimaryKey",method={RequestMethod.POST})
     public Wrapper<?> updateByPrimaryKey(@RequestBody AnswerSheetAnswerDTO record){
         ExecuteResult<Integer> executeResult = answerSheetAnswerService.updateByPrimaryKey(record);
+        if(executeResult.isSuccess()){
+            return WrapMapper.ok().result(executeResult);
+        }
+        return WrapMapper.error().result(executeResult);
+    }
+
+    /**
+     * 关联表查询试卷原题与答题卡
+     * @param record
+     * @return
+     */
+    @RequestMapping(value = "/selectPaperSheetList",method={RequestMethod.POST})
+    public Wrapper<?> selectPaperSheetList(@RequestBody AnswerSheetAnswerDTO record){
+        logger.info("入参：{}", JSONObject.toJSON(record));
+        ExecuteResult<DataUtil<AnswerSheetAnswerDTO>> executeResult = answerSheetAnswerService.selectPaperSheetList(record,record.getPager());
         if(executeResult.isSuccess()){
             return WrapMapper.ok().result(executeResult);
         }
