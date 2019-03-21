@@ -34,7 +34,7 @@
       <if test="record.languageClassificationId and record.languageClassificationId != ''">
         and a.language_classification_id = #{record.languageClassificationId}
       </if>
-      <if test="record.status">
+      <if test="record.status != null">
         and a.status = #{record.status}
       </if>
       <if test="record.languageClassificationName and record.languageClassificationName != ''">
