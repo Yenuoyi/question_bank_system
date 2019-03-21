@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>教师列表</title>
+	<title>管理程序语言</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
@@ -11,6 +11,25 @@
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/public-js.js"></script>
   <style type="text/css" media="screen">
+    .tr-id,.td-status{
+      width:100px;
+    }
+    .td-btn{
+      width:300px;
+    }
+    .td-answer{
+      width: 500px;
+    }
+    .add-box{
+      text-align: center;
+    }
+    .add-programname{
+      margin: 20px;
+    }
+    .addD{
+      padding: 5px;
+      border-radius: 5px;
+    }
     ul.pagination {
       display: inline-block;
       padding: 0;
@@ -31,77 +50,47 @@
     .active{
       background-color: #337ab7 !important;
     }
-    .teacherID{
-      display: none;
-    }
-    .add-box{
-      text-align: center;
-    }
-    .add-teacherName,.add-teacherEmail,.add-teacherPhone,.add-passWord{
-      margin: 10px;
-    }
-    .addD{
-      float: right;
-      border:1px dashed #333;
-      padding: 5px;
-      border-radius: 5px;
-    }
-    .td-status{
-      width: 150px;
-    }
   </style>
 </head>
 <body class="container-fluid bg-index">
 	<div class="row content-row" id="practice">
 		<div class="col-sm-12 all-box-bg">
-			<div class="title-tc">教师列表</div>
+      <div class="title-tc">管理程序语言</div>
       <div class="add-box">
         <div class="flex addD">
-          <div class="add-teacherName">
-            <span>教师姓名：</span><input class="form-control new-teacher-name" type="text">
-          </div>
-          <div class="add-teacherEmail">
-            <span>教师邮箱：</span><input class="form-control new-teacher-email" type="text">
-          </div>
-          <div class="add-teacherPhone">
-            <span>教师电话：</span><input class="form-control new-teacher-phone" type="text">
-          </div>
-          <div class="add-passWord">
-            <span>登录密码：</span><input class="form-control new-teacher-password" type="password">
+          <div class="add-programname">
+            <span>程序语言名称：</span><input class="form-control new-program-name" type="text">
           </div>
           <div class="add-button">
-            <button class="btn btn-primary register-button" type="submit">注册</button>
+            <button class="btn btn-primary addNew-button" type="submit">增加</button>
           </div>
         </div>
       </div>
       <table class="table">
         <thead>
           <tr>
-            <th class="tr-id">姓名</th>
-            <th>个人邮箱</th>
-            <th>联系方式</th>
-            <th>账号状态</th>
+            <th class="tr-id">编号</th>
+            <th>程序语言名称</th>
+            <th>状态</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody id="table-item">
-          <!-- <tr>
-            <td class="name">
-              <input class="form-control" type="text">
+         <!--  <tr>
+            <td class="td-id">1</td>
+            <td class="td-name">
+              <input type='text' class='form-control' value=''>
             </td>
-            <td class="email">
-              <input class="form-control" type="text">
-            </td>
-            <td class="phone">
-              <input class="form-control" type="text">
-            </td>
-            <td class="btn">
-              <button class="btn btn-primary save-button" type="submit">保存</button>
+            <td class="td-btn">
+              <button class="btn btn-primary">保存</button>
+              <button class="btn btn-warning">删除</button>
+              <button class="btn btn-danger">禁用</button>
+              <button class="btn btn-success">启用</button>
             </td>
           </tr> -->
         </tbody>
       </table>
-      <div class="tc">
+      <div class="tc p-tc">
         <ul class="pagination"></ul>
         <input type="hidden" id="currentPage" name="currentPage" value="1"></input>
         <input type="hidden" id="totalPage"></input>
@@ -112,133 +101,92 @@
     var curPage =$("#currentPage").val();  //当前页面
     var last =$("#totalPage").val();    //总页数
     var page =Math.ceil(curPage/10);
-    $(function(){
-      //注册按钮事件
-      $(".register-button").click(function(){
-        var registerInfo = {
-          "teacherName": $(".new-teacher-name").val(),
-          "teacherPassword": $(".new-teacher-password").val(),
-          "teacherIphone": $(".new-teacher-phone").val(),
-          "teacherEmail": $(".new-teacher-email").val()
-        }  
-        var param = JSON.stringify(registerInfo);
-        console.log(param);
-        $.ajax({
-              type: "post",
-              headers: {
-                "content-Type":"application/json",
-              },
-              contentType:"application/json",
-              url: 'http://47.101.33.161:8081/admin/teacher/insertSelective',
-              data: param,
-              success: function (data) {
-                console.log("这是请求成功的");
-                console.log(data);
-                if(data.code == 500){
-                      alert(data.result);
-                    }else if(data.code == 200){
-                      alert('注册成功');
-                      window.location.reload();
-                    }else{
-                      alert(data.result);
-                    }
-              },
-              error:function (err) {
-                console.log("这是请求失败的");
-              }
-            });
-      })
-
-      var editSingleChoice = {
-              "pager": {
-                "rows" : "10",
-                "page" : "1"
-              }
+		$(function(){
+            var tempParam = {
+            	"pager": {
+            		"rows" : "10",
+            		"page" : "1"
+            	}
             } 
-            var teacherArr = '';
-            console.log(editSingleChoice);
-            var param = JSON.stringify(editSingleChoice);
+            var Answer = [];
+            var questionArr = '';
+            var param = JSON.stringify(tempParam);
             $.ajax({
-              type: "post",
-              headers: {
-                "content-Type":"application/json",
-              },
-              contentType:"application/json",
-              url: 'http://47.101.33.161:8081/admin/teacher/selectList',
-              data: param,
-              success: function (data) {
+            	type: "post",
+            	headers: {
+            		"content-Type":"application/json",
+            	},
+            	contentType:"application/json",
+            	url: 'http://47.101.33.161:8081/admin/languageClassificationController/selectList',
+            	data: param,
+            	success: function (data) {
                 console.log("这是请求成功的");
                 console.log(data);
                 if(data.code == 500){
                       alert(data.result);
                     }else if(data.code == 200){
+                      $(".pagination").remove();
+                      $(".p-tc").append("<ul class='pagination'></ul>")
+                      $("#table-item").children("tr").remove();
                       $("#totalPage").attr({value:data.result.result.pager.totalPage});
                       draw(page,curPage);
-                      teacherArr = data.result.result.list;
-                      for(var i=0;i<teacherArr.length;i++){
-                        $("#table-item").append("<tr><td class='name'><input class='form-control name-input' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control email-input' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control phone-input' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='td-status'>"+(teacherArr[i].status == 1 ? '已启用' : '已禁用')+"</td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存</button> <button class='btn btn-success btn-allow'>启用</button> <button class='btn btn-danger btn-ban'>禁用</button></td></tr>");
+                      programArr = data.result.result.list;
+                      for(var i=0;i<programArr.length;i++){
+                        $("#table-item").append("<tr><td class='td-id'>"+programArr[i].languageClassificationId+"</td><td class='td-name'><input type='text' class='form-control' value='"+programArr[i].languageClassificationName+"'></td><td class='td-status'>"+(programArr[i].languageClassificationStatus == 1 ? '已启用' : '已禁用')+"</td><td class='td-btn'><button class='btn btn-primary btn-save'>保存</button> <button class='btn btn-warning btn-delete'>删除</button> <button class='btn btn-success btn-allow'>启用</button> <button class='btn btn-danger btn-ban'>禁用</button></td></tr>");
                       }
                     }else{
                       alert(data.result);
                     }
-              },
-              error:function (err) {
-                console.log("这是请求失败的");
-              }
+            	},
+            	error:function (err) {
+            		console.log("这是请求失败的");
+            	}
             });
 
-            //保存信息事件
-            $(document).on("click",".save-button",function(){
-              var temp ={
-                "id":$(this).parent().siblings(".email").children(".teacherID").html(),
-                "teacherEmail":$(this).parent().siblings(".email").children(".email-input").val(),
-                "teacherName":$(this).parent().siblings(".name").children(".name-input").val(),
-                "teacherIphone":$(this).parent().siblings(".phone").children(".phone-input").val(),
+            //增加按钮点击事件
+            $(document).on("click",".addNew-button",function(){
+              var programName = $(".new-program-name").val();
+              if(programName == ''){
+                alert('请输入需要新增的程序语言名称');
+                return
               }
-              var param = JSON.stringify(temp);
-              console.log(param);
+              var tempp1 = {
+                "languageClassificationName" : programName
+              }
+              var param = JSON.stringify(tempp1);
               $.ajax({
-                type: "post",
-                headers: {
-                  "content-Type":"application/json",
-                },
-                contentType:"application/json",
-                url: 'http://47.101.33.161:8081/admin/teacher/updateByPrimaryKeySelective',
-                data: param,
-                success: function (data) {
-                  console.log("这是请求成功的");
-                  console.log(data);
-                  if(data.code == 500){
-                        alert(data.result);
-                      }else if(data.code == 200){
-                        alert("保存成功！");
-                        window.location.reload();
-                      }else{
-                        alert(data.result);
-                      }
-                },
-                error:function (err) {
-                  console.log("这是请求失败的");
-                }
-              }) 
+                    type: "post",
+                    headers: {
+                      "content-Type":"application/json",
+                    },
+                    contentType:"application/json",
+                    url: 'http://47.101.33.161:8081/admin/languageClassificationController/insert',
+                    data: param,
+                    success: function (data) {
+                      console.log("这是请求成功的");
+                      console.log(data);
+                      if(data.code == 500){
+                            alert(data.result);
+                          }else if(data.code == 200){
+                            alert('增加成功！');
+                            window.location.reload();
+                          }else{
+                            alert(data.result);
+                          }
+                    },
+                    error:function (err) {
+                      console.log("这是请求失败的");
+                    }
+              });
             })
 
-            //启用按钮提交事件
-            $("#table-item").on("click",".btn-allow",function(){
-              var id = $(this).parent().siblings(".email").children(".teacherID").html();
-              setstate(id,1);
-            })
-            //禁用按钮提交事件
-            $("#table-item").on("click",".btn-ban",function(){
-              var id = $(this).parent().siblings(".email").children(".teacherID").html();
-              setstate(id,2);
-            })
-
-            //启用禁用请求
-            function setstate(id,Status){
+            //保存按钮提交事件
+            $("#table-item").on("click",".btn-save",function(){
+              var editProgramName = $(this).parent().siblings(".td-name").children().val();
+              var editId = $(this).parent().siblings(".td-id")[0].innerHTML;
               var tempP = {
-                'id' : id,
-                "status" : Status
+                "languageClassificationName" : editProgramName,
+                'languageClassificationId' : editId
               }
               var param = JSON.stringify(tempP);
               console.log(param);
@@ -248,7 +196,7 @@
                   "content-Type":"application/json",
                 },
                 contentType:"application/json",
-                url: 'http://47.101.33.161:8081/admin/teacher/updateByPrimaryKeySelective',
+                url: 'http://47.101.33.161:8081/admin/languageClassificationController/updateByPrimaryKey',
                 data: param,
                 success: function (data) {
                   console.log("这是请求成功的");
@@ -256,7 +204,84 @@
                   if(data.code == 500){
                         alert(data.result);
                       }else if(data.code == 200){
-                        if(Status == 1){
+                        alert('保存成功');  
+                        window.location.reload(); 
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+              })
+            })
+            //删除按钮提交事件
+            $("#table-item").on("click",".btn-delete",function(){
+              var editId = $(this).parent().siblings(".td-id")[0].innerHTML;
+              var tempP = {
+                'languageClassificationId' : editId
+              }
+              var param = JSON.stringify(tempP);
+              console.log(param);
+              $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.101.33.161:8081/admin/languageClassificationController/deleteByPrimaryKey',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        alert('删除成功');  
+                        window.location.reload(); 
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+              })
+            })
+            //启用按钮提交事件
+            $("#table-item").on("click",".btn-allow",function(){
+              var editId = $(this).parent().siblings(".td-id")[0].innerHTML;
+              setstate(editId,1);
+            })
+            //禁用按钮提交事件
+            $("#table-item").on("click",".btn-ban",function(){
+              var editId = $(this).parent().siblings(".td-id")[0].innerHTML;
+              setstate(editId,2);
+            })
+
+            //启用禁用请求
+            function setstate(editId,languageStatus){
+              var tempP = {
+                'languageClassificationId' : editId,
+                "languageClassificationStatus" : languageStatus
+              }
+              var param = JSON.stringify(tempP);
+              console.log(param);
+              $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.101.33.161:8081/admin/languageClassificationController/updateByPrimaryKeySelective',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        if(languageStatus == 1){
                           alert('启用成功');
                         }else{
                           alert('禁用成功');
@@ -272,30 +297,31 @@
               })
             }
 
+
             //绑定点击页码事件
             $(document).on("click",".pagination li a",function(){
               var str =$(this).html();
               console.log(str);
-              var editSingleChoice = {
+              var editProgramLanguage = {
                 "pager": {
                   "rows" : "10",
                   "page" : str
                 }
               } 
-              if(editSingleChoice.pager.page == '»' || editSingleChoice.pager.page == '«'){
+              if(editProgramLanguage.pager.page == '»' || editProgramLanguage.pager.page == '«'){
                 return
               }
               var Answer = [];
               var questionArr = '';
-              console.log(editSingleChoice);
-              var param = JSON.stringify(editSingleChoice);
+              console.log(editProgramLanguage);
+              var param = JSON.stringify(editProgramLanguage);
               $.ajax({
               type: "post",
               headers: {
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://47.101.33.161:8081/admin/teacher/selectList',
+              url: 'http://47.101.33.161:8081/admin/languageClassificationController/selectList',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");
@@ -304,9 +330,9 @@
                       alert(data.result);
                     }else if(data.code == 200){
                       $("#table-item").children("tr").remove();
-                      teacherArr = data.result.result.list;
-                      for(var i=0;i<teacherArr.length;i++){
-                        $("#table-item").append("<tr><td class='name'><input class='form-control' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='td-status'>"+(teacherArr[i].status == 1 ? '已启用' : '已禁用')+"</td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存 <button class='btn btn-success btn-allow'>启用</button> <button class='btn btn-danger btn-ban'>禁用</button></button></td></tr>");
+                      programArr = data.result.result.list;
+                      for(var i=0;i<programArr.length;i++){
+                        $("#table-item").append("<tr><td class='td-id'>"+programArr[i].languageClassificationId+"</td><td class='td-name'><input type='text' class='form-control' value='"+programArr[i].languageClassificationName+"'></td><td class='td-status'>"+(programArr[i].languageClassificationStatus == 1 ? '已启用' : '已禁用')+"</td><td class='td-btn'><button class='btn btn-primary btn-save'>保存</button> <button class='btn btn-warning btn-delete'>删除</button> <button class='btn btn-success btn-allow'>启用</button> <button class='btn btn-danger btn-ban'>禁用</button></td></tr>");
                       }
                     }else{
                       alert(data.result);
@@ -332,26 +358,26 @@
               var page =Math.ceil((parseInt(num))/10);
               var nowPage = parseInt(num)+1;
               console.log(nowPage);
-              var editSingleChoice = {
+              var editProgramLanguage = {
                 "pager": {
                   "rows" : "10",
                   "page" : nowPage
                 }
               } 
-              if(editSingleChoice.pager.page == '»' || editSingleChoice.pager.page == '«' || editSingleChoice.pager.page > last){
+              if(editProgramLanguage.pager.page == '»' || editProgramLanguage.pager.page == '«' || editProgramLanguage.pager.page > last){
                 return
               }
               var Answer = [];
               var questionArr = '';
-              console.log(editSingleChoice);
-              var param = JSON.stringify(editSingleChoice);
+              console.log(editProgramLanguage);
+              var param = JSON.stringify(editProgramLanguage);
               $.ajax({
               type: "post",
               headers: {
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://47.101.33.161:8081/admin/teacher/selectList',
+              url: 'http://47.101.33.161:8081/admin/languageClassificationController/selectList',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");
@@ -360,9 +386,9 @@
                       alert(data.result);
                     }else if(data.code == 200){
                       $("#table-item").children("tr").remove();
-                      teacherArr = data.result.result.list;
-                      for(var i=0;i<teacherArr.length;i++){
-                        $("#table-item").append("<tr><td class='name'><input class='form-control' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='td-status'>"+(teacherArr[i].status == 1 ? '已启用' : '已禁用')+"</td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存 <button class='btn btn-success btn-allow'>启用</button> <button class='btn btn-danger btn-ban'>禁用</button></button></td></tr>");
+                      programArr = data.result.result.list;
+                      for(var i=0;i<programArr.length;i++){
+                        $("#table-item").append("<tr><td class='td-id'>"+programArr[i].languageClassificationId+"</td><td class='td-name'><input type='text' class='form-control' value='"+programArr[i].languageClassificationName+"'></td><td class='td-status'>"+(programArr[i].languageClassificationStatus == 1 ? '已启用' : '已禁用')+"</td><td class='td-btn'><button class='btn btn-primary btn-save'>保存</button> <button class='btn btn-warning btn-delete'>删除</button> <button class='btn btn-success btn-allow'>启用</button> <button class='btn btn-danger btn-ban'>禁用</button></td></tr>");
                       }
                     }else{
                       alert(data.result);
@@ -393,26 +419,26 @@
               var page =Math.ceil((parseInt(num))/10);
               var nowPage = parseInt(num)-1;
               console.log(nowPage);
-              var editSingleChoice = {
+              var editProgramLanguage = {
                 "pager": {
                   "rows" : "10",
                   "page" : nowPage
                 }
               } 
-              if(editSingleChoice.pager.page == '»' || editSingleChoice.pager.page == '«' || editSingleChoice.pager.page == 0){
+              if(editProgramLanguage.pager.page == '»' || editProgramLanguage.pager.page == '«' || editProgramLanguage.pager.page == 0){
                 return
               }
               var Answer = [];
               var questionArr = '';
-              console.log(editSingleChoice);
-              var param = JSON.stringify(editSingleChoice);
+              console.log(editProgramLanguage);
+              var param = JSON.stringify(editProgramLanguage);
               $.ajax({
               type: "post",
               headers: {
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://47.101.33.161:8081/admin/teacher/selectList',
+              url: 'http://47.101.33.161:8081/admin/languageClassificationController/selectList',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");
@@ -421,9 +447,9 @@
                       alert(data.result);
                     }else if(data.code == 200){
                       $("#table-item").children("tr").remove();
-                      teacherArr = data.result.result.list;
-                      for(var i=0;i<teacherArr.length;i++){
-                        $("#table-item").append("<tr><td class='name'><input class='form-control' type='text' value='"+teacherArr[i].teacherName+"'></td><td class='email'><input class='form-control' type='text' value='"+teacherArr[i].teacherEmail+"'><span class='teacherID'>"+teacherArr[i].id+"</span></td><td class='phone'><input class='form-control' type='text' value='"+teacherArr[i].teacherIphone+"'></td><td class='td-status'>"+(teacherArr[i].status == 1 ? '已启用' : '已禁用')+"</td><td class='btn'><button class='btn btn-primary save-button' type='submit'>保存 <button class='btn btn-success btn-allow'>启用</button> <button class='btn btn-danger btn-ban'>禁用</button></button></td></tr>");
+                      programArr = data.result.result.list;
+                      for(var i=0;i<programArr.length;i++){
+                        $("#table-item").append("<tr><td class='td-id'>"+programArr[i].languageClassificationId+"</td><td class='td-name'><input type='text' class='form-control' value='"+programArr[i].languageClassificationName+"'></td><td class='td-status'>"+(programArr[i].languageClassificationStatus == 1 ? '已启用' : '已禁用')+"</td><td class='td-btn'><button class='btn btn-primary btn-save'>保存</button> <button class='btn btn-warning btn-delete'>删除</button> <button class='btn btn-success btn-allow'>启用</button> <button class='btn btn-danger btn-ban'>禁用</button></td></tr>");
                       }
                     }else{
                       alert(data.result);
@@ -497,8 +523,7 @@
               liStr +="<li><a id='nextPage' href='#'>»</a></li>";
               $(".pagination").append(liStr);
             }
-
-    })
+		})
 
 	</script>
 </body>

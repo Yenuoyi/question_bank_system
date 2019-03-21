@@ -96,6 +96,7 @@
     var shortAnswerAnswer = [];
 		$(function(){
       $(".btn-sub").click(function(){
+        var selectPID = JSON.parse(window.sessionStorage.getItem("tempPID"));
         var singleChoiceNumber = parseInt($(".s-input").val());
         var multipleChoiceNumber = parseInt($(".m-input").val());
         var trueFalseNumber = parseInt($(".j-input").val());
@@ -114,7 +115,8 @@
           "multipleChoiceNumber" : multipleChoiceNumber,
           "trueFalseNumber" : trueFalseNumber,
           "fillVainNumber" : fillVainNumber,
-          "shortAnswerNumber" :shortAnswerNumber
+          "shortAnswerNumber" :shortAnswerNumber,
+          "languageClassificationId":selectPID
         }
         var param = JSON.stringify(tempparam);
         $.ajax({
@@ -123,7 +125,7 @@
               "content-Type":"application/json",
             },
             contentType:"application/json",
-            url: 'http://localhost:8081/all/exercise/numberExercise',
+            url: 'http://47.101.33.161:8081/all/exercise/numberExercise',
             data: param,
             success: function (data) {
               console.log("这是请求成功的");

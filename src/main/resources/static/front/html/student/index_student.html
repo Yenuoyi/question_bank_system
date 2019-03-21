@@ -10,6 +10,18 @@
 	<script src="../../js/jquery-3.3.1.min.js"></script>
 	<script src="../../js/bootstrap.min.js"></script>
 	<script src="../../js/public-js.js"></script>
+  <style type="text/css">
+    .select-program{
+      margin-top: 10px;
+      display: flex;
+    }
+    .change-button{
+      margin-left: 20px;
+    }
+    .nowP{
+      margin-left:20px;
+    }
+  </style>
 </head>
 <body class="container-fluid bg-index">
 	<ul class="nav nav-pills nav-justified nav-ul-li">
@@ -21,6 +33,16 @@
 	<!-- 练习宝库 -->
 	<div class="row content-row" id="practice">
 		<div class="col-sm-12 practice-box">
+      <div class="col-sm-12 select-program">
+        <div class="flex" style="width:100%;">
+          <strong style="font-size: 16px;width: 110px;">切换程序语言:</strong>
+          <select class="selectpicker show-tick form-control" data-live-search="true" style="width: 200px;">
+            <option>---请选择程序语言---</option>
+          </select>
+          <button class="btn btn-primary change-button" type="submit">确定</button>
+          <strong class="nowP">当前程序语言暂未设置</strong>
+        </div>
+      </div>
 			<div class="list-group practice-list">
   				<a href="#" class="practice-item list-group-item">单选题</a>
   				<a href="#" class="practice-item list-group-item">多选题</a>
@@ -34,11 +56,14 @@
 	<!-- 模拟实战 -->
 	<div class="row content-row" id="simulate">
 		<div class="col-sm-12 simulate-box">
+      <div class="col-sm-12 select-program">
+          <strong class="nowP">当前程序语言暂未设置</strong>
+      </div>
 			<div class="list-group simulate-list">
   				<a href="#" class="simulate-item list-group-item">直接组卷</a>
   				<a href="#" class="simulate-item list-group-item">按比例抽题组卷</a>
   				<a href="#" class="simulate-item list-group-item">随机抽题组卷</a>
-  				<a href="#" class="simulate-item list-group-item">查看成绩</a>
+  				<a href="#" class="simulate-item list-group-item">查看所有成绩</a>
 			</div>
 		</div>
 	</div>
@@ -63,6 +88,11 @@
 	</div>
 	<script>
 		$(function(){
+        if (window.sessionStorage["tempPID"]){
+          var selectPID = JSON.parse(window.sessionStorage.getItem("tempPID"));
+          var selectPNAME = JSON.parse(window.sessionStorage.getItem("tempPNAME"));
+          $(".nowP").html("当前程序语言为："+selectPNAME)
+        }
   			$(".practice-item,.simulate-item,.question-item,.manage-item").mouseover(select);
   			$(".practice-item,.simulate-item,.question-item,.manage-item").mouseout(Notselect);
   			$(".practice-i").click(function() {
@@ -99,31 +129,67 @@
   			});
         //练习宝库点击事件
         $(".practice-item:nth-child(1)").click(function(){
+          if(!selectPID&&!selectPNAME){
+            alert("请先确定选择程序语言再练习");
+            return
+          }
           window.location.href = "../practice/singleChoice.html"
         })
         $(".practice-item:nth-child(2)").click(function(){
+          if(!selectPID&&!selectPNAME){
+            alert("请先确定选择程序语言再练习");
+            return
+          }
           window.location.href = "../practice/multipleChoice.html"
         })
         $(".practice-item:nth-child(3)").click(function(){
+          if(!selectPID&&!selectPNAME){
+            alert("请先确定选择程序语言再练习");
+            return
+          }
           window.location.href = "../practice/Judge.html"
         })
         $(".practice-item:nth-child(4)").click(function(){
+          if(!selectPID&&!selectPNAME){
+            alert("请先确定选择程序语言再练习");
+            return
+          }
           window.location.href = "../practice/fillVain.html"
         })
         $(".practice-item:nth-child(5)").click(function(){
+          if(!selectPID&&!selectPNAME){
+            alert("请先确定选择程序语言再练习");
+            return
+          }
           window.location.href = "../practice/shortAnswer.html"
         })
         $(".practice-item:nth-child(6)").click(function(){
+          if(!selectPID&&!selectPNAME){
+            alert("请先确定选择程序语言再练习");
+            return
+          }
           window.location.href = "../practice/askAnswer.html"
         })
         //模拟实战点击事件
         $(".simulate-item:nth-child(1)").click(function(){
+          if(!selectPID&&!selectPNAME){
+            alert("请先确定选择程序语言再练习");
+            return
+          }
           window.location.href = "../exam/examList.html"
         })
         $(".simulate-item:nth-child(2)").click(function(){
+          if(!selectPID&&!selectPNAME){
+            alert("请先确定选择程序语言再练习");
+            return
+          }
           window.location.href = "../practice/proportionExercise.html"
         })
         $(".simulate-item:nth-child(3)").click(function(){
+          if(!selectPID&&!selectPNAME){
+            alert("请先确定选择程序语言再练习");
+            return
+          }
           window.location.href = "../practice/numberExercise.html"
         })
         $(".simulate-item:nth-child(4)").click(function(){
@@ -150,7 +216,7 @@
               "content-Type":"application/json",
             },
             contentType:"application/json",
-            url: 'http://localhost:8081/logout',
+            url: 'http://47.101.33.161:8081/logout',
             data: '',
             success: function (data) {
               console.log("这是请求成功的");
@@ -168,7 +234,52 @@
   			function Notselect(){
   				$(this).removeClass('active');
   			}
-		})
+        //请求程序语言列表
+        var tempParam1 = {
+          "languageClassificationStatus": 1
+        } 
+        var param = JSON.stringify(tempParam1);
+        $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.101.33.161:8081/admin/languageClassificationController/selectList',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+              alert(data.result);
+            }else if(data.code == 200){
+              for(var i=0;i<data.result.result.list.length;i++){  
+                $(".show-tick").append("<option>"+data.result.result.list[i].languageClassificationId+"."+data.result.result.list[i].languageClassificationName+"</option>");
+              }
+            }else{
+              alert(data.result);
+            }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+        });
+        //切换程序语言列表
+        $(".change-button").click(function(){
+          var programName = $(".show-tick option:selected").text();
+          var programNameArr = programName.split('.');
+          if(programNameArr[0] == '---请选择程序语言---'){
+            alert('请选择程序语言');
+            return
+          }
+          var tempPID = JSON.stringify(programNameArr[0]);
+          var tempPNAME = JSON.stringify(programNameArr[1]);
+          window.sessionStorage["tempPID"] = tempPID;
+          window.sessionStorage["tempPNAME"] = tempPNAME;
+          alert('切换成功'); 
+          window.location.reload();
+        })
+		  })
 	</script>
 </body>
 </html>

@@ -43,11 +43,13 @@
 	</div>
 	<script type="text/javascript">
 		$(function(){
+            var selectPID = JSON.parse(window.sessionStorage.getItem("tempPID"));
             var Judge = {
             	"pager": {
             		"rows" : "10",
             		"page" : "1"
-            	}
+            	},
+              "languageClassificationId":selectPID
             } 
             var Answer = [];
             var questionArr = '';
@@ -58,7 +60,7 @@
             		"content-Type":"application/json",
             	},
             	contentType:"application/json",
-            	url: 'http://localhost:8081/all/exercise/randomSelectTrueFalseQuestionList',
+            	url: 'http://47.101.33.161:8081/all/exercise/randomSelectTrueFalseQuestionList',
             	data: param,
             	success: function (data) {
                 console.log(data);
@@ -103,7 +105,7 @@
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://localhost:8081/all/exercise/trueFalseQuestionCheck',
+              url: 'http://47.101.33.161:8081/all/exercise/trueFalseQuestionCheck',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");

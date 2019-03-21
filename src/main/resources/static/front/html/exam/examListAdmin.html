@@ -28,7 +28,7 @@
     .select-box{
       display: inline-block;
       width: 150px;
-      margin-right: 50px;
+      margin-right: 30px;
     }
     .exam-status{
       margin-left: 20px;
@@ -69,7 +69,7 @@
             "content-Type":"application/json",
           },
           contentType:"application/json",
-          url: 'http://47.101.33.161:8081/teacher/examinationPaper/selectList',
+          url: 'http://47.101.33.161:8081/admin/examinationPaper/selectList',
           data: param,
           success: function (data) {
             console.log("这是请求成功的");
@@ -78,7 +78,7 @@
                   alert(data.result);
                 }else if(data.code == 200){
                   for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id'><div class='select-box'><select class='selectpicker show-tick form-control' data-live-search='true'><option>"+data.result.result.list[i].languageClassificationId+"."+data.result.result.list[i].languageClassificationName+"</option></select></div><input type='text' class='form-control exam-title' value='"+data.result.result.list[i].examinationPaperName+"'><button class='btn btn-danger del-btn'>删除</button> <button class='btn btn-warning edit-btn'>编辑</button> <button class='btn btn-info editTitle-btn'>保存 </button> <button class='btn btn-primary look-btn'>查看答卷</button><p class='exam-id'>"+data.result.result.list[i].id+"</p><span class='exam-status'>试卷状态："+(data.result.result.list[i].status == 1?'已启用':'已禁用')+"</span></td></tr>");
+                    $("#table-item").append("<tr><td class='td-id'><div class='select-box'><select class='selectpicker show-tick form-control' data-live-search='true'><option>"+data.result.result.list[i].languageClassificationId+"."+data.result.result.list[i].languageClassificationName+"</option></select></div><input type='text' class='form-control exam-title' value='"+data.result.result.list[i].examinationPaperName+"'><button class='btn btn-danger btn-ban'>禁用</button><button class='btn btn-success btn-allow'>启用</button> <button class='btn btn-danger del-btn'>删除</button> <button class='btn btn-warning edit-btn'>编辑</button> <button class='btn btn-info editTitle-btn'>保存 </button> <button class='btn btn-primary look-btn'>查看答卷</button><p class='exam-id'>"+data.result.result.list[i].id+"</p><span class='exam-status'>试卷状态："+(data.result.result.list[i].status == 1?'已启用':'已禁用')+"</span></td></tr>");
                   }
                   appendSOption();
                 }else{
@@ -123,12 +123,12 @@
       //编辑点击按钮
       $("#table-item").on("click",".edit-btn",function(){
         var id = $(this).siblings(".exam-id").html();
-        window.location.href = "examDetailTeacher.html?originalExaminationPaperid="+id+"";
+        window.location.href = "examDetailAdmin.html?originalExaminationPaperid="+id+"";
       })
       //查看答卷点击按钮
       $("#table-item").on("click",".look-btn",function(){
         var id = $(this).siblings(".exam-id").html();
-        window.location.href = "answerListTeacher.html?examinationPaperId="+id+"";
+        window.location.href = "answerListAdmin.html?examinationPaperId="+id+"";
       })
       //修改试卷名事件
       $("#table-item").on("click",".editTitle-btn",function(){
@@ -146,7 +146,7 @@
               "content-Type":"application/json",
             },
             contentType:"application/json",
-            url: 'http://47.101.33.161:8081/teacher/examinationPaper/updateByPrimaryKeySelective',
+            url: 'http://47.101.33.161:8081/admin/examinationPaper/updateByPrimaryKeySelective',
             data: param,
             success: function (data) {
               console.log("这是请求成功的");
@@ -178,7 +178,7 @@
               "content-Type":"application/json",
             },
             contentType:"application/json",
-            url: 'http://47.101.33.161:8081/teacher/examinationPaper/deleteByPrimaryKey',
+            url: 'http://47.101.33.161:8081/admin/examinationPaper/deleteByPrimaryKey',
             data: param,
             success: function (data) {
               console.log("这是请求成功的");
@@ -197,6 +197,54 @@
             }
         }) 
       })
+
+      //启用按钮提交事件
+      $("#table-item").on("click",".btn-allow",function(){
+        var id = $(this).siblings(".exam-id").html()
+        setstate(id,1);
+      })
+      //禁用按钮提交事件
+      $("#table-item").on("click",".btn-ban",function(){
+        var id = $(this).siblings(".exam-id").html()
+        setstate(id,2);
+      })
+      //启用禁用请求
+      function setstate(id,Status){
+        var tempP = {
+          'id' : id,
+          "status" : Status
+        }
+        var param = JSON.stringify(tempP);
+        console.log(param);
+        $.ajax({
+          type: "post",
+          headers: {
+            "content-Type":"application/json",
+          },
+          contentType:"application/json",
+          url: 'http://47.101.33.161:8081/admin/examinationPaper/updateByPrimaryKeySelective',
+          data: param,
+          success: function (data) {
+            console.log("这是请求成功的");
+            console.log(data);
+            if(data.code == 500){
+                  alert(data.result);
+                }else if(data.code == 200){
+                  if(Status == 1){
+                    alert('启用成功');
+                  }else{
+                    alert('禁用成功');
+                  }  
+                  window.location.reload(); 
+                }else{
+                  alert(data.result);
+                }
+          },
+          error:function (err) {
+            console.log("这是请求失败的");
+          }
+        })
+      }
 		})
 	</script>
 </body>

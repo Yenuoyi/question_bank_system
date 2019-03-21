@@ -28,6 +28,9 @@
 		<div class="col-sm-12 all-box-bg">
 			<div class="title-tc">创建问答题</div>
 			 <div class="create-box">
+        <select class="selectpicker show-tick form-control" data-live-search="true">
+          <option>---请选择程序语言---</option>
+        </select>
         <textarea id="Question" rows="5" placeholder="题目" style="width: 100%;" class ="form-control"></textarea>
         <textarea id="Answer" rows="5" placeholder="标准答案" style="width: 100%;" class ="form-control"></textarea>
        </div>
@@ -38,11 +41,47 @@
 	</div>
 	<script type="text/javascript">
 		$(function(){
+      var tempParam = {
+        "languageClassificationStatus": 1
+      } 
+      var param = JSON.stringify(tempParam);
+      $.ajax({
+        type: "post",
+        headers: {
+          "content-Type":"application/json",
+        },
+        contentType:"application/json",
+        url: 'http://47.101.33.161:8081/admin/languageClassificationController/selectList',
+        data: param,
+        success: function (data) {
+          console.log("这是请求成功的");
+          console.log(data);
+          if(data.code == 500){
+            alert(data.result);
+          }else if(data.code == 200){
+            for(var i=0;i<data.result.result.list.length;i++){  
+              $(".show-tick").append("<option>"+data.result.result.list[i].languageClassificationId+"."+data.result.result.list[i].languageClassificationName+"</option>");
+            }
+          }else{
+            alert(data.result);
+          }
+        },
+        error:function (err) {
+          console.log("这是请求失败的");
+        }
+      });
+
       $(".create-button").click(function() {
-        console.log($("#Question").val());
+        var programName = $(".show-tick option:selected").text();
+        var programNameArr = programName.split('.');
+        if(programNameArr[0] == '---请选择程序语言---'){
+          alert('请选择程序语言');
+          return
+        }
         var createDetail = {
           "shortAnswerQuestion":$("#Question").val(),
-          "shortAnswerAnswer":$("#Answer").val()
+          "shortAnswerAnswer":$("#Answer").val(),
+          "languageClassificationId":programNameArr[0]
         }
         if(createDetail.fillVainQuestion == ''){
           alert('请输入题目');
@@ -59,7 +98,7 @@
                 "content-Type":"application/json",
               },
               contentType:"application/json",
-              url: 'http://localhost:8081/teacher/shortAnswerQuestion/insertSelective',
+              url: 'http://47.101.33.161:8081/teacher/shortAnswerQuestion/insertSelective',
               data: param,
               success: function (data) {
                 console.log("这是请求成功的");

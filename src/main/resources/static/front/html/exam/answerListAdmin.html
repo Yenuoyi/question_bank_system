@@ -14,7 +14,7 @@
     .td-id{
       font-size: 20px;
     }
-    .btn{
+    .btn-primary{
       float: right;
     }
     .answer-id,.exam-id{
@@ -36,6 +36,9 @@
     .answer-title{
       width: 500px;
     }
+    .return{
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body class="container-fluid bg-index">
@@ -45,15 +48,18 @@
 			<table class="table">
         <thead>
           <tr>
-            <th class="tr-id">答卷名称</th>
+            <th class="tr-id">答卷用户</th>
           </tr>
         </thead>
         <tbody id="table-item">
           <!-- <tr>
-            <td class="td-id "><div class="answer-title">1</div><span class="check-box"><span class="on-score">总分为：100</span><span class="off-score">待评分</span></span><button class="btn btn-primary">详情</button></td>
+            <td class="td-id flex"><div class="answer-title">1dsadasdddsadasdasdasdas sadsasa</div><span class="check-box"><span class="on-score">总分为：100</span><span class="off-score">待评分</span></span><button class="btn btn-primary">评分</button></td>
           </tr> -->
         </tbody>
       </table>
+      <div class="create-btn col-sm-10 col-sm-offset-1 tc">
+          <button class="btn btn-warning return">返回</button>
+      </div>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -67,11 +73,8 @@
     }
 		$(function(){
       var tempparam = {
-              "pager": {
-                "rows" : "",
-                "page" : ""
-              }
-            }
+          "examinationPaperId": examinationPaperId
+        }
       var param = JSON.stringify(tempparam);
       $.ajax({
           type: "post",
@@ -79,7 +82,7 @@
             "content-Type":"application/json",
           },
           contentType:"application/json",
-          url: 'http://47.101.33.161:8081/all/answerSheet/selectSheetPaperList',
+          url: 'http://47.101.33.161:8081/admin/answerSheet/selectList',
           data: param,
           success: function (data) {
             console.log("这是请求成功的");
@@ -88,7 +91,7 @@
                   alert(data.result);
                 }else if(data.code == 200){
                   for(var i=0;i<data.result.result.list.length;i++){
-                    $("#table-item").append("<tr><td class='td-id flex'><div class='answer-title'>"+data.result.result.list[i].examinationPaperName+"</div><span class='check-box'><span class='on-score show"+i+"'>总分为："+data.result.result.list[i].grade+"</span><span class='off-score noshow"+i+"'>待评分</span></span> <button class='btn btn-primary'>详情</button><p class='answer-id'>"+data.result.result.list[i].id+"</p><p class='exam-id'>"+data.result.result.list[i].examinationPaperId+"</p></td></tr>");
+                    $("#table-item").append("<tr><td class='td-id flex'><div class='answer-title'>"+data.result.result.list[i].answererName+"</div><span class='check-box'><span class='on-score show"+i+"'>总分为："+data.result.result.list[i].grade+"</span><span class='off-score noshow"+i+"'>待评分</span></span>  <button class='btn btn-primary'>评分</button><p class='answer-id'>"+data.result.result.list[i].id+"</p><p class='exam-id'>"+data.result.result.list[i].examinationPaperId+"</p></td></tr>");
                     if(data.result.result.list[i].grade != null){
                       $(".show"+i+"").show();
                     }else{
@@ -106,7 +109,11 @@
       }) 
       $("#table-item").on("click",".btn",function(){
         var id = $(this).siblings(".answer-id").html();
-        window.location.href = "answerDetail.html?answerSheetId="+id+"";
+        window.location.href = "answerDetailAdmin.html?answerSheetId="+id+""
+      })
+      //返回按钮点击事件
+      $(".return").click(function(){
+        window.history.go(-1);
       })
 		})
 	</script>

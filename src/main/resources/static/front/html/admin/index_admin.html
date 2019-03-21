@@ -13,7 +13,7 @@
 </head>
 <body class="container-fluid bg-index">
 	<ul class="nav nav-pills nav-justified nav-ul-li">
-		<li role="presentation" class="nav-li practice-i active"><a href="#">练习宝库</a></li>
+		<li role="presentation" class="nav-li practice-i active"><a href="#">管理仓库</a></li>
 		<!-- <li role="presentation" class="nav-li simulate-i"><a href="#">模拟实战</a></li> -->
 		<!-- <li role="presentation" class="nav-li create-i"><a href="#">创造中心</a></li> -->
 		<li role="presentation" class="nav-li manage-i"><a href="#">用户天地</a></li>
@@ -28,6 +28,8 @@
   				<a href="#" class="practice-item list-group-item">查看/修改填空题</a>
   				<a href="#" class="practice-item list-group-item">查看/修改简答题</a>
           <a href="#" class="practice-item list-group-item">查看/修改问答题</a>
+          <a href="#" class="practice-item list-group-item">查看/修改/审核试卷</a>
+          <a href="#" class="practice-item list-group-item">管理程序语言</a>
 			</div>
 		</div>
 	</div>
@@ -101,7 +103,7 @@
   				$("#create").css('display','none');
   				$("#manage").css('display','block');
   			});
-        //练习宝库点击事件
+        //管理仓库点击事件
         $(".practice-item:nth-child(1)").click(function(){
           window.location.href = "../edit/editSingleChoiceAdmin.html"
         })
@@ -119,6 +121,12 @@
         })
         $(".practice-item:nth-child(6)").click(function(){
           window.location.href = "../edit/editAskAnswerAdmin.html"
+        })
+        $(".practice-item:nth-child(7)").click(function(){
+          window.location.href = "../exam/examListAdmin.html"
+        })
+        $(".practice-item:nth-child(8)").click(function(){
+          window.location.href = "../edit/editProgramLanguage.html"
         })
         //用户天地点击事件
         $(".manage-item:nth-child(1)").click(function(){
@@ -140,7 +148,7 @@
               "content-Type":"application/json",
             },
             contentType:"application/json",
-            url: 'http://localhost:8081/logout',
+            url: 'http://47.101.33.161:8081/logout',
             data: '',
             success: function (data) {
               console.log("这是请求成功的");

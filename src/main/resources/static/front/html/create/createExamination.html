@@ -68,6 +68,11 @@
         <div class="col-sm-6 col-sm-offset-3  ">
           <input type="text" class="form-control exam-title" placeholder="试卷名称">
         </div>
+        <div class="col-sm-6 col-sm-offset-3  ">
+          <select class="selectpicker show-tick form-control exam-title" data-live-search="true">
+            <option>---请选择程序语言---</option>
+          </select>
+        </div>
         <!-- 单选题 -->
         <div class="sc-paper col-sm-10 col-sm-offset-1">
           <div class="flex">
@@ -153,6 +158,36 @@
 	</div>
 	<script type="text/javascript">
 		$(function(){
+      var tempParam = {
+        "languageClassificationStatus": 1
+      } 
+      var param = JSON.stringify(tempParam);
+      $.ajax({
+        type: "post",
+        headers: {
+          "content-Type":"application/json",
+        },
+        contentType:"application/json",
+        url: 'http://47.101.33.161:8081/admin/languageClassificationController/selectList',
+        data: param,
+        success: function (data) {
+          console.log("这是请求成功的");
+          console.log(data);
+          if(data.code == 500){
+            alert(data.result);
+          }else if(data.code == 200){
+            for(var i=0;i<data.result.result.list.length;i++){  
+              $(".show-tick").append("<option>"+data.result.result.list[i].languageClassificationId+"."+data.result.result.list[i].languageClassificationName+"</option>");
+            }
+          }else{
+            alert(data.result);
+          }
+        },
+        error:function (err) {
+          console.log("这是请求失败的");
+        }
+      });
+
       //增加事件
       $(".add-btn-sc").click(function(){
         $("#singleChoice-ul").append("<li class='list-group-item flex singleChoice-li'><textarea id='sc-Question' rows='3' placeholder='题目'' class='form-control paper-q'></textarea><textarea id='sc-Option' rows='3' placeholder='选项'' class='form-control paper-o'></textarea><input id='sc-Answer' type='text' class='form-control paper-a' placeholder='答案'><button class='btn btn-danger del-btn-sc'>-</button></li>")
@@ -187,6 +222,12 @@
       })
       //创建事件
       $(".create-button").click(function(){
+        var programName = $(".show-tick option:selected").text();
+        var programNameArr = programName.split('.');
+        if(programNameArr[0] == '---请选择程序语言---'){
+          alert('请选择程序语言');
+          return
+        }
         var singleChoiceNum = $("#singleChoice-ul").children().length;
         var multipleChoiceNum = $("#multipleChoice-ul").children().length;
         var JudgeNum = $("#Judge-ul").children().length;
@@ -194,7 +235,8 @@
         var shortAnswerNum = $("#shortAnswer-ul").children().length;
         var tempP = {
           "examinationPaperName" : $(".exam-title").val(),
-          "examinationPaperQuestionDTOList" : []
+          "examinationPaperQuestionDTOList" : [],
+          "languageClassificationId":programNameArr[0]
         }
         if($(".exam-title").val() == ''){
           alert("请填写试卷名称");
@@ -259,7 +301,7 @@
             "content-Type":"application/json",
           },
           contentType:"application/json",
-          url: 'http://localhost:8081/teacher/examinationPaper/insertSelective',
+          url: 'http://47.101.33.161:8081/teacher/examinationPaper/insertSelective',
           data: param,
           success: function (data) {
             console.log("这是请求成功的");

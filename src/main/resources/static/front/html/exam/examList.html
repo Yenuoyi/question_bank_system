@@ -42,11 +42,14 @@
 	</div>
 	<script type="text/javascript">
 		$(function(){
+      var selectPID = JSON.parse(window.sessionStorage.getItem("tempPID"));
       var tempparam = {
           "pager": {
                 "rows" : "",
                 "page" : ""
-          }
+          },
+          "languageClassificationId":selectPID,
+          "status":1
         }
       var param = JSON.stringify(tempparam);
       $.ajax({
@@ -55,7 +58,7 @@
             "content-Type":"application/json",
           },
           contentType:"application/json",
-          url: 'http://localhost:8081/all/examinationPaper/selectList',
+          url: 'http://47.101.33.161:8081/all/examinationPaper/selectList',
           data: param,
           success: function (data) {
             console.log("这是请求成功的");
