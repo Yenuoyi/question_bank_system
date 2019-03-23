@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>查询判断题</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/public.css">
+	<script src="../../js/jquery-3.3.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/public-js.js"></script>
+  <style type="text/css" media="screen">
+    .r-btn{
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .btn-choice{
+      margin-top: 10px;
+    }
+    .tr-id{
+      width:100px;
+    }
+    .td-id,.td-answer{
+      padding-top: 40px !important;
+    }
+    .td-btn{
+      padding-top: 40px !important;
+      width:150px;
+    }
+    .td-answer{
+      width: 100px;
+    }
+    ul.pagination {
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+    }
+    ul.pagination li {
+      display: inline;
+    }
+    ul.pagination li a {
+      font-weight: bold;
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      border: 1px solid #ddd;
+      border-radius:3px;
+    }
+    .active{
+      background-color: #337ab7 !important;
+    }
+    .td-program{
+      padding-top: 40px !important;
+      width: 150px;
+    }
+  </style>
+</head>
+<body class="container-fluid bg-index">
+	<div class="row content-row" id="practice">
+		<div class="col-sm-12 all-box-bg">
+			<div class="title-tc">查询判断题</div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="tr-id">编号</th>
+            <th>程序语言</th>
+            <th>题目</th>
+            <th>答案</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="table-item">
+          <!-- <tr>
+            <td class="td-id">1</td>
+            <td class="td-question">
+              <textarea name="td-question" rows="4" class="form-control">
+              </textarea>
+            </td>
+            <td class="td-answer">
+              <input type='text' class='form-control' value=''>
+            </td>
+            <td class="td-btn">
+              <button class="btn btn-primary">保存</button>
+              <button class="btn btn-warning">删除</button>
+            </td>
+          </tr> -->
+        </tbody>
+      </table>
+      <div class="tc">
+        <ul class="pagination"></ul>
+        <input type="hidden" id="currentPage" name="currentPage" value="1"></input>
+        <input type="hidden" id="totalPage"></input>
+      </div>
+		</div>
+	</div>
+	<script type="text/javascript">
+    var questionName = decodeURI(GetUrlParam("searchQuestion"));
+    var languageClassificationName = decodeURI(GetUrlParam("searchLanguge"));
+    var status = decodeURI(GetUrlParam("status"));
+    //获取参数
+    function GetUrlParam(paraName) {
+　　　　var url = document.location.toString();
+　　　　var arrObj = url.split("?");
+　　　　if (arrObj.length > 1) {
+　　　　　　var arrPara = arrObj[1].split("&");
+　　　　　　var arr;
+
+　　　　　　for (var i = 0; i < arrPara.length; i++) {
+　　　　　　　　arr = arrPara[i].split("=");
+
+　　　　　　　　if (arr != null && arr[0] == paraName) {
+　　　　　　　　　　return arr[1];
+　　　　　　　　}
+　　　　　　}
+　　　　　　return "";
+　　　　}
+　　　　else {
+　　　　　　return "";
+　　　　}
+　　}
+		$(function(){
+            var editMultipleChoice = {
+            	"pager": {
+            		"rows" : "",
+            		"page" : ""
+            	},
+              "trueFalseQuestion" : questionName ,
+              "languageClassificationName" : languageClassificationName
+            } 
+            var Answer = [];
+            var questionArr = '';
+            console.log(editMultipleChoice);
+            var param = JSON.stringify(editMultipleChoice);
+            $.ajax({
+            	type: "post",
+            	headers: {
+            		"content-Type":"application/json",
+            	},
+            	contentType:"application/json",
+            	url: 'http://47.101.33.161:8081/'+status+'/trueFalseQuestion/selectList',
+            	data: param,
+            	success: function (data) {
+            		console.log("这是请求成功的");
+                console.log(data);
+            		if(data.code == 500){
+                    	alert(data.result);
+                    }else if(data.code == 200){
+                    	questionArr = data.result.result.list;
+                    	console.log(questionArr);
+                    	//遍历问题和选项
+                    	for(var i=0;i<questionArr.length;i++){
+                    		$("#table-item").append("<tr><td class='td-id'>"+questionArr[i].id+"</td><td class='td-program'><select class='selectpicker show-tick form-control' data-live-search='true'><option>"+questionArr[i].languageClassificationId+"."+questionArr[i].languageClassificationName+"</option></select></td><td class='td-question'><textarea name='td-question' rows='4' class='form-control'>"+questionArr[i].trueFalseQuestion+"</textarea></td><td class='td-answer'><input type='text' class='form-control' value='"+questionArr[i].trueFalseAnswer+"'></td><td class='td-btn'><button class='btn btn-primary btn-save'>保存</button> <button class='btn btn-warning btn-delete'>删除</button></td></tr>");
+
+                    	}
+                      appendSOption();
+                    }else{
+                    	alert(data.result);
+                    }
+            	},
+            	error:function (err) {
+            		console.log("这是请求失败的");
+            	}
+            });
+
+            function appendSOption(){
+              var tempParam = {} 
+              var param = JSON.stringify(tempParam);
+              $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.101.33.161:8081/admin/languageClassificationController/selectList',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                    alert(data.result);
+                  }else if(data.code == 200){
+                    for(var i=0;i<data.result.result.list.length;i++){  
+                    $(".show-tick").append("<option>"+data.result.result.list[i].languageClassificationId+"."+data.result.result.list[i].languageClassificationName+"</option>");
+                    }
+                  }else{
+                    alert(data.result);
+                  }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+              });
+            }
+
+            //保存按钮提交事件
+            $("#table-item").on("click",".btn-save",function(){
+              var editQuestion = $(this).parent().siblings(".td-question").children().val();
+              var editAnswer = $(this).parent().siblings(".td-answer").children().val();
+              var editId = $(this).parent().siblings(".td-id")[0].innerHTML;
+              var programName = $(this).parent().siblings(".td-program").children().val();
+              var programNameArr = programName.split('.');
+              var tempP = {
+                'trueFalseQuestion' : editQuestion,
+                'trueFalseAnswer' : editAnswer,
+                'languageClassificationId' : programNameArr[0],
+                'id' : editId
+              }
+              var param = JSON.stringify(tempP);
+              console.log(param);
+              $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.101.33.161:8081/'+status+'/trueFalseQuestion/updateByPrimaryKeySelective',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        alert('保存成功');  
+                        window.location.reload(); 
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+              })
+            })
+            //删除按钮提交事件
+            $("#table-item").on("click",".btn-delete",function(){
+              var editId = $(this).parent().siblings(".td-id")[0].innerHTML;
+              var tempP = {
+                'id' : editId
+              }
+              var param = JSON.stringify(tempP);
+              console.log(param);
+              $.ajax({
+                type: "post",
+                headers: {
+                  "content-Type":"application/json",
+                },
+                contentType:"application/json",
+                url: 'http://47.101.33.161:8081/'+status+'/trueFalseQuestion/deleteByPrimaryKey',
+                data: param,
+                success: function (data) {
+                  console.log("这是请求成功的");
+                  console.log(data);
+                  if(data.code == 500){
+                        alert(data.result);
+                      }else if(data.code == 200){
+                        alert('删除成功');  
+                        window.location.reload(); 
+                      }else{
+                        alert(data.result);
+                      }
+                },
+                error:function (err) {
+                  console.log("这是请求失败的");
+                }
+              })
+            })
+		})
+
+	</script>
+</body>
+</html>

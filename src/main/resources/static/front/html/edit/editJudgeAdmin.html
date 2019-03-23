@@ -55,12 +55,22 @@
       padding-top: 40px !important;
       width: 150px;
     }
+    .search-language,.search-question{
+      width: 200px;
+      margin-right: 10px;
+    }
   </style>
 </head>
 <body class="container-fluid bg-index">
 	<div class="row content-row" id="practice">
 		<div class="col-sm-12 all-box-bg">
 			<div class="title-tc">查看/修改判断题</div>
+      <div class="col-sm-12 flex">
+        <span>查询栏：</span>
+        <input class="form-control search-language" type="text" placeholder="程序语言">
+        <input class="form-control search-question" type="text" placeholder="题目">
+        <button class="btn btn-success">查询</button>
+      </div>
       <table class="table">
         <thead>
           <tr>
@@ -245,6 +255,16 @@
                   console.log("这是请求失败的");
                 }
               })
+            })
+            //查询点击事件
+            $(".btn-success").click(function(){
+              var searchLanguge = $(".search-language").val();
+              var searchQuestion = $(".search-question").val();
+              if(searchLanguge == '' && searchQuestion == ''){
+                alert('请输入查询条件');
+                return
+              }
+              window.location.href = "../search/searchJudge.html?searchLanguge="+searchLanguge+"&searchQuestion="+searchQuestion+"&status=admin";
             })
 
             //绑定点击页码事件

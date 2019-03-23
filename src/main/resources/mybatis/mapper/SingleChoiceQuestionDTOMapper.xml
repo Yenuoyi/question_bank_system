@@ -37,6 +37,9 @@
       <if test="record.examinerType and record.examinerType != ''">
         and a.examiner_type = #{record.examinerType}
       </if>
+      <if test="record.languageClassificationId != null">
+        and a.language_classification_id = #{record.languageClassificationId})
+      </if>
       <if test="record.languageClassificationName != null">
         and b.language_classification_name like concat("%",#{record.languageClassificationName},"%")
       </if>
