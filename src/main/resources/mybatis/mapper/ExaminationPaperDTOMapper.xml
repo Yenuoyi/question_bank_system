@@ -38,7 +38,7 @@
         and a.status = #{record.status}
       </if>
       <if test="record.languageClassificationName and record.languageClassificationName != ''">
-        and b.language_classification_name = #{record.languageClassificationName}
+        and b.language_classification_name like CONCAT('%', #{record.languageClassificationName}, '%')
       </if>
       <if test="record.languageClassificationStatus != null">
         and b.language_classification_status = #{record.languageClassificationStatus}

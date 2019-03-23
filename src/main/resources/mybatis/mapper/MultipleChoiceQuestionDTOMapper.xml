@@ -24,7 +24,7 @@
         and a.id = #{record.id}
       </if>
       <if test="record.multipleChoiceQuestion and record.multipleChoiceQuestion != ''">
-        and a.multiple_choice_question = #{record.multipleChoiceQuestion}
+        and a.multiple_choice_question like concat("%",#{record.multipleChoiceQuestion},"%")
       </if>
       <if test="record.multipleChoiceOption and record.multipleChoiceOption != ''">
         and a.multiple_choice_option = #{record.multipleChoiceOption}
@@ -42,6 +42,9 @@
         and a.language_classification_id = #{record.languageClassificationId}
       </if>
       <if test="record.languageClassificationName != null">
+        and b.language_classification_name like concat("%",#{record.languageClassificationName},"%")
+      </if>
+      <if test="record.languageClassificationStatus != null">
         and b.language_classification_status = #{record.languageClassificationStatus}
       </if>
     </if>

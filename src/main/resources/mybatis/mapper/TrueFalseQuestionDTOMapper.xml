@@ -22,7 +22,7 @@
         and a.id = #{record.id}
       </if>
       <if test="record.trueFalseQuestion and record.trueFalseQuestion != ''">
-        and a.true_false_question = #{record.trueFalseQuestion}
+        and a.true_false_question like concat("%",#{record.trueFalseQuestion},"%")
       </if>
       <if test="record.trueFalseAnswer and record.trueFalseAnswer != ''">
         and a.true_false_answer = #{record.trueFalseAnswer}
@@ -35,6 +35,9 @@
       </if>
       <if test="record.languageClassificationId and record.languageClassificationId != ''">
         and a.language_classification_id = #{record.languageClassificationId}
+      </if>
+      <if test="record.languageClassificationName != null">
+        and b.language_classification_name like concat("%",#{record.languageClassificationName},"%")
       </if>
       <if test="record.languageClassificationStatus != null">
         and b.language_classification_status = #{record.languageClassificationStatus}

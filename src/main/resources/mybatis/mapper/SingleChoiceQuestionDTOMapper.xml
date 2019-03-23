@@ -23,7 +23,7 @@
         and a.id = #{record.id}
       </if>
       <if test="record.singleChoiceQuestion and record.singleChoiceQuestion != ''">
-        and a.single_choice_question = #{record.singleChoiceQuestion}
+        and a.single_choice_question like CONCAT('%', #{record.singleChoiceQuestion},'%')
       </if>
       <if test="record.singleChoiceOption and record.singleChoiceOption != ''">
         and a.single_choice_option = #{record.singleChoiceOption}
@@ -37,8 +37,8 @@
       <if test="record.examinerType and record.examinerType != ''">
         and a.examiner_type = #{record.examinerType}
       </if>
-      <if test="record.languageClassificationId and record.languageClassificationId != ''">
-        and a.language_classification_id = #{record.languageClassificationId}
+      <if test="record.languageClassificationName != null">
+        and b.language_classification_name like concat("%",#{record.languageClassificationName},"%")
       </if>
       <if test="record.languageClassificationStatus != null">
         and b.language_classification_status = #{record.languageClassificationStatus}
